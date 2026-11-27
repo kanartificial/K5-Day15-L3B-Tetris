@@ -1,0 +1,2755 @@
+[
+  {
+    "case_id": "TC08",
+    "description": "Loại giao dịch trùng ID",
+    "input": {
+      "month": "2026-11",
+      "as_of": "2026-11-20",
+      "budget_amount": 5000000,
+      "coverage_days": 20,
+      "protected_categories": [
+        "housing",
+        "health"
+      ],
+      "transactions": [
+        {
+          "transaction_id": "E",
+          "transaction_date": "2026-11-01",
+          "amount": 800000,
+          "category": "housing",
+          "is_essential": true,
+          "transaction_type": "expense",
+          "related_transaction_id": null
+        },
+        {
+          "transaction_id": "F1",
+          "transaction_date": "2026-11-01",
+          "amount": 150000,
+          "category": "food",
+          "is_essential": false,
+          "transaction_type": "expense",
+          "related_transaction_id": null
+        },
+        {
+          "transaction_id": "F2",
+          "transaction_date": "2026-11-02",
+          "amount": 150000,
+          "category": "food",
+          "is_essential": false,
+          "transaction_type": "expense",
+          "related_transaction_id": null
+        },
+        {
+          "transaction_id": "F3",
+          "transaction_date": "2026-11-03",
+          "amount": 150000,
+          "category": "food",
+          "is_essential": false,
+          "transaction_type": "expense",
+          "related_transaction_id": null
+        },
+        {
+          "transaction_id": "F4",
+          "transaction_date": "2026-11-04",
+          "amount": 150000,
+          "category": "food",
+          "is_essential": false,
+          "transaction_type": "expense",
+          "related_transaction_id": null
+        },
+        {
+          "transaction_id": "F5",
+          "transaction_date": "2026-11-05",
+          "amount": 150000,
+          "category": "food",
+          "is_essential": false,
+          "transaction_type": "expense",
+          "related_transaction_id": null
+        },
+        {
+          "transaction_id": "F6",
+          "transaction_date": "2026-11-06",
+          "amount": 150000,
+          "category": "food",
+          "is_essential": false,
+          "transaction_type": "expense",
+          "related_transaction_id": null
+        },
+        {
+          "transaction_id": "F7",
+          "transaction_date": "2026-11-07",
+          "amount": 150000,
+          "category": "food",
+          "is_essential": false,
+          "transaction_type": "expense",
+          "related_transaction_id": null
+        },
+        {
+          "transaction_id": "F8",
+          "transaction_date": "2026-11-08",
+          "amount": 150000,
+          "category": "food",
+          "is_essential": false,
+          "transaction_type": "expense",
+          "related_transaction_id": null
+        },
+        {
+          "transaction_id": "F9",
+          "transaction_date": "2026-11-09",
+          "amount": 150000,
+          "category": "food",
+          "is_essential": false,
+          "transaction_type": "expense",
+          "related_transaction_id": null
+        },
+        {
+          "transaction_id": "F10",
+          "transaction_date": "2026-11-10",
+          "amount": 150000,
+          "category": "food",
+          "is_essential": false,
+          "transaction_type": "expense",
+          "related_transaction_id": null
+        },
+        {
+          "transaction_id": "F11",
+          "transaction_date": "2026-11-11",
+          "amount": 150000,
+          "category": "food",
+          "is_essential": false,
+          "transaction_type": "expense",
+          "related_transaction_id": null
+        },
+        {
+          "transaction_id": "F12",
+          "transaction_date": "2026-11-12",
+          "amount": 150000,
+          "category": "food",
+          "is_essential": false,
+          "transaction_type": "expense",
+          "related_transaction_id": null
+        },
+        {
+          "transaction_id": "F13",
+          "transaction_date": "2026-11-13",
+          "amount": 150000,
+          "category": "food",
+          "is_essential": false,
+          "transaction_type": "expense",
+          "related_transaction_id": null
+        },
+        {
+          "transaction_id": "F14",
+          "transaction_date": "2026-11-14",
+          "amount": 150000,
+          "category": "food",
+          "is_essential": false,
+          "transaction_type": "expense",
+          "related_transaction_id": null
+        },
+        {
+          "transaction_id": "F15",
+          "transaction_date": "2026-11-15",
+          "amount": 150000,
+          "category": "food",
+          "is_essential": false,
+          "transaction_type": "expense",
+          "related_transaction_id": null
+        },
+        {
+          "transaction_id": "F16",
+          "transaction_date": "2026-11-16",
+          "amount": 150000,
+          "category": "food",
+          "is_essential": false,
+          "transaction_type": "expense",
+          "related_transaction_id": null
+        },
+        {
+          "transaction_id": "F17",
+          "transaction_date": "2026-11-17",
+          "amount": 150000,
+          "category": "food",
+          "is_essential": false,
+          "transaction_type": "expense",
+          "related_transaction_id": null
+        },
+        {
+          "transaction_id": "F18",
+          "transaction_date": "2026-11-18",
+          "amount": 150000,
+          "category": "food",
+          "is_essential": false,
+          "transaction_type": "expense",
+          "related_transaction_id": null
+        },
+        {
+          "transaction_id": "F19",
+          "transaction_date": "2026-11-19",
+          "amount": 150000,
+          "category": "food",
+          "is_essential": false,
+          "transaction_type": "expense",
+          "related_transaction_id": null
+        },
+        {
+          "transaction_id": "F20",
+          "transaction_date": "2026-11-20",
+          "amount": 150000,
+          "category": "food",
+          "is_essential": false,
+          "transaction_type": "expense",
+          "related_transaction_id": null
+        },
+        {
+          "transaction_id": "F1",
+          "transaction_date": "2026-11-01",
+          "amount": 150000,
+          "category": "food",
+          "is_essential": false,
+          "transaction_type": "expense",
+          "related_transaction_id": null
+        }
+      ],
+      "planned_expenses": [
+        {
+          "id": "rent",
+          "category": "housing",
+          "amount": 500000,
+          "is_essential": true,
+          "known_on": "2026-11-20",
+          "due_on": "2026-11-25"
+        },
+        {
+          "id": "delivery",
+          "category": "food",
+          "amount": 350000,
+          "is_essential": false,
+          "known_on": "2026-11-20",
+          "due_on": "2026-11-25"
+        },
+        {
+          "id": "shopping",
+          "category": "shopping",
+          "amount": 450000,
+          "is_essential": false,
+          "known_on": "2026-11-20",
+          "due_on": "2026-11-25"
+        }
+      ],
+      "recommendations": [
+        {
+          "candidate_id": "delivery",
+          "saving_amount": 350000
+        },
+        {
+          "candidate_id": "shopping",
+          "saving_amount": 450000
+        }
+      ]
+    },
+    "expected_output": {
+      "status": "forecast_over",
+      "spent": 3800000,
+      "forecast": 5800000,
+      "gap": 800000,
+      "max_saving": 800000,
+      "remaining_gap": 0,
+      "allowed_candidate_ids": [
+        "delivery",
+        "shopping"
+      ],
+      "forbidden_candidate_ids": [
+        "rent"
+      ],
+      "candidate_cap_total": 800000,
+      "selected_saving": 800000
+    },
+    "business_rules": [
+      "BR02"
+    ],
+    "source_type": "synthetic",
+    "fixture_type": "edge"
+  },
+  {
+    "case_id": "TC11",
+    "description": "Ngân sách bằng 0",
+    "input": {
+      "month": "2026-11",
+      "as_of": "2026-11-20",
+      "budget_amount": 0,
+      "coverage_days": 20,
+      "protected_categories": [
+        "housing",
+        "health"
+      ],
+      "transactions": [
+        {
+          "transaction_id": "E",
+          "transaction_date": "2026-11-01",
+          "amount": 800000,
+          "category": "housing",
+          "is_essential": true,
+          "transaction_type": "expense",
+          "related_transaction_id": null
+        },
+        {
+          "transaction_id": "F1",
+          "transaction_date": "2026-11-01",
+          "amount": 150000,
+          "category": "food",
+          "is_essential": false,
+          "transaction_type": "expense",
+          "related_transaction_id": null
+        },
+        {
+          "transaction_id": "F2",
+          "transaction_date": "2026-11-02",
+          "amount": 150000,
+          "category": "food",
+          "is_essential": false,
+          "transaction_type": "expense",
+          "related_transaction_id": null
+        },
+        {
+          "transaction_id": "F3",
+          "transaction_date": "2026-11-03",
+          "amount": 150000,
+          "category": "food",
+          "is_essential": false,
+          "transaction_type": "expense",
+          "related_transaction_id": null
+        },
+        {
+          "transaction_id": "F4",
+          "transaction_date": "2026-11-04",
+          "amount": 150000,
+          "category": "food",
+          "is_essential": false,
+          "transaction_type": "expense",
+          "related_transaction_id": null
+        },
+        {
+          "transaction_id": "F5",
+          "transaction_date": "2026-11-05",
+          "amount": 150000,
+          "category": "food",
+          "is_essential": false,
+          "transaction_type": "expense",
+          "related_transaction_id": null
+        },
+        {
+          "transaction_id": "F6",
+          "transaction_date": "2026-11-06",
+          "amount": 150000,
+          "category": "food",
+          "is_essential": false,
+          "transaction_type": "expense",
+          "related_transaction_id": null
+        },
+        {
+          "transaction_id": "F7",
+          "transaction_date": "2026-11-07",
+          "amount": 150000,
+          "category": "food",
+          "is_essential": false,
+          "transaction_type": "expense",
+          "related_transaction_id": null
+        },
+        {
+          "transaction_id": "F8",
+          "transaction_date": "2026-11-08",
+          "amount": 150000,
+          "category": "food",
+          "is_essential": false,
+          "transaction_type": "expense",
+          "related_transaction_id": null
+        },
+        {
+          "transaction_id": "F9",
+          "transaction_date": "2026-11-09",
+          "amount": 150000,
+          "category": "food",
+          "is_essential": false,
+          "transaction_type": "expense",
+          "related_transaction_id": null
+        },
+        {
+          "transaction_id": "F10",
+          "transaction_date": "2026-11-10",
+          "amount": 150000,
+          "category": "food",
+          "is_essential": false,
+          "transaction_type": "expense",
+          "related_transaction_id": null
+        },
+        {
+          "transaction_id": "F11",
+          "transaction_date": "2026-11-11",
+          "amount": 150000,
+          "category": "food",
+          "is_essential": false,
+          "transaction_type": "expense",
+          "related_transaction_id": null
+        },
+        {
+          "transaction_id": "F12",
+          "transaction_date": "2026-11-12",
+          "amount": 150000,
+          "category": "food",
+          "is_essential": false,
+          "transaction_type": "expense",
+          "related_transaction_id": null
+        },
+        {
+          "transaction_id": "F13",
+          "transaction_date": "2026-11-13",
+          "amount": 150000,
+          "category": "food",
+          "is_essential": false,
+          "transaction_type": "expense",
+          "related_transaction_id": null
+        },
+        {
+          "transaction_id": "F14",
+          "transaction_date": "2026-11-14",
+          "amount": 150000,
+          "category": "food",
+          "is_essential": false,
+          "transaction_type": "expense",
+          "related_transaction_id": null
+        },
+        {
+          "transaction_id": "F15",
+          "transaction_date": "2026-11-15",
+          "amount": 150000,
+          "category": "food",
+          "is_essential": false,
+          "transaction_type": "expense",
+          "related_transaction_id": null
+        },
+        {
+          "transaction_id": "F16",
+          "transaction_date": "2026-11-16",
+          "amount": 150000,
+          "category": "food",
+          "is_essential": false,
+          "transaction_type": "expense",
+          "related_transaction_id": null
+        },
+        {
+          "transaction_id": "F17",
+          "transaction_date": "2026-11-17",
+          "amount": 150000,
+          "category": "food",
+          "is_essential": false,
+          "transaction_type": "expense",
+          "related_transaction_id": null
+        },
+        {
+          "transaction_id": "F18",
+          "transaction_date": "2026-11-18",
+          "amount": 150000,
+          "category": "food",
+          "is_essential": false,
+          "transaction_type": "expense",
+          "related_transaction_id": null
+        },
+        {
+          "transaction_id": "F19",
+          "transaction_date": "2026-11-19",
+          "amount": 150000,
+          "category": "food",
+          "is_essential": false,
+          "transaction_type": "expense",
+          "related_transaction_id": null
+        },
+        {
+          "transaction_id": "F20",
+          "transaction_date": "2026-11-20",
+          "amount": 150000,
+          "category": "food",
+          "is_essential": false,
+          "transaction_type": "expense",
+          "related_transaction_id": null
+        }
+      ],
+      "planned_expenses": [
+        {
+          "id": "rent",
+          "category": "housing",
+          "amount": 500000,
+          "is_essential": true,
+          "known_on": "2026-11-20",
+          "due_on": "2026-11-25"
+        },
+        {
+          "id": "delivery",
+          "category": "food",
+          "amount": 350000,
+          "is_essential": false,
+          "known_on": "2026-11-20",
+          "due_on": "2026-11-25"
+        },
+        {
+          "id": "shopping",
+          "category": "shopping",
+          "amount": 450000,
+          "is_essential": false,
+          "known_on": "2026-11-20",
+          "due_on": "2026-11-25"
+        }
+      ],
+      "recommendations": []
+    },
+    "expected_output": {
+      "status": "invalid_budget",
+      "spent": null,
+      "forecast": null,
+      "gap": null,
+      "max_saving": 0,
+      "remaining_gap": null,
+      "allowed_candidate_ids": [],
+      "forbidden_candidate_ids": [],
+      "candidate_cap_total": 0,
+      "selected_saving": 0
+    },
+    "business_rules": [
+      "BR01"
+    ],
+    "source_type": "synthetic",
+    "fixture_type": "edge"
+  },
+  {
+    "case_id": "TC12",
+    "description": "Bỏ chi ngoài kỳ và sau ngày đánh giá",
+    "input": {
+      "month": "2026-11",
+      "as_of": "2026-11-20",
+      "budget_amount": 5000000,
+      "coverage_days": 20,
+      "protected_categories": [
+        "housing",
+        "health"
+      ],
+      "transactions": [
+        {
+          "transaction_id": "E",
+          "transaction_date": "2026-11-01",
+          "amount": 800000,
+          "category": "housing",
+          "is_essential": true,
+          "transaction_type": "expense",
+          "related_transaction_id": null
+        },
+        {
+          "transaction_id": "F1",
+          "transaction_date": "2026-11-01",
+          "amount": 150000,
+          "category": "food",
+          "is_essential": false,
+          "transaction_type": "expense",
+          "related_transaction_id": null
+        },
+        {
+          "transaction_id": "F2",
+          "transaction_date": "2026-11-02",
+          "amount": 150000,
+          "category": "food",
+          "is_essential": false,
+          "transaction_type": "expense",
+          "related_transaction_id": null
+        },
+        {
+          "transaction_id": "F3",
+          "transaction_date": "2026-11-03",
+          "amount": 150000,
+          "category": "food",
+          "is_essential": false,
+          "transaction_type": "expense",
+          "related_transaction_id": null
+        },
+        {
+          "transaction_id": "F4",
+          "transaction_date": "2026-11-04",
+          "amount": 150000,
+          "category": "food",
+          "is_essential": false,
+          "transaction_type": "expense",
+          "related_transaction_id": null
+        },
+        {
+          "transaction_id": "F5",
+          "transaction_date": "2026-11-05",
+          "amount": 150000,
+          "category": "food",
+          "is_essential": false,
+          "transaction_type": "expense",
+          "related_transaction_id": null
+        },
+        {
+          "transaction_id": "F6",
+          "transaction_date": "2026-11-06",
+          "amount": 150000,
+          "category": "food",
+          "is_essential": false,
+          "transaction_type": "expense",
+          "related_transaction_id": null
+        },
+        {
+          "transaction_id": "F7",
+          "transaction_date": "2026-11-07",
+          "amount": 150000,
+          "category": "food",
+          "is_essential": false,
+          "transaction_type": "expense",
+          "related_transaction_id": null
+        },
+        {
+          "transaction_id": "F8",
+          "transaction_date": "2026-11-08",
+          "amount": 150000,
+          "category": "food",
+          "is_essential": false,
+          "transaction_type": "expense",
+          "related_transaction_id": null
+        },
+        {
+          "transaction_id": "F9",
+          "transaction_date": "2026-11-09",
+          "amount": 150000,
+          "category": "food",
+          "is_essential": false,
+          "transaction_type": "expense",
+          "related_transaction_id": null
+        },
+        {
+          "transaction_id": "F10",
+          "transaction_date": "2026-11-10",
+          "amount": 150000,
+          "category": "food",
+          "is_essential": false,
+          "transaction_type": "expense",
+          "related_transaction_id": null
+        },
+        {
+          "transaction_id": "F11",
+          "transaction_date": "2026-11-11",
+          "amount": 150000,
+          "category": "food",
+          "is_essential": false,
+          "transaction_type": "expense",
+          "related_transaction_id": null
+        },
+        {
+          "transaction_id": "F12",
+          "transaction_date": "2026-11-12",
+          "amount": 150000,
+          "category": "food",
+          "is_essential": false,
+          "transaction_type": "expense",
+          "related_transaction_id": null
+        },
+        {
+          "transaction_id": "F13",
+          "transaction_date": "2026-11-13",
+          "amount": 150000,
+          "category": "food",
+          "is_essential": false,
+          "transaction_type": "expense",
+          "related_transaction_id": null
+        },
+        {
+          "transaction_id": "F14",
+          "transaction_date": "2026-11-14",
+          "amount": 150000,
+          "category": "food",
+          "is_essential": false,
+          "transaction_type": "expense",
+          "related_transaction_id": null
+        },
+        {
+          "transaction_id": "F15",
+          "transaction_date": "2026-11-15",
+          "amount": 150000,
+          "category": "food",
+          "is_essential": false,
+          "transaction_type": "expense",
+          "related_transaction_id": null
+        },
+        {
+          "transaction_id": "F16",
+          "transaction_date": "2026-11-16",
+          "amount": 150000,
+          "category": "food",
+          "is_essential": false,
+          "transaction_type": "expense",
+          "related_transaction_id": null
+        },
+        {
+          "transaction_id": "F17",
+          "transaction_date": "2026-11-17",
+          "amount": 150000,
+          "category": "food",
+          "is_essential": false,
+          "transaction_type": "expense",
+          "related_transaction_id": null
+        },
+        {
+          "transaction_id": "F18",
+          "transaction_date": "2026-11-18",
+          "amount": 150000,
+          "category": "food",
+          "is_essential": false,
+          "transaction_type": "expense",
+          "related_transaction_id": null
+        },
+        {
+          "transaction_id": "F19",
+          "transaction_date": "2026-11-19",
+          "amount": 150000,
+          "category": "food",
+          "is_essential": false,
+          "transaction_type": "expense",
+          "related_transaction_id": null
+        },
+        {
+          "transaction_id": "F20",
+          "transaction_date": "2026-11-20",
+          "amount": 150000,
+          "category": "food",
+          "is_essential": false,
+          "transaction_type": "expense",
+          "related_transaction_id": null
+        },
+        {
+          "transaction_id": "O",
+          "transaction_date": "2026-10-31",
+          "amount": 999000,
+          "category": "food",
+          "is_essential": false,
+          "transaction_type": "expense",
+          "related_transaction_id": null
+        },
+        {
+          "transaction_id": "L",
+          "transaction_date": "2026-11-21",
+          "amount": 999000,
+          "category": "food",
+          "is_essential": false,
+          "transaction_type": "expense",
+          "related_transaction_id": null
+        }
+      ],
+      "planned_expenses": [
+        {
+          "id": "rent",
+          "category": "housing",
+          "amount": 500000,
+          "is_essential": true,
+          "known_on": "2026-11-20",
+          "due_on": "2026-11-25"
+        },
+        {
+          "id": "delivery",
+          "category": "food",
+          "amount": 350000,
+          "is_essential": false,
+          "known_on": "2026-11-20",
+          "due_on": "2026-11-25"
+        },
+        {
+          "id": "shopping",
+          "category": "shopping",
+          "amount": 450000,
+          "is_essential": false,
+          "known_on": "2026-11-20",
+          "due_on": "2026-11-25"
+        }
+      ],
+      "recommendations": [
+        {
+          "candidate_id": "delivery",
+          "saving_amount": 350000
+        },
+        {
+          "candidate_id": "shopping",
+          "saving_amount": 450000
+        }
+      ]
+    },
+    "expected_output": {
+      "status": "forecast_over",
+      "spent": 3800000,
+      "forecast": 5800000,
+      "gap": 800000,
+      "max_saving": 800000,
+      "remaining_gap": 0,
+      "allowed_candidate_ids": [
+        "delivery",
+        "shopping"
+      ],
+      "forbidden_candidate_ids": [
+        "rent"
+      ],
+      "candidate_cap_total": 800000,
+      "selected_saving": 800000
+    },
+    "business_rules": [
+      "BR04"
+    ],
+    "source_type": "synthetic",
+    "fixture_type": "edge"
+  },
+  {
+    "case_id": "TC13",
+    "description": "Four candidates with three picks leave 50000 VND uncovered",
+    "input": {
+      "month": "2026-11",
+      "as_of": "2026-11-20",
+      "budget_amount": 5000000,
+      "coverage_days": 20,
+      "protected_categories": [
+        "housing",
+        "health"
+      ],
+      "transactions": [
+        {
+          "transaction_id": "E",
+          "transaction_date": "2026-11-01",
+          "amount": 800000,
+          "category": "housing",
+          "is_essential": true,
+          "transaction_type": "expense",
+          "related_transaction_id": null
+        },
+        {
+          "transaction_id": "F1",
+          "transaction_date": "2026-11-01",
+          "amount": 150000,
+          "category": "food",
+          "is_essential": false,
+          "transaction_type": "expense",
+          "related_transaction_id": null
+        },
+        {
+          "transaction_id": "F2",
+          "transaction_date": "2026-11-02",
+          "amount": 150000,
+          "category": "food",
+          "is_essential": false,
+          "transaction_type": "expense",
+          "related_transaction_id": null
+        },
+        {
+          "transaction_id": "F3",
+          "transaction_date": "2026-11-03",
+          "amount": 150000,
+          "category": "food",
+          "is_essential": false,
+          "transaction_type": "expense",
+          "related_transaction_id": null
+        },
+        {
+          "transaction_id": "F4",
+          "transaction_date": "2026-11-04",
+          "amount": 150000,
+          "category": "food",
+          "is_essential": false,
+          "transaction_type": "expense",
+          "related_transaction_id": null
+        },
+        {
+          "transaction_id": "F5",
+          "transaction_date": "2026-11-05",
+          "amount": 150000,
+          "category": "food",
+          "is_essential": false,
+          "transaction_type": "expense",
+          "related_transaction_id": null
+        },
+        {
+          "transaction_id": "F6",
+          "transaction_date": "2026-11-06",
+          "amount": 150000,
+          "category": "food",
+          "is_essential": false,
+          "transaction_type": "expense",
+          "related_transaction_id": null
+        },
+        {
+          "transaction_id": "F7",
+          "transaction_date": "2026-11-07",
+          "amount": 150000,
+          "category": "food",
+          "is_essential": false,
+          "transaction_type": "expense",
+          "related_transaction_id": null
+        },
+        {
+          "transaction_id": "F8",
+          "transaction_date": "2026-11-08",
+          "amount": 150000,
+          "category": "food",
+          "is_essential": false,
+          "transaction_type": "expense",
+          "related_transaction_id": null
+        },
+        {
+          "transaction_id": "F9",
+          "transaction_date": "2026-11-09",
+          "amount": 150000,
+          "category": "food",
+          "is_essential": false,
+          "transaction_type": "expense",
+          "related_transaction_id": null
+        },
+        {
+          "transaction_id": "F10",
+          "transaction_date": "2026-11-10",
+          "amount": 150000,
+          "category": "food",
+          "is_essential": false,
+          "transaction_type": "expense",
+          "related_transaction_id": null
+        },
+        {
+          "transaction_id": "F11",
+          "transaction_date": "2026-11-11",
+          "amount": 150000,
+          "category": "food",
+          "is_essential": false,
+          "transaction_type": "expense",
+          "related_transaction_id": null
+        },
+        {
+          "transaction_id": "F12",
+          "transaction_date": "2026-11-12",
+          "amount": 150000,
+          "category": "food",
+          "is_essential": false,
+          "transaction_type": "expense",
+          "related_transaction_id": null
+        },
+        {
+          "transaction_id": "F13",
+          "transaction_date": "2026-11-13",
+          "amount": 150000,
+          "category": "food",
+          "is_essential": false,
+          "transaction_type": "expense",
+          "related_transaction_id": null
+        },
+        {
+          "transaction_id": "F14",
+          "transaction_date": "2026-11-14",
+          "amount": 150000,
+          "category": "food",
+          "is_essential": false,
+          "transaction_type": "expense",
+          "related_transaction_id": null
+        },
+        {
+          "transaction_id": "F15",
+          "transaction_date": "2026-11-15",
+          "amount": 150000,
+          "category": "food",
+          "is_essential": false,
+          "transaction_type": "expense",
+          "related_transaction_id": null
+        },
+        {
+          "transaction_id": "F16",
+          "transaction_date": "2026-11-16",
+          "amount": 150000,
+          "category": "food",
+          "is_essential": false,
+          "transaction_type": "expense",
+          "related_transaction_id": null
+        },
+        {
+          "transaction_id": "F17",
+          "transaction_date": "2026-11-17",
+          "amount": 150000,
+          "category": "food",
+          "is_essential": false,
+          "transaction_type": "expense",
+          "related_transaction_id": null
+        },
+        {
+          "transaction_id": "F18",
+          "transaction_date": "2026-11-18",
+          "amount": 150000,
+          "category": "food",
+          "is_essential": false,
+          "transaction_type": "expense",
+          "related_transaction_id": null
+        },
+        {
+          "transaction_id": "F19",
+          "transaction_date": "2026-11-19",
+          "amount": 150000,
+          "category": "food",
+          "is_essential": false,
+          "transaction_type": "expense",
+          "related_transaction_id": null
+        },
+        {
+          "transaction_id": "F20",
+          "transaction_date": "2026-11-20",
+          "amount": 150000,
+          "category": "food",
+          "is_essential": false,
+          "transaction_type": "expense",
+          "related_transaction_id": null
+        }
+      ],
+      "planned_expenses": [
+        {
+          "id": "rent",
+          "category": "housing",
+          "amount": 500000,
+          "is_essential": true,
+          "known_on": "2026-11-20",
+          "due_on": "2026-11-25"
+        },
+        {
+          "id": "cut1",
+          "category": "food",
+          "amount": 250000,
+          "is_essential": false,
+          "known_on": "2026-11-20",
+          "due_on": "2026-11-25"
+        },
+        {
+          "id": "cut2",
+          "category": "food",
+          "amount": 250000,
+          "is_essential": false,
+          "known_on": "2026-11-20",
+          "due_on": "2026-11-25"
+        },
+        {
+          "id": "cut3",
+          "category": "food",
+          "amount": 250000,
+          "is_essential": false,
+          "known_on": "2026-11-20",
+          "due_on": "2026-11-25"
+        },
+        {
+          "id": "cut4",
+          "category": "food",
+          "amount": 250000,
+          "is_essential": false,
+          "known_on": "2026-11-20",
+          "due_on": "2026-11-25"
+        }
+      ],
+      "recommendations": [
+        {
+          "candidate_id": "cut1",
+          "saving_amount": 250000
+        },
+        {
+          "candidate_id": "cut2",
+          "saving_amount": 250000
+        },
+        {
+          "candidate_id": "cut3",
+          "saving_amount": 250000
+        }
+      ]
+    },
+    "expected_output": {
+      "status": "forecast_over",
+      "spent": 3800000,
+      "forecast": 5800000,
+      "gap": 800000,
+      "allowed_candidate_ids": [
+        "cut1",
+        "cut2",
+        "cut3",
+        "cut4"
+      ],
+      "forbidden_candidate_ids": [
+        "rent"
+      ],
+      "candidate_cap_total": 1000000,
+      "max_saving": 1000000,
+      "selected_saving": 750000,
+      "remaining_gap": 50000
+    },
+    "business_rules": [
+      "BR06"
+    ],
+    "source_type": "synthetic",
+    "fixture_type": "edge"
+  },
+  {
+    "case_id": "TC14",
+    "description": "Reject a refund referencing an expense in the previous month pending accounting policy",
+    "input": {
+      "month": "2026-11",
+      "as_of": "2026-11-20",
+      "budget_amount": 5000000,
+      "coverage_days": 20,
+      "protected_categories": [
+        "housing",
+        "health"
+      ],
+      "transactions": [
+        {
+          "transaction_id": "E",
+          "transaction_date": "2026-11-01",
+          "amount": 800000,
+          "category": "housing",
+          "is_essential": true,
+          "transaction_type": "expense",
+          "related_transaction_id": null
+        },
+        {
+          "transaction_id": "F1",
+          "transaction_date": "2026-11-01",
+          "amount": 150000,
+          "category": "food",
+          "is_essential": false,
+          "transaction_type": "expense",
+          "related_transaction_id": null
+        },
+        {
+          "transaction_id": "F2",
+          "transaction_date": "2026-11-02",
+          "amount": 150000,
+          "category": "food",
+          "is_essential": false,
+          "transaction_type": "expense",
+          "related_transaction_id": null
+        },
+        {
+          "transaction_id": "F3",
+          "transaction_date": "2026-11-03",
+          "amount": 150000,
+          "category": "food",
+          "is_essential": false,
+          "transaction_type": "expense",
+          "related_transaction_id": null
+        },
+        {
+          "transaction_id": "F4",
+          "transaction_date": "2026-11-04",
+          "amount": 150000,
+          "category": "food",
+          "is_essential": false,
+          "transaction_type": "expense",
+          "related_transaction_id": null
+        },
+        {
+          "transaction_id": "F5",
+          "transaction_date": "2026-11-05",
+          "amount": 150000,
+          "category": "food",
+          "is_essential": false,
+          "transaction_type": "expense",
+          "related_transaction_id": null
+        },
+        {
+          "transaction_id": "F6",
+          "transaction_date": "2026-11-06",
+          "amount": 150000,
+          "category": "food",
+          "is_essential": false,
+          "transaction_type": "expense",
+          "related_transaction_id": null
+        },
+        {
+          "transaction_id": "F7",
+          "transaction_date": "2026-11-07",
+          "amount": 150000,
+          "category": "food",
+          "is_essential": false,
+          "transaction_type": "expense",
+          "related_transaction_id": null
+        },
+        {
+          "transaction_id": "F8",
+          "transaction_date": "2026-11-08",
+          "amount": 150000,
+          "category": "food",
+          "is_essential": false,
+          "transaction_type": "expense",
+          "related_transaction_id": null
+        },
+        {
+          "transaction_id": "F9",
+          "transaction_date": "2026-11-09",
+          "amount": 150000,
+          "category": "food",
+          "is_essential": false,
+          "transaction_type": "expense",
+          "related_transaction_id": null
+        },
+        {
+          "transaction_id": "F10",
+          "transaction_date": "2026-11-10",
+          "amount": 150000,
+          "category": "food",
+          "is_essential": false,
+          "transaction_type": "expense",
+          "related_transaction_id": null
+        },
+        {
+          "transaction_id": "F11",
+          "transaction_date": "2026-11-11",
+          "amount": 150000,
+          "category": "food",
+          "is_essential": false,
+          "transaction_type": "expense",
+          "related_transaction_id": null
+        },
+        {
+          "transaction_id": "F12",
+          "transaction_date": "2026-11-12",
+          "amount": 150000,
+          "category": "food",
+          "is_essential": false,
+          "transaction_type": "expense",
+          "related_transaction_id": null
+        },
+        {
+          "transaction_id": "F13",
+          "transaction_date": "2026-11-13",
+          "amount": 150000,
+          "category": "food",
+          "is_essential": false,
+          "transaction_type": "expense",
+          "related_transaction_id": null
+        },
+        {
+          "transaction_id": "F14",
+          "transaction_date": "2026-11-14",
+          "amount": 150000,
+          "category": "food",
+          "is_essential": false,
+          "transaction_type": "expense",
+          "related_transaction_id": null
+        },
+        {
+          "transaction_id": "F15",
+          "transaction_date": "2026-11-15",
+          "amount": 150000,
+          "category": "food",
+          "is_essential": false,
+          "transaction_type": "expense",
+          "related_transaction_id": null
+        },
+        {
+          "transaction_id": "F16",
+          "transaction_date": "2026-11-16",
+          "amount": 150000,
+          "category": "food",
+          "is_essential": false,
+          "transaction_type": "expense",
+          "related_transaction_id": null
+        },
+        {
+          "transaction_id": "F17",
+          "transaction_date": "2026-11-17",
+          "amount": 150000,
+          "category": "food",
+          "is_essential": false,
+          "transaction_type": "expense",
+          "related_transaction_id": null
+        },
+        {
+          "transaction_id": "F18",
+          "transaction_date": "2026-11-18",
+          "amount": 150000,
+          "category": "food",
+          "is_essential": false,
+          "transaction_type": "expense",
+          "related_transaction_id": null
+        },
+        {
+          "transaction_id": "F19",
+          "transaction_date": "2026-11-19",
+          "amount": 150000,
+          "category": "food",
+          "is_essential": false,
+          "transaction_type": "expense",
+          "related_transaction_id": null
+        },
+        {
+          "transaction_id": "F20",
+          "transaction_date": "2026-11-20",
+          "amount": 150000,
+          "category": "food",
+          "is_essential": false,
+          "transaction_type": "expense",
+          "related_transaction_id": null
+        },
+        {
+          "transaction_id": "OLD",
+          "transaction_date": "2026-10-30",
+          "amount": 200000,
+          "category": "food",
+          "is_essential": false,
+          "transaction_type": "expense",
+          "related_transaction_id": null
+        },
+        {
+          "transaction_id": "REF",
+          "transaction_date": "2026-11-20",
+          "amount": 100000,
+          "category": "food",
+          "is_essential": false,
+          "transaction_type": "refund",
+          "related_transaction_id": "OLD"
+        }
+      ],
+      "planned_expenses": [
+        {
+          "id": "rent",
+          "category": "housing",
+          "amount": 500000,
+          "is_essential": true,
+          "known_on": "2026-11-20",
+          "due_on": "2026-11-25"
+        },
+        {
+          "id": "delivery",
+          "category": "food",
+          "amount": 350000,
+          "is_essential": false,
+          "known_on": "2026-11-20",
+          "due_on": "2026-11-25"
+        },
+        {
+          "id": "shopping",
+          "category": "shopping",
+          "amount": 450000,
+          "is_essential": false,
+          "known_on": "2026-11-20",
+          "due_on": "2026-11-25"
+        }
+      ],
+      "recommendations": []
+    },
+    "expected_output": {
+      "status": "refund_reference_outside_snapshot",
+      "spent": null,
+      "forecast": null,
+      "gap": null,
+      "allowed_candidate_ids": [],
+      "forbidden_candidate_ids": [],
+      "candidate_cap_total": 0,
+      "max_saving": 0,
+      "selected_saving": 0,
+      "remaining_gap": null
+    },
+    "business_rules": [
+      "BR02"
+    ],
+    "source_type": "synthetic",
+    "fixture_type": "edge"
+  },
+  {
+    "case_id": "TC15",
+    "description": "Exclude late-known transactions and plans, already-due plans and later-month plans",
+    "input": {
+      "month": "2026-11",
+      "as_of": "2026-11-20",
+      "budget_amount": 5000000,
+      "coverage_days": 20,
+      "protected_categories": [
+        "housing",
+        "health"
+      ],
+      "transactions": [
+        {
+          "transaction_id": "E",
+          "transaction_date": "2026-11-01",
+          "amount": 800000,
+          "category": "housing",
+          "is_essential": true,
+          "transaction_type": "expense",
+          "related_transaction_id": null
+        },
+        {
+          "transaction_id": "F1",
+          "transaction_date": "2026-11-01",
+          "amount": 150000,
+          "category": "food",
+          "is_essential": false,
+          "transaction_type": "expense",
+          "related_transaction_id": null
+        },
+        {
+          "transaction_id": "F2",
+          "transaction_date": "2026-11-02",
+          "amount": 150000,
+          "category": "food",
+          "is_essential": false,
+          "transaction_type": "expense",
+          "related_transaction_id": null
+        },
+        {
+          "transaction_id": "F3",
+          "transaction_date": "2026-11-03",
+          "amount": 150000,
+          "category": "food",
+          "is_essential": false,
+          "transaction_type": "expense",
+          "related_transaction_id": null
+        },
+        {
+          "transaction_id": "F4",
+          "transaction_date": "2026-11-04",
+          "amount": 150000,
+          "category": "food",
+          "is_essential": false,
+          "transaction_type": "expense",
+          "related_transaction_id": null
+        },
+        {
+          "transaction_id": "F5",
+          "transaction_date": "2026-11-05",
+          "amount": 150000,
+          "category": "food",
+          "is_essential": false,
+          "transaction_type": "expense",
+          "related_transaction_id": null
+        },
+        {
+          "transaction_id": "F6",
+          "transaction_date": "2026-11-06",
+          "amount": 150000,
+          "category": "food",
+          "is_essential": false,
+          "transaction_type": "expense",
+          "related_transaction_id": null
+        },
+        {
+          "transaction_id": "F7",
+          "transaction_date": "2026-11-07",
+          "amount": 150000,
+          "category": "food",
+          "is_essential": false,
+          "transaction_type": "expense",
+          "related_transaction_id": null
+        },
+        {
+          "transaction_id": "F8",
+          "transaction_date": "2026-11-08",
+          "amount": 150000,
+          "category": "food",
+          "is_essential": false,
+          "transaction_type": "expense",
+          "related_transaction_id": null
+        },
+        {
+          "transaction_id": "F9",
+          "transaction_date": "2026-11-09",
+          "amount": 150000,
+          "category": "food",
+          "is_essential": false,
+          "transaction_type": "expense",
+          "related_transaction_id": null
+        },
+        {
+          "transaction_id": "F10",
+          "transaction_date": "2026-11-10",
+          "amount": 150000,
+          "category": "food",
+          "is_essential": false,
+          "transaction_type": "expense",
+          "related_transaction_id": null
+        },
+        {
+          "transaction_id": "F11",
+          "transaction_date": "2026-11-11",
+          "amount": 150000,
+          "category": "food",
+          "is_essential": false,
+          "transaction_type": "expense",
+          "related_transaction_id": null
+        },
+        {
+          "transaction_id": "F12",
+          "transaction_date": "2026-11-12",
+          "amount": 150000,
+          "category": "food",
+          "is_essential": false,
+          "transaction_type": "expense",
+          "related_transaction_id": null
+        },
+        {
+          "transaction_id": "F13",
+          "transaction_date": "2026-11-13",
+          "amount": 150000,
+          "category": "food",
+          "is_essential": false,
+          "transaction_type": "expense",
+          "related_transaction_id": null
+        },
+        {
+          "transaction_id": "F14",
+          "transaction_date": "2026-11-14",
+          "amount": 150000,
+          "category": "food",
+          "is_essential": false,
+          "transaction_type": "expense",
+          "related_transaction_id": null
+        },
+        {
+          "transaction_id": "F15",
+          "transaction_date": "2026-11-15",
+          "amount": 150000,
+          "category": "food",
+          "is_essential": false,
+          "transaction_type": "expense",
+          "related_transaction_id": null
+        },
+        {
+          "transaction_id": "F16",
+          "transaction_date": "2026-11-16",
+          "amount": 150000,
+          "category": "food",
+          "is_essential": false,
+          "transaction_type": "expense",
+          "related_transaction_id": null
+        },
+        {
+          "transaction_id": "F17",
+          "transaction_date": "2026-11-17",
+          "amount": 150000,
+          "category": "food",
+          "is_essential": false,
+          "transaction_type": "expense",
+          "related_transaction_id": null
+        },
+        {
+          "transaction_id": "F18",
+          "transaction_date": "2026-11-18",
+          "amount": 150000,
+          "category": "food",
+          "is_essential": false,
+          "transaction_type": "expense",
+          "related_transaction_id": null
+        },
+        {
+          "transaction_id": "F19",
+          "transaction_date": "2026-11-19",
+          "amount": 150000,
+          "category": "food",
+          "is_essential": false,
+          "transaction_type": "expense",
+          "related_transaction_id": null
+        },
+        {
+          "transaction_id": "F20",
+          "transaction_date": "2026-11-20",
+          "amount": 150000,
+          "category": "food",
+          "is_essential": false,
+          "transaction_type": "expense",
+          "related_transaction_id": null
+        },
+        {
+          "transaction_id": "LATE",
+          "transaction_date": "2026-11-01",
+          "amount": 150000,
+          "category": "food",
+          "is_essential": false,
+          "transaction_type": "expense",
+          "related_transaction_id": null,
+          "known_on": "2026-11-21"
+        }
+      ],
+      "planned_expenses": [
+        {
+          "id": "rent",
+          "category": "housing",
+          "amount": 500000,
+          "is_essential": true,
+          "known_on": "2026-11-20",
+          "due_on": "2026-11-25"
+        },
+        {
+          "id": "delivery",
+          "category": "food",
+          "amount": 350000,
+          "is_essential": false,
+          "known_on": "2026-11-20",
+          "due_on": "2026-11-25"
+        },
+        {
+          "id": "shopping",
+          "category": "shopping",
+          "amount": 450000,
+          "is_essential": false,
+          "known_on": "2026-11-20",
+          "due_on": "2026-11-25"
+        },
+        {
+          "id": "late_known",
+          "category": "housing",
+          "amount": 500000,
+          "is_essential": true,
+          "known_on": "2026-11-21",
+          "due_on": "2026-11-25"
+        },
+        {
+          "id": "outside_period",
+          "category": "housing",
+          "amount": 500000,
+          "is_essential": true,
+          "known_on": "2026-11-20",
+          "due_on": "2026-12-01"
+        },
+        {
+          "id": "already_due",
+          "category": "housing",
+          "amount": 500000,
+          "is_essential": true,
+          "known_on": "2026-11-20",
+          "due_on": "2026-11-20"
+        },
+        {
+          "id": "late_candidate",
+          "category": "food",
+          "amount": 350000,
+          "is_essential": false,
+          "known_on": "2026-11-21",
+          "due_on": "2026-11-25"
+        }
+      ],
+      "recommendations": [
+        {
+          "candidate_id": "delivery",
+          "saving_amount": 350000
+        },
+        {
+          "candidate_id": "shopping",
+          "saving_amount": 450000
+        }
+      ]
+    },
+    "expected_output": {
+      "status": "forecast_over",
+      "spent": 3800000,
+      "forecast": 5800000,
+      "gap": 800000,
+      "allowed_candidate_ids": [
+        "delivery",
+        "shopping"
+      ],
+      "forbidden_candidate_ids": [
+        "rent"
+      ],
+      "candidate_cap_total": 800000,
+      "max_saving": 800000,
+      "selected_saving": 800000,
+      "remaining_gap": 0
+    },
+    "business_rules": [
+      "BR04",
+      "BR07"
+    ],
+    "source_type": "synthetic",
+    "fixture_type": "edge"
+  },
+  {
+    "case_id": "TC16",
+    "description": "Reject a protected candidate ID even if its amount would fit the cap",
+    "input": {
+      "month": "2026-11",
+      "as_of": "2026-11-20",
+      "budget_amount": 6000000,
+      "coverage_days": 20,
+      "protected_categories": [
+        "housing",
+        "health"
+      ],
+      "transactions": [
+        {
+          "transaction_id": "E",
+          "transaction_date": "2026-11-01",
+          "amount": 800000,
+          "category": "housing",
+          "is_essential": true,
+          "transaction_type": "expense",
+          "related_transaction_id": null
+        },
+        {
+          "transaction_id": "F1",
+          "transaction_date": "2026-11-01",
+          "amount": 150000,
+          "category": "food",
+          "is_essential": false,
+          "transaction_type": "expense",
+          "related_transaction_id": null
+        },
+        {
+          "transaction_id": "F2",
+          "transaction_date": "2026-11-02",
+          "amount": 150000,
+          "category": "food",
+          "is_essential": false,
+          "transaction_type": "expense",
+          "related_transaction_id": null
+        },
+        {
+          "transaction_id": "F3",
+          "transaction_date": "2026-11-03",
+          "amount": 150000,
+          "category": "food",
+          "is_essential": false,
+          "transaction_type": "expense",
+          "related_transaction_id": null
+        },
+        {
+          "transaction_id": "F4",
+          "transaction_date": "2026-11-04",
+          "amount": 150000,
+          "category": "food",
+          "is_essential": false,
+          "transaction_type": "expense",
+          "related_transaction_id": null
+        },
+        {
+          "transaction_id": "F5",
+          "transaction_date": "2026-11-05",
+          "amount": 150000,
+          "category": "food",
+          "is_essential": false,
+          "transaction_type": "expense",
+          "related_transaction_id": null
+        },
+        {
+          "transaction_id": "F6",
+          "transaction_date": "2026-11-06",
+          "amount": 150000,
+          "category": "food",
+          "is_essential": false,
+          "transaction_type": "expense",
+          "related_transaction_id": null
+        },
+        {
+          "transaction_id": "F7",
+          "transaction_date": "2026-11-07",
+          "amount": 150000,
+          "category": "food",
+          "is_essential": false,
+          "transaction_type": "expense",
+          "related_transaction_id": null
+        },
+        {
+          "transaction_id": "F8",
+          "transaction_date": "2026-11-08",
+          "amount": 150000,
+          "category": "food",
+          "is_essential": false,
+          "transaction_type": "expense",
+          "related_transaction_id": null
+        },
+        {
+          "transaction_id": "F9",
+          "transaction_date": "2026-11-09",
+          "amount": 150000,
+          "category": "food",
+          "is_essential": false,
+          "transaction_type": "expense",
+          "related_transaction_id": null
+        },
+        {
+          "transaction_id": "F10",
+          "transaction_date": "2026-11-10",
+          "amount": 150000,
+          "category": "food",
+          "is_essential": false,
+          "transaction_type": "expense",
+          "related_transaction_id": null
+        },
+        {
+          "transaction_id": "F11",
+          "transaction_date": "2026-11-11",
+          "amount": 150000,
+          "category": "food",
+          "is_essential": false,
+          "transaction_type": "expense",
+          "related_transaction_id": null
+        },
+        {
+          "transaction_id": "F12",
+          "transaction_date": "2026-11-12",
+          "amount": 150000,
+          "category": "food",
+          "is_essential": false,
+          "transaction_type": "expense",
+          "related_transaction_id": null
+        },
+        {
+          "transaction_id": "F13",
+          "transaction_date": "2026-11-13",
+          "amount": 150000,
+          "category": "food",
+          "is_essential": false,
+          "transaction_type": "expense",
+          "related_transaction_id": null
+        },
+        {
+          "transaction_id": "F14",
+          "transaction_date": "2026-11-14",
+          "amount": 150000,
+          "category": "food",
+          "is_essential": false,
+          "transaction_type": "expense",
+          "related_transaction_id": null
+        },
+        {
+          "transaction_id": "F15",
+          "transaction_date": "2026-11-15",
+          "amount": 150000,
+          "category": "food",
+          "is_essential": false,
+          "transaction_type": "expense",
+          "related_transaction_id": null
+        },
+        {
+          "transaction_id": "F16",
+          "transaction_date": "2026-11-16",
+          "amount": 150000,
+          "category": "food",
+          "is_essential": false,
+          "transaction_type": "expense",
+          "related_transaction_id": null
+        },
+        {
+          "transaction_id": "F17",
+          "transaction_date": "2026-11-17",
+          "amount": 150000,
+          "category": "food",
+          "is_essential": false,
+          "transaction_type": "expense",
+          "related_transaction_id": null
+        },
+        {
+          "transaction_id": "F18",
+          "transaction_date": "2026-11-18",
+          "amount": 150000,
+          "category": "food",
+          "is_essential": false,
+          "transaction_type": "expense",
+          "related_transaction_id": null
+        },
+        {
+          "transaction_id": "F19",
+          "transaction_date": "2026-11-19",
+          "amount": 150000,
+          "category": "food",
+          "is_essential": false,
+          "transaction_type": "expense",
+          "related_transaction_id": null
+        },
+        {
+          "transaction_id": "F20",
+          "transaction_date": "2026-11-20",
+          "amount": 150000,
+          "category": "food",
+          "is_essential": false,
+          "transaction_type": "expense",
+          "related_transaction_id": null
+        }
+      ],
+      "planned_expenses": [
+        {
+          "id": "rent",
+          "category": "housing",
+          "amount": 500000,
+          "is_essential": true,
+          "known_on": "2026-11-20",
+          "due_on": "2026-11-25"
+        },
+        {
+          "id": "delivery",
+          "category": "food",
+          "amount": 350000,
+          "is_essential": false,
+          "known_on": "2026-11-20",
+          "due_on": "2026-11-25"
+        },
+        {
+          "id": "shopping",
+          "category": "shopping",
+          "amount": 450000,
+          "is_essential": false,
+          "known_on": "2026-11-20",
+          "due_on": "2026-11-25"
+        },
+        {
+          "id": "medicine",
+          "category": "health",
+          "amount": 200000,
+          "is_essential": false,
+          "known_on": "2026-11-20",
+          "due_on": "2026-11-25"
+        },
+        {
+          "id": "insurance",
+          "category": "other",
+          "amount": 100000,
+          "is_essential": true,
+          "known_on": "2026-11-20",
+          "due_on": "2026-11-25"
+        }
+      ],
+      "recommendations": [
+        {
+          "candidate_id": "delivery",
+          "saving_amount": 50000
+        },
+        {
+          "candidate_id": "medicine",
+          "saving_amount": 50000
+        }
+      ]
+    },
+    "expected_output": {
+      "status": "invalid_selection",
+      "spent": 3800000,
+      "forecast": 6100000,
+      "gap": 100000,
+      "allowed_candidate_ids": [
+        "delivery",
+        "shopping"
+      ],
+      "forbidden_candidate_ids": [
+        "insurance",
+        "medicine",
+        "rent"
+      ],
+      "candidate_cap_total": 800000,
+      "max_saving": 800000,
+      "selected_saving": 0,
+      "remaining_gap": 100000
+    },
+    "business_rules": [
+      "BR06",
+      "BR07"
+    ],
+    "source_type": "synthetic",
+    "fixture_type": "edge"
+  },
+  {
+    "case_id": "TC17",
+    "description": "Reject a selection with four candidates",
+    "input": {
+      "month": "2026-11",
+      "as_of": "2026-11-20",
+      "budget_amount": 5000000,
+      "coverage_days": 20,
+      "protected_categories": [
+        "housing",
+        "health"
+      ],
+      "transactions": [
+        {
+          "transaction_id": "E",
+          "transaction_date": "2026-11-01",
+          "amount": 800000,
+          "category": "housing",
+          "is_essential": true,
+          "transaction_type": "expense",
+          "related_transaction_id": null
+        },
+        {
+          "transaction_id": "F1",
+          "transaction_date": "2026-11-01",
+          "amount": 150000,
+          "category": "food",
+          "is_essential": false,
+          "transaction_type": "expense",
+          "related_transaction_id": null
+        },
+        {
+          "transaction_id": "F2",
+          "transaction_date": "2026-11-02",
+          "amount": 150000,
+          "category": "food",
+          "is_essential": false,
+          "transaction_type": "expense",
+          "related_transaction_id": null
+        },
+        {
+          "transaction_id": "F3",
+          "transaction_date": "2026-11-03",
+          "amount": 150000,
+          "category": "food",
+          "is_essential": false,
+          "transaction_type": "expense",
+          "related_transaction_id": null
+        },
+        {
+          "transaction_id": "F4",
+          "transaction_date": "2026-11-04",
+          "amount": 150000,
+          "category": "food",
+          "is_essential": false,
+          "transaction_type": "expense",
+          "related_transaction_id": null
+        },
+        {
+          "transaction_id": "F5",
+          "transaction_date": "2026-11-05",
+          "amount": 150000,
+          "category": "food",
+          "is_essential": false,
+          "transaction_type": "expense",
+          "related_transaction_id": null
+        },
+        {
+          "transaction_id": "F6",
+          "transaction_date": "2026-11-06",
+          "amount": 150000,
+          "category": "food",
+          "is_essential": false,
+          "transaction_type": "expense",
+          "related_transaction_id": null
+        },
+        {
+          "transaction_id": "F7",
+          "transaction_date": "2026-11-07",
+          "amount": 150000,
+          "category": "food",
+          "is_essential": false,
+          "transaction_type": "expense",
+          "related_transaction_id": null
+        },
+        {
+          "transaction_id": "F8",
+          "transaction_date": "2026-11-08",
+          "amount": 150000,
+          "category": "food",
+          "is_essential": false,
+          "transaction_type": "expense",
+          "related_transaction_id": null
+        },
+        {
+          "transaction_id": "F9",
+          "transaction_date": "2026-11-09",
+          "amount": 150000,
+          "category": "food",
+          "is_essential": false,
+          "transaction_type": "expense",
+          "related_transaction_id": null
+        },
+        {
+          "transaction_id": "F10",
+          "transaction_date": "2026-11-10",
+          "amount": 150000,
+          "category": "food",
+          "is_essential": false,
+          "transaction_type": "expense",
+          "related_transaction_id": null
+        },
+        {
+          "transaction_id": "F11",
+          "transaction_date": "2026-11-11",
+          "amount": 150000,
+          "category": "food",
+          "is_essential": false,
+          "transaction_type": "expense",
+          "related_transaction_id": null
+        },
+        {
+          "transaction_id": "F12",
+          "transaction_date": "2026-11-12",
+          "amount": 150000,
+          "category": "food",
+          "is_essential": false,
+          "transaction_type": "expense",
+          "related_transaction_id": null
+        },
+        {
+          "transaction_id": "F13",
+          "transaction_date": "2026-11-13",
+          "amount": 150000,
+          "category": "food",
+          "is_essential": false,
+          "transaction_type": "expense",
+          "related_transaction_id": null
+        },
+        {
+          "transaction_id": "F14",
+          "transaction_date": "2026-11-14",
+          "amount": 150000,
+          "category": "food",
+          "is_essential": false,
+          "transaction_type": "expense",
+          "related_transaction_id": null
+        },
+        {
+          "transaction_id": "F15",
+          "transaction_date": "2026-11-15",
+          "amount": 150000,
+          "category": "food",
+          "is_essential": false,
+          "transaction_type": "expense",
+          "related_transaction_id": null
+        },
+        {
+          "transaction_id": "F16",
+          "transaction_date": "2026-11-16",
+          "amount": 150000,
+          "category": "food",
+          "is_essential": false,
+          "transaction_type": "expense",
+          "related_transaction_id": null
+        },
+        {
+          "transaction_id": "F17",
+          "transaction_date": "2026-11-17",
+          "amount": 150000,
+          "category": "food",
+          "is_essential": false,
+          "transaction_type": "expense",
+          "related_transaction_id": null
+        },
+        {
+          "transaction_id": "F18",
+          "transaction_date": "2026-11-18",
+          "amount": 150000,
+          "category": "food",
+          "is_essential": false,
+          "transaction_type": "expense",
+          "related_transaction_id": null
+        },
+        {
+          "transaction_id": "F19",
+          "transaction_date": "2026-11-19",
+          "amount": 150000,
+          "category": "food",
+          "is_essential": false,
+          "transaction_type": "expense",
+          "related_transaction_id": null
+        },
+        {
+          "transaction_id": "F20",
+          "transaction_date": "2026-11-20",
+          "amount": 150000,
+          "category": "food",
+          "is_essential": false,
+          "transaction_type": "expense",
+          "related_transaction_id": null
+        }
+      ],
+      "planned_expenses": [
+        {
+          "id": "rent",
+          "category": "housing",
+          "amount": 500000,
+          "is_essential": true,
+          "known_on": "2026-11-20",
+          "due_on": "2026-11-25"
+        },
+        {
+          "id": "cut1",
+          "category": "food",
+          "amount": 250000,
+          "is_essential": false,
+          "known_on": "2026-11-20",
+          "due_on": "2026-11-25"
+        },
+        {
+          "id": "cut2",
+          "category": "food",
+          "amount": 250000,
+          "is_essential": false,
+          "known_on": "2026-11-20",
+          "due_on": "2026-11-25"
+        },
+        {
+          "id": "cut3",
+          "category": "food",
+          "amount": 250000,
+          "is_essential": false,
+          "known_on": "2026-11-20",
+          "due_on": "2026-11-25"
+        },
+        {
+          "id": "cut4",
+          "category": "food",
+          "amount": 250000,
+          "is_essential": false,
+          "known_on": "2026-11-20",
+          "due_on": "2026-11-25"
+        }
+      ],
+      "recommendations": [
+        {
+          "candidate_id": "cut1",
+          "saving_amount": 250000
+        },
+        {
+          "candidate_id": "cut2",
+          "saving_amount": 250000
+        },
+        {
+          "candidate_id": "cut3",
+          "saving_amount": 250000
+        },
+        {
+          "candidate_id": "cut4",
+          "saving_amount": 250000
+        }
+      ]
+    },
+    "expected_output": {
+      "status": "invalid_selection",
+      "spent": 3800000,
+      "forecast": 5800000,
+      "gap": 800000,
+      "allowed_candidate_ids": [
+        "cut1",
+        "cut2",
+        "cut3",
+        "cut4"
+      ],
+      "forbidden_candidate_ids": [
+        "rent"
+      ],
+      "candidate_cap_total": 1000000,
+      "max_saving": 1000000,
+      "selected_saving": 0,
+      "remaining_gap": 800000
+    },
+    "business_rules": [
+      "BR06"
+    ],
+    "source_type": "synthetic",
+    "fixture_type": "edge"
+  },
+  {
+    "case_id": "TC18",
+    "description": "Reject duplicate candidate IDs",
+    "input": {
+      "month": "2026-11",
+      "as_of": "2026-11-20",
+      "budget_amount": 5000000,
+      "coverage_days": 20,
+      "protected_categories": [
+        "housing",
+        "health"
+      ],
+      "transactions": [
+        {
+          "transaction_id": "E",
+          "transaction_date": "2026-11-01",
+          "amount": 800000,
+          "category": "housing",
+          "is_essential": true,
+          "transaction_type": "expense",
+          "related_transaction_id": null
+        },
+        {
+          "transaction_id": "F1",
+          "transaction_date": "2026-11-01",
+          "amount": 150000,
+          "category": "food",
+          "is_essential": false,
+          "transaction_type": "expense",
+          "related_transaction_id": null
+        },
+        {
+          "transaction_id": "F2",
+          "transaction_date": "2026-11-02",
+          "amount": 150000,
+          "category": "food",
+          "is_essential": false,
+          "transaction_type": "expense",
+          "related_transaction_id": null
+        },
+        {
+          "transaction_id": "F3",
+          "transaction_date": "2026-11-03",
+          "amount": 150000,
+          "category": "food",
+          "is_essential": false,
+          "transaction_type": "expense",
+          "related_transaction_id": null
+        },
+        {
+          "transaction_id": "F4",
+          "transaction_date": "2026-11-04",
+          "amount": 150000,
+          "category": "food",
+          "is_essential": false,
+          "transaction_type": "expense",
+          "related_transaction_id": null
+        },
+        {
+          "transaction_id": "F5",
+          "transaction_date": "2026-11-05",
+          "amount": 150000,
+          "category": "food",
+          "is_essential": false,
+          "transaction_type": "expense",
+          "related_transaction_id": null
+        },
+        {
+          "transaction_id": "F6",
+          "transaction_date": "2026-11-06",
+          "amount": 150000,
+          "category": "food",
+          "is_essential": false,
+          "transaction_type": "expense",
+          "related_transaction_id": null
+        },
+        {
+          "transaction_id": "F7",
+          "transaction_date": "2026-11-07",
+          "amount": 150000,
+          "category": "food",
+          "is_essential": false,
+          "transaction_type": "expense",
+          "related_transaction_id": null
+        },
+        {
+          "transaction_id": "F8",
+          "transaction_date": "2026-11-08",
+          "amount": 150000,
+          "category": "food",
+          "is_essential": false,
+          "transaction_type": "expense",
+          "related_transaction_id": null
+        },
+        {
+          "transaction_id": "F9",
+          "transaction_date": "2026-11-09",
+          "amount": 150000,
+          "category": "food",
+          "is_essential": false,
+          "transaction_type": "expense",
+          "related_transaction_id": null
+        },
+        {
+          "transaction_id": "F10",
+          "transaction_date": "2026-11-10",
+          "amount": 150000,
+          "category": "food",
+          "is_essential": false,
+          "transaction_type": "expense",
+          "related_transaction_id": null
+        },
+        {
+          "transaction_id": "F11",
+          "transaction_date": "2026-11-11",
+          "amount": 150000,
+          "category": "food",
+          "is_essential": false,
+          "transaction_type": "expense",
+          "related_transaction_id": null
+        },
+        {
+          "transaction_id": "F12",
+          "transaction_date": "2026-11-12",
+          "amount": 150000,
+          "category": "food",
+          "is_essential": false,
+          "transaction_type": "expense",
+          "related_transaction_id": null
+        },
+        {
+          "transaction_id": "F13",
+          "transaction_date": "2026-11-13",
+          "amount": 150000,
+          "category": "food",
+          "is_essential": false,
+          "transaction_type": "expense",
+          "related_transaction_id": null
+        },
+        {
+          "transaction_id": "F14",
+          "transaction_date": "2026-11-14",
+          "amount": 150000,
+          "category": "food",
+          "is_essential": false,
+          "transaction_type": "expense",
+          "related_transaction_id": null
+        },
+        {
+          "transaction_id": "F15",
+          "transaction_date": "2026-11-15",
+          "amount": 150000,
+          "category": "food",
+          "is_essential": false,
+          "transaction_type": "expense",
+          "related_transaction_id": null
+        },
+        {
+          "transaction_id": "F16",
+          "transaction_date": "2026-11-16",
+          "amount": 150000,
+          "category": "food",
+          "is_essential": false,
+          "transaction_type": "expense",
+          "related_transaction_id": null
+        },
+        {
+          "transaction_id": "F17",
+          "transaction_date": "2026-11-17",
+          "amount": 150000,
+          "category": "food",
+          "is_essential": false,
+          "transaction_type": "expense",
+          "related_transaction_id": null
+        },
+        {
+          "transaction_id": "F18",
+          "transaction_date": "2026-11-18",
+          "amount": 150000,
+          "category": "food",
+          "is_essential": false,
+          "transaction_type": "expense",
+          "related_transaction_id": null
+        },
+        {
+          "transaction_id": "F19",
+          "transaction_date": "2026-11-19",
+          "amount": 150000,
+          "category": "food",
+          "is_essential": false,
+          "transaction_type": "expense",
+          "related_transaction_id": null
+        },
+        {
+          "transaction_id": "F20",
+          "transaction_date": "2026-11-20",
+          "amount": 150000,
+          "category": "food",
+          "is_essential": false,
+          "transaction_type": "expense",
+          "related_transaction_id": null
+        }
+      ],
+      "planned_expenses": [
+        {
+          "id": "rent",
+          "category": "housing",
+          "amount": 500000,
+          "is_essential": true,
+          "known_on": "2026-11-20",
+          "due_on": "2026-11-25"
+        },
+        {
+          "id": "delivery",
+          "category": "food",
+          "amount": 350000,
+          "is_essential": false,
+          "known_on": "2026-11-20",
+          "due_on": "2026-11-25"
+        },
+        {
+          "id": "shopping",
+          "category": "shopping",
+          "amount": 450000,
+          "is_essential": false,
+          "known_on": "2026-11-20",
+          "due_on": "2026-11-25"
+        }
+      ],
+      "recommendations": [
+        {
+          "candidate_id": "delivery",
+          "saving_amount": 100000
+        },
+        {
+          "candidate_id": "delivery",
+          "saving_amount": 100000
+        }
+      ]
+    },
+    "expected_output": {
+      "status": "invalid_selection",
+      "spent": 3800000,
+      "forecast": 5800000,
+      "gap": 800000,
+      "allowed_candidate_ids": [
+        "delivery",
+        "shopping"
+      ],
+      "forbidden_candidate_ids": [
+        "rent"
+      ],
+      "candidate_cap_total": 800000,
+      "max_saving": 800000,
+      "selected_saving": 0,
+      "remaining_gap": 800000
+    },
+    "business_rules": [
+      "BR06"
+    ],
+    "source_type": "synthetic",
+    "fixture_type": "edge"
+  },
+  {
+    "case_id": "TC19",
+    "description": "Reject a saving above the candidate cap",
+    "input": {
+      "month": "2026-11",
+      "as_of": "2026-11-20",
+      "budget_amount": 5000000,
+      "coverage_days": 20,
+      "protected_categories": [
+        "housing",
+        "health"
+      ],
+      "transactions": [
+        {
+          "transaction_id": "E",
+          "transaction_date": "2026-11-01",
+          "amount": 800000,
+          "category": "housing",
+          "is_essential": true,
+          "transaction_type": "expense",
+          "related_transaction_id": null
+        },
+        {
+          "transaction_id": "F1",
+          "transaction_date": "2026-11-01",
+          "amount": 150000,
+          "category": "food",
+          "is_essential": false,
+          "transaction_type": "expense",
+          "related_transaction_id": null
+        },
+        {
+          "transaction_id": "F2",
+          "transaction_date": "2026-11-02",
+          "amount": 150000,
+          "category": "food",
+          "is_essential": false,
+          "transaction_type": "expense",
+          "related_transaction_id": null
+        },
+        {
+          "transaction_id": "F3",
+          "transaction_date": "2026-11-03",
+          "amount": 150000,
+          "category": "food",
+          "is_essential": false,
+          "transaction_type": "expense",
+          "related_transaction_id": null
+        },
+        {
+          "transaction_id": "F4",
+          "transaction_date": "2026-11-04",
+          "amount": 150000,
+          "category": "food",
+          "is_essential": false,
+          "transaction_type": "expense",
+          "related_transaction_id": null
+        },
+        {
+          "transaction_id": "F5",
+          "transaction_date": "2026-11-05",
+          "amount": 150000,
+          "category": "food",
+          "is_essential": false,
+          "transaction_type": "expense",
+          "related_transaction_id": null
+        },
+        {
+          "transaction_id": "F6",
+          "transaction_date": "2026-11-06",
+          "amount": 150000,
+          "category": "food",
+          "is_essential": false,
+          "transaction_type": "expense",
+          "related_transaction_id": null
+        },
+        {
+          "transaction_id": "F7",
+          "transaction_date": "2026-11-07",
+          "amount": 150000,
+          "category": "food",
+          "is_essential": false,
+          "transaction_type": "expense",
+          "related_transaction_id": null
+        },
+        {
+          "transaction_id": "F8",
+          "transaction_date": "2026-11-08",
+          "amount": 150000,
+          "category": "food",
+          "is_essential": false,
+          "transaction_type": "expense",
+          "related_transaction_id": null
+        },
+        {
+          "transaction_id": "F9",
+          "transaction_date": "2026-11-09",
+          "amount": 150000,
+          "category": "food",
+          "is_essential": false,
+          "transaction_type": "expense",
+          "related_transaction_id": null
+        },
+        {
+          "transaction_id": "F10",
+          "transaction_date": "2026-11-10",
+          "amount": 150000,
+          "category": "food",
+          "is_essential": false,
+          "transaction_type": "expense",
+          "related_transaction_id": null
+        },
+        {
+          "transaction_id": "F11",
+          "transaction_date": "2026-11-11",
+          "amount": 150000,
+          "category": "food",
+          "is_essential": false,
+          "transaction_type": "expense",
+          "related_transaction_id": null
+        },
+        {
+          "transaction_id": "F12",
+          "transaction_date": "2026-11-12",
+          "amount": 150000,
+          "category": "food",
+          "is_essential": false,
+          "transaction_type": "expense",
+          "related_transaction_id": null
+        },
+        {
+          "transaction_id": "F13",
+          "transaction_date": "2026-11-13",
+          "amount": 150000,
+          "category": "food",
+          "is_essential": false,
+          "transaction_type": "expense",
+          "related_transaction_id": null
+        },
+        {
+          "transaction_id": "F14",
+          "transaction_date": "2026-11-14",
+          "amount": 150000,
+          "category": "food",
+          "is_essential": false,
+          "transaction_type": "expense",
+          "related_transaction_id": null
+        },
+        {
+          "transaction_id": "F15",
+          "transaction_date": "2026-11-15",
+          "amount": 150000,
+          "category": "food",
+          "is_essential": false,
+          "transaction_type": "expense",
+          "related_transaction_id": null
+        },
+        {
+          "transaction_id": "F16",
+          "transaction_date": "2026-11-16",
+          "amount": 150000,
+          "category": "food",
+          "is_essential": false,
+          "transaction_type": "expense",
+          "related_transaction_id": null
+        },
+        {
+          "transaction_id": "F17",
+          "transaction_date": "2026-11-17",
+          "amount": 150000,
+          "category": "food",
+          "is_essential": false,
+          "transaction_type": "expense",
+          "related_transaction_id": null
+        },
+        {
+          "transaction_id": "F18",
+          "transaction_date": "2026-11-18",
+          "amount": 150000,
+          "category": "food",
+          "is_essential": false,
+          "transaction_type": "expense",
+          "related_transaction_id": null
+        },
+        {
+          "transaction_id": "F19",
+          "transaction_date": "2026-11-19",
+          "amount": 150000,
+          "category": "food",
+          "is_essential": false,
+          "transaction_type": "expense",
+          "related_transaction_id": null
+        },
+        {
+          "transaction_id": "F20",
+          "transaction_date": "2026-11-20",
+          "amount": 150000,
+          "category": "food",
+          "is_essential": false,
+          "transaction_type": "expense",
+          "related_transaction_id": null
+        }
+      ],
+      "planned_expenses": [
+        {
+          "id": "rent",
+          "category": "housing",
+          "amount": 500000,
+          "is_essential": true,
+          "known_on": "2026-11-20",
+          "due_on": "2026-11-25"
+        },
+        {
+          "id": "delivery",
+          "category": "food",
+          "amount": 350000,
+          "is_essential": false,
+          "known_on": "2026-11-20",
+          "due_on": "2026-11-25"
+        },
+        {
+          "id": "shopping",
+          "category": "shopping",
+          "amount": 450000,
+          "is_essential": false,
+          "known_on": "2026-11-20",
+          "due_on": "2026-11-25"
+        }
+      ],
+      "recommendations": [
+        {
+          "candidate_id": "delivery",
+          "saving_amount": 350001
+        }
+      ]
+    },
+    "expected_output": {
+      "status": "invalid_selection",
+      "spent": 3800000,
+      "forecast": 5800000,
+      "gap": 800000,
+      "allowed_candidate_ids": [
+        "delivery",
+        "shopping"
+      ],
+      "forbidden_candidate_ids": [
+        "rent"
+      ],
+      "candidate_cap_total": 800000,
+      "max_saving": 800000,
+      "selected_saving": 0,
+      "remaining_gap": 800000
+    },
+    "business_rules": [
+      "BR06"
+    ],
+    "source_type": "synthetic",
+    "fixture_type": "edge"
+  }
+]
