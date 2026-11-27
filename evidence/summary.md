@@ -60,37 +60,44 @@ Data (review Google Play) cho thấy pain có tồn tại nhưng hiếm được
 - Cả hai nguồn đều là lời tự kể. Chưa nguồn nào đo được hành vi thật, ví dụ ngày vượt ngân sách trong sao kê.
 
 Trong chính khảo sát có điểm lệch:
-- 5/21 người chọn "Không theo dõi / Không biết" ở câu 5, nhưng ở câu 6 chỉ 2/21 chọn "Không vượt ngân sách"/"Không xác định được". Nghĩa là nhiều người không theo dõi vẫn tự ước được mức vượt.
-- Phiếu 21 trả lời "0 tháng" ở câu 5 nhưng lại ước vượt "200.000 đến dưới 500.000 đồng" ở câu 6. Con số này có thể là cảm giác chứ không phải số đo. Đây cũng chính là dấu hiệu của pain "không biết mình đã chi bao nhiêu" (8/11).
+- 5/21 người chọn "Không theo dõi / Không biết" ở câu 5, nhưng ở câu 6 chỉ 2/21 chọn "Không vượt ngân sách"/"Không xác định được". Nghĩa là nhiều người không theo dõi vẫn tự ước được mức vượt. Con số đó có thể là cảm giác chứ không phải số đo. Đây cũng chính là dấu hiệu của pain "không biết mình đã chi bao nhiêu" (15/21).
+- Phiếu 21 trả lời "0 tháng" ở câu 5 nhưng lại ước vượt "200.000 đến dưới 500.000 đồng" ở câu 6.
+
+`data/SURVEY_ANALYSIS.md` cho cùng số liệu. Khác biệt duy nhất là cách gộp câu 8:
+- File đó đếm 15/21 người "nhận ra khi đã vượt, cuối tháng hoặc gần hết tiền", tức tính cả nhóm "ngay khi vượt".
+- File này đếm 11/21, không tính nhóm "ngay khi vượt" nhưng tính nhóm "không theo dõi".
+- Hai cách đều cùng chỉ ra: chỉ 4/21 nhận ra *trước khi* vượt.
 
 ## 5. Kết luận
 
-Giả thuyết ở `evidence/hypothesis.md` đặt ngưỡng: "Mình đúng nếu thấy ≥10/20 người khảo sát gặp phải vấn đề này".
+Giả thuyết ở `evidence/hypothesis.md` có hai điều kiện:
+- (a) "≥10/20 người được khảo sát kể lại được một trường hợp trong 1 tháng gần nhất họ vượt ngân sách…"
+- (b) "≥50% người tham gia khảo sát xác nhận họ gặp khó khăn trong việc kiểm soát ngân sách hoặc lựa chọn khoản chi cần cắt giảm."
 
-**Kết luận: đúng ở mức khảo sát, nhưng chưa kiểm được cho vai đã chọn.** Đếm theo ba mức, từ rộng đến chặt:
+**Kết luận: đúng**, kèm hai giới hạn ở điều kiện (a).
 
-| Cách hiểu "gặp vấn đề" | Kết quả | Đạt ngưỡng ≥10? |
-|---|---|---|
-| Vượt ngân sách ≥1 trong 3 tháng (câu 5) | 15/21 (71%) | Đạt |
-| Vượt ngân sách và có vượt ở nhóm "Ăn uống" (câu 5 + câu 7), đúng tình huống trong giả thuyết | 12/21 (57%) | Đạt |
-| Như dòng trên, và không nhận ra trước khi vượt (câu 8) | 10/21 (48%) | Vừa sát ngưỡng |
+| Điều kiện | Cách đo trong khảo sát | Toàn mẫu (n=21) | Người 20–30 tuổi (n=19) | Đạt? |
+|---|---|---|---|---|
+| (a) có một lần vượt ngân sách mà không nhận ra đủ sớm | Câu 5: vượt ≥1 tháng, **và** câu 8: không chọn "Trước khi vượt ngân sách" | 12/21 (57%) | 10/19 (53%) | Đạt (≥10) |
+| (a) nới rộng: chỉ cần có vượt | Câu 5: vượt ≥1 trong 3 tháng | 15/21 (71%) | 13/19 (68%) | Đạt |
+| (b) khó kiểm soát ngân sách hoặc khó chọn khoản cắt | Câu 10: chọn ít nhất một trong "Không nhận ra nguy cơ vượt ngân sách", "Khó kiểm soát các khoản chi nhỏ", "Không biết nên cắt giảm khoản nào" | 21/21 (100%) | 19/19 (100%) | Đạt (≥50%) |
+| (b) chỉ tính vế "khó chọn khoản cắt" | Câu 10: "Không biết nên cắt giảm khoản nào" | 7/21 (33%) | | Không đạt nếu đo riêng vế này |
 
-**Theo vai đã chốt (nhân viên văn phòng 20–24 tuổi):** chỉ có 4/21 phiếu (phiếu 3, 9, 17, 19).
-- 4/4 vượt ngân sách và đều có vượt ở nhóm "Ăn uống".
-- 2/4 không nhận ra trước khi vượt.
-- 3/4 thiếu tiền trước kỳ lương.
-- Nếu tính mọi nhân viên văn phòng (9 người): 7/9 vượt ngân sách (đều có Ăn uống), 5/9 không nhận ra trước khi vượt.
+Giới hạn của điều kiện (a):
+- Câu 5 hỏi về **3 tháng**, không phải 1 tháng.
+- Form không có câu mở, nên người trả lời chọn đáp án chứ không "kể lại" một lần cụ thể.
+- Câu (a) trong `hypothesis.md` đang bị cụt ("…vượt ngân sách đủ sớm hoặc."). Nhóm nên sửa cho rõ nghĩa và ghi một dòng "sửa sau khi có kết quả".
 
-n = 4 quá nhỏ để kết luận riêng cho vai này. Số liệu toàn mẫu là bằng chứng cho nhóm người trẻ nói chung. Nên phỏng vấn ≥3 nhân viên văn phòng 20–24 tuổi để kiểm lại.
+Vế "nhận ra muộn" có bằng chứng mạnh: chỉ 4/21 nhận ra trước khi vượt. Vế "không biết cắt khoản nào" yếu hơn: 7/21 tự nhận gặp khó, dù 20/21 *muốn* có gợi ý cắt giảm. Muốn có là ý định, không phải khó khăn đã gặp.
 
 **Kiểm các cách giải thích khác** (ghi ở `hypothesis.md`):
 
 | Cách giải thích khác | Khảo sát nói gì | Đánh giá |
 |---|---|---|
-| 1. Ngân sách đặt không thực tế | 15/21 không đặt ngân sách theo danh mục: 8 chỉ đặt tổng, 4 thỉnh thoảng, 3 không đặt | **Có khả năng**, đi kèm với nguyên nhân "nhận ra muộn" |
-| 2. Biết nhưng vẫn chi | Trong 4 người nhận ra trước khi vượt, 3 người vẫn vượt; 3/21 nói "không thể cắt giảm thêm" | Có ở một nhóm nhỏ: với họ, cảnh báo sớm thôi là chưa đủ |
-| 3. Vượt vì khoản bất thường | Ăn uống 17/21, mua sắm 16/21, giải trí 15/21; nhà ở 6/21, du lịch 4/21, y tế 0/21 | **Yếu**: vượt chủ yếu ở các khoản chi hằng ngày |
-| 4. Không ghi chép nên không biết thật | 5/21 không theo dõi số tháng vượt; 15/21 "không biết mình đã chi bao nhiêu" | **Có khả năng**: cảnh báo chỉ chạy được khi có dữ liệu giao dịch |
+| 1. Thu nhập không đủ chi sinh hoạt | Người thu nhập dưới 5 triệu: 3/5 có vượt; người thu nhập từ 10 triệu trở lên: 8/11 cũng có vượt | **Yếu**, nếu coi là nguyên nhân chính: người thu nhập cao cũng vượt |
+| 2. Chi phát sinh bất ngờ | Vượt ở ăn uống 17/21, mua sắm 16/21, giải trí 15/21; nhà ở 6/21, du lịch 4/21, y tế 0/21 | **Yếu**: vượt chủ yếu ở các khoản chi hằng ngày |
+| 3. Biết chi quá mức nhưng chưa muốn cắt | Trong 4 người nhận ra trước khi vượt, 3 người vẫn vượt; 3/21 nói "không thể cắt giảm thêm" | Có ở một nhóm nhỏ: với họ, cảnh báo sớm thôi là chưa đủ |
+| 4. Đã có phương pháp riêng nhưng thiếu công cụ phù hợp | Cả 6/6 người đặt ngân sách theo danh mục vẫn có vượt; review Google Play cho thấy người đã dùng app vẫn xin tính năng cảnh báo và chia hạn mức theo ngày | **Có khả năng**: có phương pháp nhưng công cụ không báo kịp |
 
 Review Google Play xác nhận pain có tồn tại (có người muốn được thông báo khi vượt hạn mức), nhưng ít được nhắc: 12/2.717 review.
 
