@@ -34,11 +34,11 @@
 
 | | |
 |---|---|
-| Dùng để làm gì | Bàn giao đầu vào đã biết và kết quả kỳ vọng cho B và D. |
-| Từ đâu | Ca do nhóm dựng từ BR01–BR07 và các đề xuất C03.2 trong [DATA_CONTRACT.md](DATA_CONTRACT.md). |
+| Dùng để làm gì | Bàn giao đầu vào đã biết và kết quả kỳ vọng cho phần xử lý dữ liệu và phần gợi ý AI. |
+| Từ đâu | Ca do nhóm dựng từ BR01–BR07 và các đề xuất trong [DATA_CONTRACT.md](DATA_CONTRACT.md). |
 | Xử lý những bước gì | Cố định snapshot và hợp đồng, tách dữ liệu lỗi có chủ đích, đối chiếu phép tính và đủ mã ca bằng script. |
 | Số dòng / số đoạn | [demo_cases.json](demo/demo_cases.json) 9 ca, [edge_cases.json](demo/edge_cases.json) 10 ca. |
-| Phiên bản / ngày lấy | v0.2 · 27/11/2026. |
+| Phiên bản / ngày lấy | v0.1 · 27/11/2026. |
 | Nhãn | `synthetic test cases`. |
 | Giới hạn | Chưa chạy qua luồng AI của ứng dụng. Không tính vào số câu có nguồn thật trong benchmark. |
 

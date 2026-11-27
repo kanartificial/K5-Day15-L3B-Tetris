@@ -21,7 +21,7 @@ Validator kiểm header, trường thiếu, kiểu, ID trùng, ngày, số tiề
 
 Đã chạy lại cùng seed và đối chiếu cả 4 CSV giống từng byte. Khi chèn một ID trùng vào bản sao tạm, validator báo lỗi và thoát với mã 1. Đã thử cấu hình 3 người dùng, 1 tháng, tạo 210 giao dịch và được PASS.
 
-Ở C03.2, kiểm bổ sung trên bản sao CSV cho thấy khoản hoàn khác kỳ bị từ chối, còn khoản hoàn cùng kỳ có liên kết hợp lệ được chấp nhận. Kiểm bổ sung lượt chọn có từng số tiền hợp lệ nhưng vượt trần tổng cũng trả `invalid_selection`.
+Kiểm tra trên bản sao CSV cho thấy khoản hoàn khác kỳ bị từ chối, còn khoản hoàn cùng kỳ có liên kết hợp lệ được chấp nhận. Lượt chọn có từng số tiền hợp lệ nhưng vượt trần tổng trả `invalid_selection`.
 
 Từ thư mục gốc thực hiện:
 
@@ -37,4 +37,4 @@ python data/scripts/generate_data.py --users 3 --start 2026-11 --months 1 --seed
 python data/scripts/validate_data.py --input data/demo/sample --start 2026-11 --end 2026-11
 ```
 
-Kiểm tay của thành viên nhóm chưa có xác nhận. Phép tính TC02 được ghi trong Data Contract để B và D đối chiếu.
+Kiểm tay của thành viên nhóm chưa có xác nhận. Phép tính TC02 được ghi trong Data Contract để đối chiếu kết quả khi tích hợp.

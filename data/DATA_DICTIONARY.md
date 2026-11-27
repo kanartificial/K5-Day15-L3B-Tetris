@@ -17,7 +17,7 @@
 | transactions | category | enum | food, housing, transport, shopping, entertainment, health, other, travel. Các nhóm phát sinh chính bám chủ đề Q7 | food |
 | transactions | transaction_type | enum | expense, refund, transfer. CSV sinh expense, fixture có cả ba | expense |
 | transactions | is_essential | bool | CSV dùng true/false. Phân loại theo mục đích chi, giả định nghiệp vụ | false |
-| transactions | related_transaction_id | chuỗi rỗng hoặc ID | Bắt buộc khi refund, trỏ chi gốc cùng user và danh mục, không hoàn quá số chi gốc. Validator C03.2 tạm từ chối hoàn khác kỳ. JSON dùng null nếu rỗng | T000001 |
+| transactions | related_transaction_id | chuỗi rỗng hoặc ID | Bắt buộc khi refund, trỏ chi gốc cùng user và danh mục, không hoàn quá số chi gốc. Validator tạm từ chối hoàn khác kỳ. JSON dùng null nếu rỗng | T000001 |
 | preferences | user_id | chuỗi | Khóa chính, khóa ngoại | U001 |
 | preferences | protected_categories | tập enum | CSV phân cách bằng ký tự `\|`, JSON dùng mảng. Bảo vệ nhà ở và y tế theo giả định | housing, health |
 
