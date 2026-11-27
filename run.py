@@ -82,7 +82,7 @@ def py(*args):
 
 
 def run_app():
-    return py(os.path.join("codebase", "app.py"))
+    return py(os.path.join("codebase", "web_server.py"))
 
 
 def main(argv):
