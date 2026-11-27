@@ -56,7 +56,23 @@ Mình đã đọc 45 review ngẫu nhiên (seed 1) trước khi viết regex. C�
 6. **[fa7cbaf9]** Money+ · 2021-08 · 5★ (L3): "coi mình tiêu tiền vào vấn đề nào nhiều nhất mà đó giờ mình chưa bao giờ biết mình xài nhiều như z"
 7. **[9c0eb30d]** Quản lý Ngân sách Chi tiêu · 2019-09 · 5★ (L2): "phải có lời khuyên căn bằng tri tiêu hoặc gợi ý j thì tốt biết mấy"
 
-## 5. Giới hạn của data
+## 5. Đối chiếu với giả thuyết (`evidence/hypothesis.md`)
+
+| Ý trong giả thuyết | Review nói gì | Ủng hộ? |
+|---|---|---|
+| Chỉ nhận ra nguy cơ vượt ngân sách khi tiền còn lại đã thấp | 6/2.717 kể không biết tiền đi đâu hoặc hết tiền trước cuối tháng, ví dụ "chưa hết tháng đã hết tiền" [36c8e675], "toàn 3 cái tiền lặt vặt mà hàng triệu đổ lên" [a9a8b971]. Thêm 5/2.717 xin được báo trước hoặc chia hạn mức chi theo ngày [7c6412de, b38091c9] | Có, nhưng **hiếm**: 11/2.717 |
+| Không thường xuyên đối chiếu chi tiêu thực tế với ngân sách | 42/2.717 nhắc "ngân sách / hạn mức", đa số là lỗi hoặc thắc mắc về tính năng ngân sách. Có người muốn "đối chiếu xem khoản nào chi tiêu quá mức" [9adfff0b] | Yếu |
+| Khó xác định khoản chi nào nên cắt giảm | 1/2.717 xin "lời khuyên căn bằng chi tiêu hoặc gợi ý" [9c0eb30d] | **Rất yếu** |
+| Cách giải thích khác: "đã có phương pháp riêng nhưng chưa có công cụ phù hợp" | Toàn bộ người viết review đều đã dùng app ghi chép, nhưng vẫn xin cảnh báo và chia hạn mức theo ngày [7c6412de, b38091c9, e73ca5a3, 04981bfa] | Có: công cụ hiện tại chưa báo kịp |
+| Cách giải thích khác: thu nhập không đủ, chi phát sinh bất ngờ, biết nhưng chưa muốn cắt | Không gặp review nào nói về các ý này trong các review đã đọc tay | Chưa đủ dữ liệu |
+
+**Kết luận từ nguồn này:**
+- Review xác nhận pain "nhận ra muộn / không biết tiền đi đâu" là **có thật**, và cho được ví dụ nguyên văn.
+- Nhưng pain này **hiếm được nhắc**: 12/2.717 (0,44%), trong khi lỗi, quảng cáo, trả phí mỗi loại chiếm khoảng 8–10%.
+- Vế "khó chọn khoản cắt giảm" gần như không xuất hiện.
+- Kết quả này khớp với khảo sát: vế "nhận ra muộn" mạnh (chỉ 4/21 nhận ra trước khi vượt), vế "khó chọn khoản cắt" yếu (7/21).
+
+## 6. Giới hạn của data
 
 - **Tín hiệu yếu:** chỉ 12/2.717 (0,44%) review chạm tới pain của lát cắt. Người viết review chủ yếu nói về lỗi, quảng cáo, trả phí và đồng bộ, mỗi chủ đề chiếm khoảng 7–10%. Vì vậy data này **không chứng minh được pain phổ biến**. Nó chỉ cho thấy pain có tồn tại và cho ví dụ nguyên văn.
 - **Lệch người viết:** đây là người *đã* cài app và *đã* tự ghi chép chi tiêu, tức nhóm có kỷ luật hơn người dùng chính. Người không theo dõi chi tiêu, đúng nhóm "nhận ra muộn", gần như không có mặt.

@@ -17,7 +17,6 @@
   - 12/2.717 (0,44%) chạm tới pain của lát cắt: 5 muốn được cảnh báo hoặc chia nhịp chi khi sắp vượt; 6 kể không biết tiền đi đâu hoặc hết tiền trước cuối tháng; 1 muốn gợi ý cân đối chi tiêu.
   - Để so: lỗi 8,1%, quảng cáo 9,6%, trả phí 9,3%.
   - Người viết review đã là người tự ghi chép chi tiêu, nên data này chỉ cho ví dụ nguyên văn, không chứng minh được độ phổ biến.
-- Phỏng vấn: __/3 người gặp *(n nhỏ không ghi %)* · số lần / tháng: P1 __, P2 __, P3 __ · mỗi lần mất __–__ phút
 - Khảo sát: n = 21 (học viên L3 khóa 5, gửi qua Discord; 13/21 ở tuổi 20–24; 9 nhân viên văn phòng, 8 sinh viên, 4 người lao động tự do). Đếm lại bằng `python evidence/survey/count.py`.
   - **Vượt ngân sách:** 15/21 (71%) vượt ít nhất 1 trong 3 tháng gần đây (1 tháng: 11, 2 tháng: 1, cả 3 tháng: 3). 5/21 không theo dõi nên không biết; 1/21 không vượt.
   - **Mức vượt:** 13/21 (62%) thường vượt từ 500.000đ đến dưới 2 triệu đồng mỗi tháng bị vượt.
@@ -29,14 +28,6 @@
     - 18/21 (86%) thấy cần hoặc rất cần cảnh báo trước khi vượt.
     - Tính năng muốn có: gợi ý cắt giảm cá nhân hóa 20/21; cảnh báo sắp vượt 17/21; dự báo cuối tháng 17/21; giải thích gợi ý theo giao dịch 17/21.
     - Lo ngại: AI khuyên sai 17/21; gợi ý không hợp thực tế 17/21; rò rỉ dữ liệu 15/21; cảnh báo quá nhiều 13/21.
-
-Phỏng vấn nhiều vai thì đếm theo từng vai, không cộng chung.
-
-| | Vai | Gặp pain? | Số lần / 1 tháng qua | Lần gần nhất mất | Đang xoay xở bằng |
-|---|---|---|---|---|---|
-| P1 | | | | | |
-| P2 | | | | | |
-| P3 | | | | | |
 
 ## 3. ≥5 trích dẫn hoặc ví dụ nguyên văn (có nguồn, bỏ tên)
 
@@ -86,7 +77,7 @@ Giả thuyết ở `evidence/hypothesis.md` có hai điều kiện:
 Giới hạn của điều kiện (a):
 - Câu 5 hỏi về **3 tháng**, không phải 1 tháng.
 - Form không có câu mở, nên người trả lời chọn đáp án chứ không "kể lại" một lần cụ thể.
-- Câu (a) trong `hypothesis.md` đang bị cụt ("…vượt ngân sách đủ sớm hoặc."). Nhóm nên sửa cho rõ nghĩa và ghi một dòng "sửa sau khi có kết quả".
+- Câu (a) trong `hypothesis.md` vốn bị cụt ("…vượt ngân sách đủ sớm hoặc.") và đã được sửa ngày 27/11, sau khi có kết quả, thành "…vượt ngân sách mà không nhận ra đủ sớm". Ngưỡng 10/20 giữ nguyên.
 
 Vế "nhận ra muộn" có bằng chứng mạnh: chỉ 4/21 nhận ra trước khi vượt. Vế "không biết cắt khoản nào" yếu hơn: 7/21 tự nhận gặp khó, dù 20/21 *muốn* có gợi ý cắt giảm. Muốn có là ý định, không phải khó khăn đã gặp.
 
@@ -106,9 +97,3 @@ Review Google Play xác nhận pain có tồn tại (có người muốn đượ
 - 10/21 phiếu được nộp trong 7 phút (17:28–17:35).
 - Người trả lời là học viên khóa AI, có thể lệch so với người dùng mục tiêu.
 - Chưa có lời kể nguyên văn về một lần vượt cụ thể. Nên bổ sung bằng phỏng vấn ≥3 người, ưu tiên 5 người trả lời "Có" ở câu 19.
-
-## Lịch hẹn (dùng cho CP2 — chỉ ghi vai và giờ, không tên)
-
-| Vai | Giờ hẹn | Đã xong? |
-|---|---|---|
-| | | |
