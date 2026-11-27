@@ -13,4 +13,4 @@
 | 5 | **Lát cắt MỘT CÂU** (1 người dùng · 1 việc · 1 quyết định AI · 1 kết quả) | Khi người mới đi làm có nguy cơ vượt ngân sách tháng, AI phân tích lịch sử giao dịch và lựa chọn 2–3 khoản chi có thể cắt giảm để giúp người dùng duy trì ngân sách. |
 | 6 | AI tự làm đến đâu + 1 dòng lý do: sai thì ai chịu gì | Rule Engine xác định nguy cơ vượt ngân sách; AI phân tích và đề xuất 2–3 phương án cắt giảm; người dùng quyết định áp dụng, bỏ qua hoặc tạm tắt. AI không tự thực hiện giao dịch vì đề xuất sai có thể ảnh hưởng đến sinh hoạt và tài chính của người dùng. |
 | 7 | Phân công có tên | Nhóm đã điền phân công của mỗi người trong team.md|
-| — | *(CP2)* Đã đổi gì so với CP1 | |
+| — | *(CP2)* Đã đổi gì so với CP1 | Bổ sung chức năng AI đề xuất phương án cắt giảm chi tiêu cá nhân hóa bên cạnh chức năng cảnh báo sớm nguy cơ vượt ngân sách. Hoàn thiện luồng giải quyết vấn đề từ phát hiện nguy cơ, phân tích nguyên nhân đến đề xuất giải pháp giúp người dùng kiểm soát ngân sách.|
