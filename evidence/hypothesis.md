@@ -11,7 +11,7 @@
   - Các khoản chi phát sinh bất ngờ khiến kế hoạch tài chính ban đầu không còn phù hợp.
   - Người dùng biết mình đang chi tiêu quá mức nhưng chưa muốn cắt giảm vì các khoản chi phục vụ nhu cầu cá nhân.
   - Người dùng đã có phương pháp quản lý chi tiêu riêng nhưng chưa tìm được công cụ phù hợp để theo dõi.
-- **Mình đúng nếu thấy:** Có ít nhất 10/20 người được khảo sát kể lại được một trường hợp trong 1 tháng gần nhất họ vượt ngân sách đủ sớm hoặc. Đồng thời, 90% người tham gia khảo sát xác nhận họ gặp khó khăn trong việc kiểm soát ngân sách hoặc lựa chọn khoản chi cần cắt giảm.
+- **Mình đúng nếu thấy:** Có ít nhất 10/20 người được khảo sát kể lại được một trường hợp trong 1 tháng gần nhất họ vượt ngân sách đủ sớm hoặc. Đồng thời, >= 50% người tham gia khảo sát xác nhận họ gặp khó khăn trong việc kiểm soát ngân sách hoặc lựa chọn khoản chi cần cắt giảm.
 
 - **Nguồn sẽ dùng (≥1 nguồn đạt ngưỡng):**
   - [ ] Đào data
