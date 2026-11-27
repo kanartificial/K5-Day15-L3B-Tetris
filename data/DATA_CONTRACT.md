@@ -1,0 +1,23 @@
+# Data Contract FinPilot v0.1
+
+## Dữ liệu và quy tắc tính
+
+CSV UTF-8, ID chuỗi, VND nguyên dương, ngày ISO, kỳ theo Asia/Bangkok. Mỗi cặp người dùng và tháng có một ngân sách. Ngày `as_of` nằm trong kỳ. Bản ghi sau ngày này hoặc khác kỳ bị bỏ khỏi snapshot.
+
+- **BR01 — Kiểm tra ngân sách.** Quy tắc yêu cầu ngân sách dương. Nếu không hợp lệ, trả `invalid_budget` trước khi tính.
+- **BR02 — Tính chi tiêu ròng.** Snapshot tính chi ròng bằng chi hợp lệ trừ hoàn tiền liên kết, bỏ chuyển nội bộ và gộp bản sao cùng ID. Ca demo chỉ có bản trùng giống hệt. Nếu cùng ID nhưng nội dung xung đột, luồng nhập cần trả lỗi theo chính sách nhập dữ liệu cần được xác nhận. Tạm từ chối hoàn tiền khác kỳ trong validator CSV và trả `refund_reference_outside_snapshot` trong fixture khi chi gốc nằm ngoài snapshot hoặc thiếu liên kết khả dụng. Snapshot bị từ chối không trả số chi, forecast hoặc gap. Phương án đề xuất là ghi khoản hoàn vào tháng nhận tiền và tra chi gốc từ ledger lịch sử để phân loại. Cần xác nhận cách xử lý khi khoản hoàn làm chi ròng một danh mục âm. Chưa áp dụng cách hạch toán này.
+- **BR03 — Số dư và tỷ lệ sử dụng ngân sách.** Hệ thống tính số dư bằng ngân sách trừ thực chi, tỷ lệ sử dụng bằng thực chi chia ngân sách.
+- **BR04 — Dự báo chi tiêu cuối tháng.** Hệ thống dự báo bằng thực chi cộng tổng chi thiết yếu tương lai đã biết cộng chi linh hoạt ròng mỗi ngày nhân số ngày còn lại. Trong fixture, mẫu số là số ngày **đã được xác nhận bao phủ** từ đầu kỳ đến ngày đánh giá (kể cả ngày không giao dịch), làm tròn về VND gần nhất theo Python. Các khoản chi linh hoạt đã lên kế hoạch chỉ giới hạn số có thể giảm, tránh cộng lần hai vào dự báo.
+- **BR05 — Điều kiện dự báo và cảnh báo.** Fixture dùng ngưỡng đề xuất 7 ngày. Thứ tự trạng thái là ngân sách sai, thực chi vượt, thiếu dữ liệu, dự báo vượt, an toàn. Dự báo thiếu thì dùng phần thực chi đã vượt nếu biết. Nếu chưa biết có vượt hay không, `gap` là null.
+- **BR06 — Khoản thiếu và mức tiết kiệm hợp lệ.** Fixture lấy `gap` bằng phần dương của chênh lệch giữa ngân sách và mức lớn hơn trong thực chi/dự báo hiện có. `candidate_cap_total` là tổng trần từng candidate trước khi chọn. `max_saving` là trần tổng sau khi giới hạn theo dự phóng chi linh hoạt, vẫn trước bước chọn. `selected_saving` cộng số tiền của lượt đề xuất đã kiểm: tối đa ba ID phân biệt, mỗi ID thuộc danh sách cho phép, số tiền VND nguyên dương trong trần từng khoản và tổng không vượt `max_saving`. Nếu lượt đề xuất sai, fixture trả `invalid_selection` và ghi nhận 0đ. `remaining_gap = max(0, gap - selected_saving)` hoặc null nếu chưa tính được gap. Khi thực chi vượt nhưng chưa đủ dữ liệu dự báo, fixture báo trần 0.
+- **BR07 — Bảo vệ các khoản thiết yếu.** Fixture loại khỏi tập có thể giảm mọi khoản thiết yếu hoặc thuộc danh mục người dùng khóa. Các khoản rent, thuốc, nghĩa vụ trả nợ cần được đánh dấu thiết yếu khi nhập. Trường rỗng `related_transaction_id` chỉ dùng cho khoản chi thường hoặc chuyển nội bộ.
+
+## Đầu vào và đầu ra
+
+Backend đọc CSV, chuẩn hóa và tính snapshot. Mỗi ca JSON có đầu vào `month`, `as_of`, `budget_amount`, `coverage_days`, `protected_categories`, `transactions`, `planned_expenses` và `recommendations`. Ngày đánh giá mặc định là 20/11/2026. Kế hoạch có `id`, `category`, `amount`, `is_essential`, `known_on` và `due_on`. Chỉ dùng kế hoạch có `known_on <= as_of < due_on` và `due_on` thuộc kỳ đánh giá. Giao dịch cần cả ngày phát sinh và ngày ghi nhận không muộn hơn `as_of`. Fixture cũ thiếu `known_on` dùng ngày giao dịch làm ngày ghi nhận theo giả định dữ liệu demo. Với dữ liệu lưu thực tế, đề xuất backend lưu thời điểm ghi nhận và lịch sử sửa đổi để dựng lại trạng thái tại `as_of`. Quy tắc ngày dùng mốc cuối ngày Asia/Bangkok.
+
+Thành phần gợi ý AI nhận `budget`, `spent`, `forecast`, `gap`, `days_remaining`, `protected_categories`, ưu tiên đã cung cấp (nếu có), và `candidates[{id, category, max_saving, evidence}]`. Mỗi candidate có căn cứ và trần tiền do backend tính. Fixture nhận `recommendations[{candidate_id, saving_amount}]` và trả `allowed_candidate_ids`, `forbidden_candidate_ids` để kiểm cả khoản chọn lẫn số tiền. Cần xác nhận khi tích hợp cách đưa trần tổng vào payload tích hợp và cách trả lỗi. Kết quả xếp hạng AI sẽ được đánh giá riêng.
+
+## Ca đối chiếu TC02
+
+Tháng 11 có 30 ngày, ngày đánh giá 20/11. Thực chi gồm 800.000đ tiền nhà và 20 khoản linh hoạt 150.000đ, tổng 3.800.000đ. Còn 10 ngày và 500.000đ tiền thiết yếu đã lên kế hoạch. Dự báo = 3.800.000 + 500.000 + (3.000.000 / 20 × 10) = 5.800.000đ. So với ngân sách 5.000.000đ, thiếu 800.000đ. Hai khoản linh hoạt còn lại có trần 350.000đ và 450.000đ, nên trần giảm 800.000đ và phần thiếu sau khi dùng hết trần là 0đ.

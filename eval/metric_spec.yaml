@@ -13,18 +13,20 @@
 # Người thứ hai chấm thử 5 output theo file này → ghi kết quả vào eval/README.md mục 3.
 
 metrics:
-  - name: "<metric_1>"
-    definition: "<định nghĩa kiểm chứng được>"
-    grader: "<code | llm | nguoi>"
-    threshold: "<ngưỡng bằng số>"
-    why: "<vì sao người dùng quan tâm>"
-  - name: "<metric_2>"
-    definition: "<…>"
-    grader: "<…>"
-    threshold: "<…>"
-    why: "<…>"
-  - name: "<metric_3>"
-    definition: "<…>"
-    grader: "<…>"
-    threshold: "<…>"
-    why: "<…>"
+  - name: canh_bao_dung
+    definition: "Một cảnh báo được tính là đúng khi hệ thống cảnh báo người dùng có nguy cơ vượt ngân sách và dữ liệu thực tế hoặc kết quả tính toán đối chiếu xác nhận chi tiêu dự kiến cuối tháng vượt ngân sách đã đặt. Tỷ lệ chính xác = số cảnh báo đúng / tổng số cảnh báo hệ thống đưa ra."
+    grader: "code"
+    threshold: "Precision ≥ 80% trên tập test có nhãn đối chiếu"
+    why: "Người dùng muốn được cảnh báo sớm khi có nguy cơ thiếu hụt ngân sách, nhưng cảnh báo sai quá nhiều sẽ gây phiền và làm giảm niềm tin vào công cụ."
+
+  - name: phat_hien_nguy_co
+    definition: "Một trường hợp có nguy cơ vượt ngân sách được tính là phát hiện đúng nếu hệ thống đưa ra cảnh báo trước khi tổng chi tiêu thực tế vượt ngân sách. Tỷ lệ phát hiện = số trường hợp nguy cơ được cảnh báo đúng / tổng số trường hợp thực sự có nguy cơ vượt ngân sách trong tập test."
+    grader: "code"
+    threshold: "Recall ≥ 80% trên tập test có nhãn đối chiếu"
+    why: "Người dùng thường chỉ nhận ra mình chi tiêu quá mức khi ngân sách gần cạn hoặc đã vượt. Phát hiện được phần lớn trường hợp nguy cơ giúp họ có thời gian điều chỉnh."
+
+  - name: de_xuat_phu_hop
+    definition: "Đề xuất được tính là phù hợp khi khoản chi tồn tại trong lịch sử giao dịch, có thể cân nhắc giảm, không thuộc chi phí thiết yếu người dùng cần bảo vệ, phù hợp với thói quen và mục tiêu ngân sách, đồng thời nêu rõ số tiền tiết kiệm dự kiến và lý do."
+    grader: "nguoi"
+    threshold: "≥ 80% đề xuất được đánh giá phù hợp"
+    why: "Người dùng cần biết nên giảm khoản chi nào để tránh vượt ngân sách, nhưng vẫn đảm bảo các nhu cầu thiết yếu và thói quen chi tiêu cá nhân."

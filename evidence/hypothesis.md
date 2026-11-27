@@ -3,9 +3,24 @@
 > Điền ở guide bước 1.1. Ôn lại: ngày 2 · lab ngày 2.
 > Viết **trước** khi đọc dòng data đầu tiên hay hỏi người đầu tiên, để không sửa cho khớp kết quả. Kết quả ngược giả thuyết vẫn đủ điểm nếu số là thật.
 
-- Ngày giờ viết: __
-- Người dùng chính (một vai cụ thể): __
-- **Mình nghĩ:** [ai] gặp khó khi [việc] vì [lý do], hậu quả là [mất gì].
-- **Có thể còn cách giải thích khác:** __
-- **Mình đúng nếu thấy:** [một con số nhóm tự chọn] — vd "≥2/3 người kể được một lần như thế trong 1 tháng qua" hoặc "≥x/N học viên bỏ ở bước này" *(ví dụ)*
-- **Nguồn sẽ dùng** (≥1 nguồn đạt ngưỡng, guide 1.2): [ ] đào data · [ ] phỏng vấn ≥3 · [ ] khảo sát ≥20 — nguồn chính: __ · nguồn để kiểm lại: __
+- **Ngày giờ viết:** 17h 27/11/2026
+- **Người dùng chính (một vai cụ thể):** Người trẻ từ 20–30 tuổi, mới đi làm, có thu nhập hàng tháng nhưng chưa có nhiều kinh nghiệm lập kế hoạch và quản lý tài chính cá nhân.
+- **Mình nghĩ:** Người trẻ mới đi làm gặp khó khăn khi theo dõi và kiểm soát chi tiêu hàng tháng vì chưa có thói quen lập ngân sách, không thường xuyên đối chiếu chi tiêu thực tế với ngân sách dự kiến và khó xác định khoản chi nào nên cắt giảm. Hậu quả là họ thường chỉ nhận ra nguy cơ vượt ngân sách khi số tiền còn lại đã thấp, dẫn đến thiếu hụt tài chính cuối tháng và khó duy trì mục tiêu tiết kiệm.
+- **Có thể còn cách giải thích khác:**
+  - Thu nhập chưa đủ đáp ứng các khoản chi phí sinh hoạt nên dù quản lý tốt vẫn có thể vượt ngân sách.
+  - Các khoản chi phát sinh bất ngờ khiến kế hoạch tài chính ban đầu không còn phù hợp.
+  - Người dùng biết mình đang chi tiêu quá mức nhưng chưa muốn cắt giảm vì các khoản chi phục vụ nhu cầu cá nhân.
+  - Người dùng đã có phương pháp quản lý chi tiêu riêng nhưng chưa tìm được công cụ phù hợp để theo dõi.
+- **Mình đúng nếu thấy:** Có ít nhất 10/20 người được khảo sát kể lại được một trường hợp trong 1 tháng gần nhất họ vượt ngân sách mà không nhận ra đủ sớm. Đồng thời, >= 50% người tham gia khảo sát xác nhận họ gặp khó khăn trong việc kiểm soát ngân sách hoặc lựa chọn khoản chi cần cắt giảm.
+
+- **Nguồn sẽ dùng (≥1 nguồn đạt ngưỡng):**
+  - [x] Đào data
+  - [ ] Phỏng vấn ≥3 người
+  - [x] Khảo sát ≥20 người
+
+  **Nguồn chính:** Khảo sát người mới đi làm, có thu nhập hàng tháng, tập trung tìm hiểu trải nghiệm quản lý ngân sách và những lần chi tiêu vượt dự kiến.
+
+  **Nguồn để kiểm lại:** Đào data. Dùng review công khai trên Google Play của các app quản lý chi tiêu phổ biến ở Việt Nam để kiểm:
+  - Người dùng có tự kể chuyện chỉ nhận ra vượt ngân sách khi đã muộn, hoặc không biết tiền đi đâu, không.
+  - Họ có xin tính năng cảnh báo trước hoặc gợi ý cắt giảm không.
+  - Pain này chiếm bao nhiêu phần so với các phàn nàn khác (lỗi, quảng cáo, trả phí).
