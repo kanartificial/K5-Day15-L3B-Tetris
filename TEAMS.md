@@ -11,10 +11,10 @@
 
 | STT | Họ và tên | Mã học viên | Vai trò | Phần việc chính |
 |---|---|---|---|---|
-| 1 | Khổng Ngọc Anh | 2A202603974 | Đội trưởng | ____ |
-| 2 | Võ Thị Kim Ý | 2A202603965 | Thành viên | ____ |
-| 3 | Vương Thu Thảo | 2A202603966 | Thành viên | ____ |
-| 4 | Lý Hà Trân Trân | 2A202603968 | Thành viên | ____ |
+| 1 | Khổng Ngọc Anh | 2A202603974 | Đội trưởng | AI |
+| 2 | Võ Thị Kim Ý | 2A202603965 | Thành viên | Tester, Data |
+| 3 | Vương Thu Thảo | 2A202603966 | Thành viên | Frontend |
+| 4 | Lý Hà Trân Trân | 2A202603968 | Thành viên | Backend |
 
 **Quy tắc điền**
 - **Lớp:** `L3A` hoặc `L3B`. **Track:** một chữ `A` (EdTech), `B` (Y tế), `C` (Du lịch), `D` (Thương mại điện tử), `E` (Tài chính) hoặc `F` (Làn khác). **Link repo:** link GitHub công khai của nhóm.
