@@ -1,110 +1,1439 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="vi">
+
 <head>
-<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-<title>FinPilot — Personal Cashflow</title>
-<style>
-:root{--bg:#f5f6fa;--panel:#fff;--ink:#182230;--muted:#7b8494;--line:#e9edf3;--navy:#18263e;--purple:#7258e8;--purple2:#8c79f4;--green:#16a579;--red:#e35c69;--amber:#d99a35;--shadow:0 8px 28px rgba(29,42,68,.06)}
-*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--ink);font:14px/1.5 Inter,ui-sans-serif,system-ui,-apple-system,"Segoe UI",sans-serif}button,input,select{font:inherit}.app{display:flex;min-height:100vh}.sidebar{width:248px;background:var(--navy);color:#dce4f3;padding:26px 17px;display:flex;flex-direction:column;flex-shrink:0}.brand{display:flex;align-items:center;gap:11px;padding:0 12px 32px;font-size:20px;font-weight:800;color:white;letter-spacing:-.5px}.logo{width:34px;height:34px;border-radius:11px;background:linear-gradient(135deg,#9c8cff,#6852e5);display:grid;place-items:center;font-size:18px}.nav-label{font-size:10px;text-transform:uppercase;letter-spacing:1.4px;color:#8997ad;padding:10px 13px}.nav{display:flex;align-items:center;gap:13px;padding:12px 13px;border-radius:10px;color:#b8c4d8;margin:3px 0;cursor:pointer;transition:.2s}.nav:hover,.nav.active{background:#2b3b58;color:white}.nav.active{box-shadow:inset 3px 0 #9b8cff}.nav .ico{width:19px;text-align:center;font-size:16px}.side-bottom{margin-top:auto;background:#243653;padding:15px;border-radius:13px;color:#aebbd0;font-size:12px}.side-bottom strong{display:block;color:white;font-size:13px;margin-bottom:5px}.main{flex:1;min-width:0;padding:27px 34px 45px;max-width:1600px;margin:auto}.top{display:flex;justify-content:space-between;align-items:center;margin-bottom:27px;gap:18px}.eyebrow{font-size:11px;color:var(--muted);text-transform:uppercase;letter-spacing:1.2px;font-weight:700}.top h1{font-size:25px;letter-spacing:-.8px;margin:4px 0 0}.top-right{display:flex;align-items:center;gap:12px}.select{border:1px solid var(--line);border-radius:9px;padding:10px 12px;background:white;color:var(--ink)}.avatar{width:38px;height:38px;background:#e9e5ff;color:#624cda;border-radius:50%;display:grid;place-items:center;font-weight:800}.welcome{display:flex;justify-content:space-between;align-items:center;margin-bottom:20px}.welcome h2{margin:0;font-size:17px}.welcome p{margin:3px 0;color:var(--muted);font-size:12px}.badge{font-size:11px;padding:6px 10px;border-radius:30px;background:#e9f8f2;color:#16805f;font-weight:700}.grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:15px}.card{background:var(--panel);border:1px solid var(--line);border-radius:15px;padding:19px;box-shadow:var(--shadow);min-width:0}.metric-head{display:flex;justify-content:space-between;align-items:center;color:var(--muted);font-size:12px;font-weight:600}.metric-icon{width:33px;height:33px;border-radius:10px;display:grid;place-items:center;background:#f0edff;color:var(--purple);font-size:16px}.metric-value{font-size:25px;font-weight:800;letter-spacing:-.8px;margin:13px 0 5px;white-space:nowrap}.metric-foot{font-size:11px;color:var(--muted)}.metric-foot b{color:var(--green)}.section-grid{display:grid;grid-template-columns:minmax(0,1.6fr) minmax(280px,1fr);gap:16px;margin-top:17px}.card-title{display:flex;justify-content:space-between;align-items:center;margin-bottom:16px}.card-title h3{margin:0;font-size:14px}.sub{color:var(--muted);font-size:11px}.chart-area{height:220px;position:relative}.chart-area svg{width:100%;height:100%;overflow:visible}.legend{display:flex;gap:17px;color:var(--muted);font-size:11px;margin-top:5px}.dot{display:inline-block;width:8px;height:8px;border-radius:50%;margin-right:6px}.forecast-summary{display:flex;align-items:center;gap:18px;margin:10px 0 17px}.ring{width:112px;height:112px;border-radius:50%;display:grid;place-items:center;background:conic-gradient(var(--purple) 0 68%,#eeeaff 68% 100%);position:relative;flex-shrink:0}.ring:before{content:"";position:absolute;inset:9px;border-radius:50%;background:white}.ring-inner{position:relative;text-align:center}.ring-inner strong{display:block;font-size:21px}.ring-inner span{font-size:10px;color:var(--muted)}.forecast-text strong{font-size:13px}.forecast-text p{font-size:11px;color:var(--muted);margin:5px 0}.forecast-lines{display:grid;gap:9px}.fline{display:flex;justify-content:space-between;font-size:12px}.fline span{color:var(--muted)}.bar{height:6px;background:#f0eef9;border-radius:10px;overflow:hidden;margin-top:5px}.bar i{display:block;height:100%;border-radius:10px;background:var(--purple)}.bottom-grid{display:grid;grid-template-columns:minmax(0,1.1fr) minmax(0,1fr);gap:16px;margin-top:17px}.category-list{display:grid;gap:15px}.cat-row{display:grid;grid-template-columns:1fr auto;gap:7px;align-items:center}.cat-name{font-size:12px;font-weight:600}.cat-amount{font-size:12px;color:var(--muted)}.cat-track{grid-column:1/-1;height:7px;border-radius:8px;background:#f0f1f6;overflow:hidden}.cat-track i{height:100%;display:block;border-radius:8px;background:linear-gradient(90deg,#8975f2,#b3a6ff)}.recommend{display:flex;gap:11px;padding:12px 0;border-bottom:1px solid var(--line)}.recommend:last-child{border:0}.rec-icon{width:32px;height:32px;border-radius:9px;background:#fff5e6;color:#c88a28;display:grid;place-items:center;flex-shrink:0}.recommend strong{font-size:12px}.recommend p{font-size:11px;color:var(--muted);margin:3px 0}.pill{font-size:10px;padding:3px 7px;border-radius:20px;background:#f0edff;color:#6d59d8}.actions{display:flex;gap:9px;flex-wrap:wrap;margin-top:13px}.btn{border:0;border-radius:9px;padding:10px 14px;font-weight:700;font-size:12px;cursor:pointer;transition:.18s}.btn-primary{background:var(--purple);color:white}.btn-primary:hover{background:#6049d7;transform:translateY(-1px)}.btn-light{background:#f2f0ff;color:#6652d1}.btn-outline{border:1px solid var(--line);background:white;color:var(--ink)}.page{display:none}.page.active{display:block}.chat-layout{display:grid;grid-template-columns:minmax(0,1fr) 270px;gap:16px}.chatbox{height:calc(100vh - 230px);min-height:440px;display:flex;flex-direction:column}.chat-head{display:flex;align-items:center;gap:10px;border-bottom:1px solid var(--line);padding-bottom:15px}.bot-avatar{width:37px;height:37px;border-radius:12px;background:#eeeaff;color:var(--purple);display:grid;place-items:center;font-size:19px}.chat-head strong{font-size:13px}.chat-head small{display:block;color:var(--green);font-size:10px}.messages{padding:17px 2px;overflow:auto;flex:1;display:flex;flex-direction:column;gap:13px}.msg{max-width:84%;padding:12px 14px;border-radius:13px;font-size:12px;white-space:pre-wrap;line-height:1.65}.msg.bot{background:#f5f4fa;border:1px solid #efedf7;align-self:flex-start;border-top-left-radius:4px}.msg.user{background:var(--purple);color:white;align-self:flex-end;border-top-right-radius:4px}.chat-form{display:flex;gap:9px;border-top:1px solid var(--line);padding-top:13px}.chat-form input{flex:1;min-width:0;border:1px solid var(--line);border-radius:10px;padding:12px;outline:none}.chat-form input:focus{border-color:var(--purple)}.quick{display:grid;gap:8px}.quick button{text-align:left;padding:10px;border:1px solid var(--line);border-radius:9px;background:white;color:#50596a;font-size:11px;cursor:pointer}.quick button:hover{border-color:#b8adf5;color:var(--purple)}.sim-grid{display:grid;grid-template-columns:minmax(0,1.3fr) minmax(270px,.8fr);gap:16px}.slider-row{padding:18px 0;border-bottom:1px solid var(--line)}.slider-row:last-child{border:0}.slider-top{display:flex;justify-content:space-between;font-size:12px;font-weight:600}.slider-top strong{color:var(--purple)}input[type=range]{width:100%;accent-color:var(--purple);margin:16px 0 5px}.range-hint{font-size:10px;color:var(--muted);display:flex;justify-content:space-between}.result-box{background:#f7f5ff;border-radius:12px;padding:16px;margin:12px 0}.result-box span{font-size:11px;color:var(--muted)}.result-box strong{font-size:23px;display:block;margin-top:5px}.notice{font-size:11px;color:var(--muted);background:#fff8e9;border:1px solid #f6e7c5;padding:11px;border-radius:9px;margin-top:13px}.table{width:100%;border-collapse:collapse;font-size:12px}.table th,.table td{text-align:left;padding:12px 9px;border-bottom:1px solid var(--line)}.table th{color:var(--muted);font-size:10px;text-transform:uppercase}.status{font-size:10px;border-radius:20px;padding:4px 8px;background:#e8f7f0;color:#16805f}.status.warn{background:#fff3e2;color:#b87919}.trace{font-size:11px;color:var(--muted);margin-top:8px}.empty{color:var(--muted);font-size:12px;padding:15px 0}.toast{position:fixed;right:24px;bottom:24px;background:#202d44;color:white;padding:12px 17px;border-radius:10px;box-shadow:var(--shadow);display:none;z-index:5;font-size:12px}
-@media(max-width:1050px){.sidebar{width:205px}.main{padding:23px}.grid{grid-template-columns:repeat(2,1fr)}.section-grid,.bottom-grid{grid-template-columns:1fr}.chat-layout,.sim-grid{grid-template-columns:1fr}.chatbox{height:600px}}
-@media(max-width:680px){.app{display:block}.sidebar{width:100%;height:auto;padding:12px;display:block}.brand{padding:0 7px 10px}.nav-label,.side-bottom{display:none}.nav-wrap{display:flex;overflow:auto;gap:4px}.nav{white-space:nowrap;padding:9px 10px;font-size:11px}.main{padding:18px 13px}.top{align-items:flex-start}.top h1{font-size:20px}.top-right .select{max-width:125px}.grid{gap:9px}.card{padding:14px}.metric-value{font-size:20px}.section-grid,.bottom-grid{gap:10px}.chat-layout{display:flex;flex-direction:column}.chatbox{min-height:480px}.chat-side{order:-1}.msg{max-width:94%}}
-</style>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>FinPilot</title>
+    <style>
+        :root {
+            --bg: #f5f6fa;
+            --ink: #182230;
+            --muted: #7b8494;
+            --line: #e8ecf2;
+            --navy: #18263e;
+            --purple: #7258e8;
+            --green: #16805f
+        }
+
+        * {
+            box-sizing: border-box
+        }
+
+        body {
+            margin: 0;
+            background: var(--bg);
+            color: var(--ink);
+            font: 14px/1.5 Inter, system-ui, Arial
+        }
+
+        button,
+        input,
+        select {
+            font: inherit
+        }
+
+        .app {
+            display: flex;
+            min-height: 100vh
+        }
+
+        .side {
+            width: 225px;
+            background: var(--navy);
+            color: #dce4f3;
+            padding: 22px 15px;
+            display: flex;
+            flex-direction: column
+        }
+
+        .brand {
+            font-size: 21px;
+            font-weight: 800;
+            color: white;
+            padding: 5px 10px 28px
+        }
+
+        .logo {
+            background: #8069eb;
+            border-radius: 10px;
+            padding: 5px 9px;
+            margin-right: 8px
+        }
+
+        .nav {
+            padding: 11px 12px;
+            border-radius: 9px;
+            cursor: pointer;
+            color: #bbc6d8;
+            margin: 3px 0
+        }
+
+        .nav.active,
+        .nav:hover {
+            background: #2b3b58;
+            color: white
+        }
+
+        .sidefoot {
+            margin-top: auto;
+            background: #243653;
+            padding: 13px;
+            border-radius: 10px;
+            font-size: 11px
+        }
+
+        .main {
+            padding: 25px 30px;
+            max-width: 1450px;
+            margin: auto;
+            flex: 1;
+            min-width: 0
+        }
+
+        .top,
+        .welcome,
+        .head {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 12px
+        }
+
+        .top {
+            margin-bottom: 24px
+        }
+
+        .top h1 {
+            font-size: 24px;
+            margin: 3px 0
+        }
+
+        .eyebrow,
+        .muted,
+        .foot {
+            font-size: 11px;
+            color: var(--muted)
+        }
+
+        .select,
+        .field input,
+        .field select {
+            padding: 10px;
+            border: 1px solid var(--line);
+            border-radius: 9px;
+            background: #fff;
+            color: var(--ink);
+            width: 100%
+        }
+
+        .top .select {
+            width: auto;
+            max-width: 220px
+        }
+
+        .page {
+            display: none
+        }
+
+        .page.active {
+            display: block
+        }
+
+        .welcome {
+            margin-bottom: 16px
+        }
+
+        .welcome h2 {
+            font-size: 17px;
+            margin: 0
+        }
+
+        .welcome p {
+            font-size: 12px;
+            color: var(--muted);
+            margin: 3px 0
+        }
+
+        .badge {
+            font-size: 10px;
+            border-radius: 30px;
+            padding: 6px 10px;
+            background: #e9f8f2;
+            color: var(--green);
+            font-weight: 700
+        }
+
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(4, minmax(0, 1fr));
+            gap: 12px
+        }
+
+        .card {
+            background: white;
+            border: 1px solid var(--line);
+            border-radius: 14px;
+            padding: 17px;
+            box-shadow: 0 8px 28px #1d2a440a;
+            margin-bottom: 14px
+        }
+
+        .metric {
+            font-size: 23px;
+            font-weight: 800;
+            margin: 10px 0 4px
+        }
+
+        .row2 {
+            display: grid;
+            grid-template-columns: 1.3fr 1fr;
+            gap: 14px;
+            margin-top: 14px
+        }
+
+        .head {
+            margin-bottom: 13px
+        }
+
+        .head h3 {
+            font-size: 14px;
+            margin: 0
+        }
+
+        .sub {
+            font-size: 11px;
+            color: var(--muted)
+        }
+
+        .line {
+            display: flex;
+            justify-content: space-between;
+            font-size: 12px;
+            margin: 9px 0
+        }
+
+        .line span {
+            color: var(--muted)
+        }
+
+        .bar {
+            height: 7px;
+            background: #f0eef9;
+            border-radius: 8px;
+            overflow: hidden;
+            margin: 5px 0 12px
+        }
+
+        .bar i {
+            display: block;
+            height: 100%;
+            background: var(--purple)
+        }
+
+        .cats {
+            display: grid;
+            gap: 12px
+        }
+
+        .cat {
+            display: grid;
+            grid-template-columns: 1fr auto;
+            gap: 5px;
+            font-size: 12px
+        }
+
+        .track {
+            grid-column: 1/-1;
+            background: #f0f1f6;
+            height: 7px;
+            border-radius: 8px;
+            overflow: hidden
+        }
+
+        .track i {
+            display: block;
+            height: 100%;
+            background: #9584f2
+        }
+
+        .btn {
+            border: 0;
+            border-radius: 9px;
+            padding: 10px 14px;
+            font-size: 12px;
+            font-weight: 700;
+            cursor: pointer
+        }
+
+        .primary {
+            background: var(--purple);
+            color: white
+        }
+
+        .light {
+            background: #f1efff;
+            color: #6652d1
+        }
+
+        .outline {
+            background: white;
+            border: 1px solid var(--line)
+        }
+
+        .actions {
+            display: flex;
+            gap: 8px;
+            flex-wrap: wrap;
+            margin-top: 12px
+        }
+
+        .field {
+            display: grid;
+            gap: 5px;
+            margin: 10px 0
+        }
+
+        .field label {
+            font-size: 11px;
+            font-weight: 700;
+            color: #596477
+        }
+
+        .formgrid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 10px
+        }
+
+        .notice {
+            background: #fff8e9;
+            border: 1px solid #f6e7c5;
+            border-radius: 9px;
+            padding: 10px;
+            font-size: 11px;
+            color: var(--muted);
+            margin-top: 10px
+        }
+
+        .tablewrap {
+            overflow: auto
+        }
+
+        .table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 12px;
+            min-width: 580px
+        }
+
+        .table th,
+        .table td {
+            text-align: left;
+            padding: 10px;
+            border-bottom: 1px solid var(--line)
+        }
+
+        .table th {
+            font-size: 10px;
+            color: var(--muted)
+        }
+
+        .right {
+            text-align: right !important
+        }
+
+        .tag {
+            font-size: 10px;
+            background: #f1efff;
+            color: #6652d1;
+            padding: 4px 8px;
+            border-radius: 20px
+        }
+
+        .small {
+            font-size: 10px;
+            color: var(--muted)
+        }
+
+        .chat {
+            height: 390px;
+            display: flex;
+            flex-direction: column
+        }
+
+        .messages {
+            flex: 1;
+            overflow: auto;
+            display: flex;
+            flex-direction: column;
+            gap: 9px;
+            padding: 12px 0
+        }
+
+        .msg {
+            padding: 10px 12px;
+            border-radius: 11px;
+            max-width: 85%;
+            font-size: 12px;
+            white-space: pre-wrap
+        }
+
+        .bot {
+            background: #f2f1f8;
+            align-self: flex-start
+        }
+
+        .user {
+            background: var(--purple);
+            color: white;
+            align-self: flex-end
+        }
+
+        .chatform {
+            display: flex;
+            gap: 8px
+        }
+
+        .chatform input {
+            flex: 1;
+            min-width: 0;
+            border: 1px solid var(--line);
+            border-radius: 9px;
+            padding: 10px
+        }
+
+        .slider {
+            padding: 12px 0;
+            border-bottom: 1px solid var(--line)
+        }
+
+        .sliderhead {
+            display: flex;
+            justify-content: space-between;
+            font-size: 12px
+        }
+
+        .slider input {
+            width: 100%;
+            accent-color: var(--purple)
+        }
+
+        .result {
+            font-size: 22px;
+            font-weight: 800;
+            background: #f6f3ff;
+            padding: 14px;
+            border-radius: 10px;
+            margin: 12px 0
+        }
+
+        .checkgrid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 8px
+        }
+
+        .checkitem {
+            display: flex;
+            gap: 8px;
+            align-items: center;
+            padding: 9px;
+            border: 1px solid var(--line);
+            border-radius: 9px;
+            font-size: 11px;
+            cursor: pointer
+        }
+
+        .checkitem:has(input:checked) {
+            border-color: var(--purple);
+            background: #f5f2ff
+        }
+
+        .checkitem input {
+            accent-color: var(--purple)
+        }
+
+        .modal {
+            position: fixed;
+            inset: 0;
+            background: #111d3199;
+            display: none;
+            align-items: center;
+            justify-content: center;
+            padding: 16px;
+            z-index: 10
+        }
+
+        .modalbox {
+            background: white;
+            padding: 24px;
+            border-radius: 16px;
+            width: min(620px, 100%);
+            max-height: 92vh;
+            overflow: auto
+        }
+
+        .toast {
+            display: none;
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background: #202d44;
+            color: white;
+            padding: 12px 16px;
+            border-radius: 9px;
+            z-index: 20;
+            font-size: 12px
+        }
+
+        @media(max-width:950px) {
+            .side {
+                width: 190px
+            }
+
+            .grid {
+                grid-template-columns: 1fr 1fr
+            }
+
+            .row2 {
+                grid-template-columns: 1fr
+            }
+        }
+
+        @media(max-width:650px) {
+            .app {
+                display: block
+            }
+
+            .side {
+                width: 100%;
+                padding: 10px;
+                display: block
+            }
+
+            .brand {
+                padding: 0 5px 8px
+            }
+
+            .navs {
+                display: flex;
+                overflow: auto
+            }
+
+            .nav {
+                white-space: nowrap;
+                padding: 8px;
+                font-size: 11px
+            }
+
+            .sidefoot {
+                display: none
+            }
+
+            .main {
+                padding: 14px 10px
+            }
+
+            .top h1 {
+                font-size: 19px
+            }
+
+            .top .select {
+                max-width: 140px
+            }
+
+            .card {
+                padding: 13px
+            }
+
+            .metric {
+                font-size: 19px
+            }
+
+            .formgrid,
+            .checkgrid {
+                grid-template-columns: 1fr
+            }
+        }
+    </style>
 </head>
+
 <body>
-<div class="app">
-<aside class="sidebar">
- <div class="brand"><div class="logo">✦</div>FinPilot</div>
- <div class="nav-label">Workspace</div>
- <div class="nav-wrap">
-  <div class="nav active" data-page="dashboard"><span class="ico">▦</span> Tổng quan</div>
-  <div class="nav" data-page="analysis"><span class="ico">◫</span> Phân tích chi tiêu</div>
-  <div class="nav" data-page="assistant"><span class="ico">✧</span> AI Assistant</div>
-  <div class="nav" data-page="whatif"><span class="ico">⌁</span> What-If Simulator</div>
-  <div class="nav" data-page="transactions"><span class="ico">⇄</span> Giao dịch</div>
- </div>
- <div class="side-bottom"><strong>✦ FinPilot AI</strong>Trợ lý tài chính cá nhân<br>AI gợi ý · Bạn quyết định</div>
-</aside>
-<main class="main">
-<header class="top"><div><div class="eyebrow">PERSONAL FINANCE OVERVIEW</div><h1 id="page-title">Tổng quan tài chính</h1></div><div class="top-right"><select id="user-select" class="select"><option value="U010">Demo user · U010</option><option value="U001">Demo user · U001</option><option value="U002">Demo user · U002</option><option value="U003">Demo user · U003</option></select><div class="avatar">FP</div></div></header>
+    <div class="app">
+        <aside class="side">
+            <div class="brand"><span class="logo">✦</span>FinPilot</div>
+            <div class="navs">
+                <div class="nav active" data-page="dashboard">▦ Tổng quan</div>
+                <div class="nav" data-page="transactions">⇄ Giao dịch</div>
+                <div class="nav" data-page="assistant">✧ AI Assistant</div>
+                <div class="nav" data-page="whatif">⌁ What-If</div>
+            </div>
+            <div class="sidefoot"><b>FinPilot AI</b><br>AI gợi ý · Bạn quyết định</div>
+        </aside>
 
-<section class="page active" id="page-dashboard">
- <div class="welcome"><div><h2>Xin chào! 👋</h2><p>Đây là bức tranh tài chính của bạn trong tháng 11/2026.</p></div><span class="badge" id="health-badge">● Đang tải dữ liệu</span></div>
- <div class="grid">
-  <div class="card"><div class="metric-head">Ngân sách tháng <span class="metric-icon">◈</span></div><div class="metric-value" id="budget">—</div><div class="metric-foot">Ngân sách đã thiết lập</div></div>
-  <div class="card"><div class="metric-head">Tổng đã chi <span class="metric-icon">↗</span></div><div class="metric-value" id="spent">—</div><div class="metric-foot" id="spent-foot">Đang tải dữ liệu giao dịch</div></div>
-  <div class="card"><div class="metric-head">Dự báo cuối tháng <span class="metric-icon">⌁</span></div><div class="metric-value" id="forecast">—</div><div class="metric-foot" id="forecast-foot">Dựa trên engine dự báo</div></div>
-  <div class="card"><div class="metric-head">Safe-to-Spend / ngày <span class="metric-icon">◎</span></div><div class="metric-value" id="safe">—</div><div class="metric-foot">Ngân sách còn lại chia ngày còn lại</div></div>
- </div>
- <div class="section-grid">
-  <div class="card"><div class="card-title"><div><h3>Dự báo dòng tiền</h3><div class="sub">So sánh ngân sách và các mức dự báo</div></div><span class="pill">P50 / P85</span></div><div class="chart-area"><svg id="forecast-chart" viewBox="0 0 640 220" preserveAspectRatio="none"></svg></div><div class="legend"><span><i class="dot" style="background:#7258e8"></i>Ngân sách</span><span><i class="dot" style="background:#16a579"></i>P50</span><span><i class="dot" style="background:#e5a33b"></i>P85</span></div></div>
-  <div class="card"><div class="card-title"><h3>Tình hình ngân sách</h3><span class="sub" id="days-left">—</span></div><div class="forecast-summary"><div class="ring" id="budget-ring"><div class="ring-inner"><strong id="usage-pct">—</strong><span>đã sử dụng</span></div></div><div class="forecast-text"><strong id="budget-status">Đang phân tích</strong><p id="budget-note">Tỷ lệ chi tiêu trên ngân sách.</p></div></div><div class="forecast-lines"><div><div class="fline"><span>Dự báo P50</span><b id="p50">—</b></div><div class="bar"><i id="p50-bar"></i></div></div><div><div class="fline"><span>Dự báo P85</span><b id="p85">—</b></div><div class="bar"><i id="p85-bar" style="background:#e5a33b"></i></div></div></div></div>
- </div>
- <div class="bottom-grid">
-  <div class="card"><div class="card-title"><h3>Chi tiêu theo danh mục</h3><span class="sub">Dữ liệu thực từ engine</span></div><div class="category-list" id="category-list"><div class="empty">Đang tải...</div></div></div>
-  <div class="card"><div class="card-title"><h3>Gợi ý tối ưu chi tiêu</h3><span class="pill">AI Coaching</span></div><div id="recommendations"><div class="empty">Đang phân tích...</div></div><div class="actions"><button class="btn btn-primary" onclick="goPage('assistant')">Trao đổi với AI ↗</button><button class="btn btn-light" onclick="goPage('whatif')">Thử What-If</button></div></div>
- </div>
-</section>
+        <main class="main">
+            <header class="top">
+                <div>
+                    <div class="eyebrow">PERSONAL FINANCE</div>
+                    <h1 id="page-title">Tổng quan tài chính</h1>
+                </div>
+                <select id="user-select" class="select">
+                    <option value="U010">Demo · U010</option>
+                    <option value="U001">Demo · U001</option>
+                    <option value="U002">Demo · U002</option>
+                    <option value="U003">Demo · U003</option>
+                    <option value="NEW">＋ Tạo user mới</option>
+                </select>
+            </header>
 
-<section class="page" id="page-analysis">
- <div class="welcome"><div><h2>Phân tích chi tiêu</h2><p>Phân tách chi tiêu thiết yếu và linh hoạt từ dữ liệu giao dịch.</p></div><span class="badge">Engine analytics</span></div>
- <div class="grid">
-  <div class="card"><div class="metric-head">Chi tiêu thiết yếu</div><div class="metric-value" id="essential">—</div><div class="metric-foot">Nhà ở, y tế và khoản bảo vệ</div></div>
-  <div class="card"><div class="metric-head">Chi tiêu linh hoạt</div><div class="metric-value" id="flexible">—</div><div class="metric-foot">Các danh mục có thể cân nhắc</div></div>
-  <div class="card"><div class="metric-head">Độ đầy đủ dữ liệu</div><div class="metric-value" id="completeness">—</div><div class="metric-foot">Tín hiệu chất lượng dữ liệu</div></div>
-  <div class="card"><div class="metric-head">Ngày từ giao dịch gần nhất</div><div class="metric-value" id="last-tx">—</div><div class="metric-foot">Dùng để đánh giá độ tin cậy</div></div>
- </div>
- <div class="card" style="margin-top:16px"><div class="card-title"><h3>Cơ cấu chi tiêu</h3><span class="sub">Theo danh mục từ snapshot</span></div><div class="category-list" id="category-list-2"></div></div>
-</section>
+            <!-- DASHBOARD -->
+            <section class="page active" id="page-dashboard">
+                <div class="welcome">
+                    <div>
+                        <h2>Xin chào! 👋</h2>
+                        <p id="dash-sub">Đang tải dữ liệu…</p>
+                    </div>
+                    <span class="badge" id="health">Đang tải</span>
+                </div>
 
-<section class="page" id="page-assistant">
- <div class="welcome"><div><h2>FinPilot AI Assistant</h2><p>Hỏi về dòng tiền, ngân sách và phương án điều chỉnh chi tiêu.</p></div><span class="badge">● Sẵn sàng hỗ trợ</span></div>
- <div class="chat-layout">
-  <div class="card chatbox"><div class="chat-head"><div class="bot-avatar">✧</div><div><strong>FinPilot Coach</strong><small>Trợ lý diễn giải kết quả engine tài chính</small></div></div><div class="messages" id="messages"><div class="msg bot">Xin chào! Mình là FinPilot. Mình có thể giúp bạn kiểm tra nguy cơ vượt ngân sách, dự báo Safe-to-Spend và mô phỏng cắt giảm chi tiêu. Bạn muốn bắt đầu từ đâu?</div></div><form class="chat-form" id="chat-form"><input id="chat-input" autocomplete="off" placeholder="Ví dụ: Dự báo cuối tháng mình còn bao nhiêu?"><button class="btn btn-primary" id="send-btn">Gửi ↗</button></form><div class="trace" id="trace"></div></div>
-  <div class="card chat-side"><div class="card-title"><h3>Câu hỏi gợi ý</h3></div><div class="quick"><button data-prompt="U010 tháng 2026-11, dự báo cuối tháng mình còn bao nhiêu?">📊 Dự báo cuối tháng</button><button data-prompt="Mình nên cắt giảm khoản nào để không vượt ngân sách?">✂️ Gợi ý cắt giảm</button><button data-prompt="Nếu giảm 30% chi tiêu ăn uống thì tình hình sẽ thế nào?">⌁ What-If ăn uống -30%</button><button data-prompt="Mình có 2 ngày tiêu tiền mặt chưa ghi, dự báo có đáng tin không?">◉ Kiểm tra độ tin cậy</button><button data-prompt="TC01">🧪 Chạy ca demo TC01</button></div><div class="notice">AI chỉ diễn giải số liệu do engine tính toán. Không tự thực hiện giao dịch hoặc thay đổi ngân sách thật.</div></div>
- </div>
-</section>
+                <div class="grid">
+                    <div class="card">
+                        <div class="muted">Ngân sách tháng</div>
+                        <div class="metric" id="budget">—</div>
+                        <div class="foot">Ngân sách đã thiết lập</div>
+                    </div>
+                    <div class="card">
+                        <div class="muted">Tổng đã chi</div>
+                        <div class="metric" id="spent">—</div>
+                        <div class="foot" id="spent-foot">—</div>
+                    </div>
+                    <div class="card">
+                        <div class="muted">Dự báo cuối tháng</div>
+                        <div class="metric" id="forecast">—</div>
+                        <div class="foot" id="forecast-foot">—</div>
+                    </div>
+                    <div class="card">
+                        <div class="muted">Safe-to-Spend/ngày</div>
+                        <div class="metric" id="safe">—</div>
+                        <div class="foot">Ngân sách còn lại/ngày</div>
+                    </div>
+                </div>
 
-<section class="page" id="page-whatif">
- <div class="welcome"><div><h2>What-If Simulator</h2><p>Thử điều chỉnh các khoản chi linh hoạt và xem tác động đến dòng tiền.</p></div><span class="badge">Mô phỏng · Không tác động thật</span></div>
- <div class="sim-grid"><div class="card"><div class="card-title"><h3>Điều chỉnh chi tiêu</h3><span class="sub">Kịch bản mô phỏng</span></div>
-  <div class="slider-row"><div class="slider-top"><span>🍜 Ăn uống</span><strong id="food-val">30%</strong></div><input id="food-range" type="range" min="0" max="100" value="30" step="5"><div class="range-hint"><span>Không giảm</span><span>Giảm toàn bộ</span></div></div>
-  <div class="slider-row"><div class="slider-top"><span>🛍️ Mua sắm</span><strong id="shopping-val">20%</strong></div><input id="shopping-range" type="range" min="0" max="100" value="20" step="5"><div class="range-hint"><span>Không giảm</span><span>Giảm toàn bộ</span></div></div>
-  <div class="slider-row"><div class="slider-top"><span>🎬 Giải trí</span><strong id="entertainment-val">50%</strong></div><input id="entertainment-range" type="range" min="0" max="100" value="50" step="5"><div class="range-hint"><span>Không giảm</span><span>Giảm toàn bộ</span></div></div>
-  <div class="notice">Các khoản thiết yếu như nhà ở, y tế và trả góp không được đưa vào danh sách cắt giảm.</div>
-  <div class="actions"><button class="btn btn-primary" id="run-sim">Chạy mô phỏng với AI ↗</button><button class="btn btn-outline" id="reset-sim">Đặt lại</button></div>
- </div>
- <div class="card"><div class="card-title"><h3>Kết quả mô phỏng</h3><span class="pill">What-If</span></div><div class="result-box"><span>Phản hồi từ engine / AI</span><strong id="sim-result">Chưa chạy</strong><div class="sub" id="sim-desc">Điều chỉnh thanh trượt và chạy mô phỏng để xem kết quả.</div></div><div id="sim-reply" class="empty">Kết quả sẽ hiển thị tại đây sau khi gửi yêu cầu đến backend.</div></div></div>
-</section>
+                <div class="row2">
+                    <div class="card">
+                        <div class="head">
+                            <h3>Tình hình ngân sách</h3>
+                            <span class="sub" id="days">—</span>
+                        </div>
+                        <div class="line"><span>Trạng thái</span><b id="status">—</b></div>
+                        <div class="line"><span>Dự báo P50</span><b id="p50">—</b></div>
+                        <div class="bar"><i id="p50bar"></i></div>
+                        <div class="line"><span>Dự báo P85</span><b id="p85">—</b></div>
+                        <div class="bar"><i id="p85bar" style="background:#e4a13b"></i></div>
+                        <div class="sub" id="budget-note"></div>
+                    </div>
 
-<section class="page" id="page-transactions">
- <div class="welcome"><div><h2>Dữ liệu & ca kiểm thử</h2><p>Chọn người dùng demo hoặc gửi mã tình huống để kiểm tra engine.</p></div><span class="badge">Synthetic dataset</span></div>
- <div class="card"><div class="card-title"><h3>Chạy nhanh demo case</h3><span class="sub">Theo data/demo</span></div><div class="actions"><button class="btn btn-light" onclick="sendPreset('TC01')">TC01 · Dưới ngân sách</button><button class="btn btn-light" onclick="sendPreset('TC02')">TC02 · Nguy cơ vượt</button><button class="btn btn-light" onclick="sendPreset('TC03')">TC03 · Thiếu dữ liệu</button><button class="btn btn-light" onclick="sendPreset('TC04')">TC04 · Cold start</button></div><div class="notice">Mã ca hợp lệ phụ thuộc vào các case thực tế có trong data/demo/demo_cases.json và edge_cases.json.</div></div>
- <div class="card" style="margin-top:16px"><div class="card-title"><h3>Thông tin snapshot hiện tại</h3></div><table class="table"><tbody><tr><th>Người dùng</th><td id="tx-user">U010</td></tr><tr><th>Tháng dữ liệu</th><td>2026-11</td></tr><tr><th>Ngày snapshot</th><td>2026-11-20</td></tr><tr><th>Nguồn</th><td id="tx-source">—</td></tr><tr><th>Trạng thái engine</th><td id="tx-status">—</td></tr></tbody></table></div>
-</section>
-</main>
-</div><div class="toast" id="toast"></div>
-<script>
-const $=id=>document.getElementById(id);
-let currentData=null;
-const money=n=>n==null?'Chưa xác định':new Intl.NumberFormat('vi-VN').format(Math.round(n))+' ₫';
-const pct=n=>Math.round((Number(n)||0)*100)+'%';
-function toast(s){const t=$('toast');t.textContent=s;t.style.display='block';setTimeout(()=>t.style.display='none',2600)}
-function goPage(name){document.querySelectorAll('.page').forEach(x=>x.classList.remove('active'));$('page-'+name).classList.add('active');document.querySelectorAll('.nav').forEach(x=>x.classList.toggle('active',x.dataset.page===name));const titles={dashboard:'Tổng quan tài chính',analysis:'Phân tích chi tiêu',assistant:'AI Financial Assistant',whatif:'What-If Simulator',transactions:'Dữ liệu & giao dịch'};$('page-title').textContent=titles[name]}
-document.querySelectorAll('.nav').forEach(n=>n.addEventListener('click',()=>goPage(n.dataset.page)));
-function drawChart(f){const svg=$('forecast-chart');const vals=[f.budget_amount,f.forecast_p50,f.forecast_p85].filter(x=>x!=null);if(!vals.length){svg.innerHTML='<text x="20" y="90" fill="#8a91a0">Chưa đủ dữ liệu để vẽ dự báo</text>';return}const max=Math.max(...vals)*1.18||1;const y=v=>188-(v/max)*155;const items=[['Ngân sách',f.budget_amount,'#7258e8'],['P50',f.forecast_p50,'#16a579'],['P85',f.forecast_p85,'#e5a33b']];let out='';[0,.25,.5,.75,1].forEach(k=>{let yy=188-k*155;out+=`<line x1="48" y1="${yy}" x2="620" y2="${yy}" stroke="#edf0f5" stroke-dasharray="3 4"/><text x="3" y="${yy+4}" fill="#929aaa" font-size="10">${(max*k/1000000).toFixed(1)}tr</text>`});items.forEach((it,i)=>{if(it[1]==null)return;let xx=120+i*185, yy=y(it[1]);out+=`<rect x="${xx}" y="${yy}" width="74" height="${188-yy}" rx="7" fill="${it[2]}" opacity=".85"/><text x="${xx+37}" y="${Math.max(yy-9,12)}" text-anchor="middle" fill="#4c5668" font-size="10">${(it[1]/1000000).toFixed(2)}tr</text><text x="${xx+37}" y="207" text-anchor="middle" fill="#7b8494" font-size="11">${it[0]}</text>`});svg.innerHTML=out}
-function renderCats(target,data){const entries=Object.entries(data||{}).sort((a,b)=>b[1]-a[1]);const total=entries.reduce((s,x)=>s+x[1],0)||1;const names={food:'Ăn uống',shopping:'Mua sắm',entertainment:'Giải trí',transport:'Đi lại',travel:'Du lịch',housing:'Nhà ở',health:'Y tế',other:'Khác'};$(target).innerHTML=entries.length?entries.map(([k,v])=>`<div class="cat-row"><span class="cat-name">${names[k]||k}</span><span class="cat-amount">${money(v)}</span><div class="cat-track"><i style="width:${Math.max(2,v/total*100)}%"></i></div></div>`).join(''):'<div class="empty">Không có dữ liệu danh mục.</div>'}
-function renderRecommendations(opt){const el=$('recommendations');const recs=opt?.recommendations||[];el.innerHTML=recs.length?recs.slice(0,3).map(r=>`<div class="recommend"><div class="rec-icon">✂</div><div><strong>${r.category_vi||r.category||'Khoản linh hoạt'}</strong><p>Đề xuất giảm ${money(r.saving_amount)}</p></div></div>`).join(''):'<div class="empty">Chưa có đề xuất cắt giảm hoặc chưa đủ dữ liệu để tối ưu.</div>'}
-function renderOverview(data){currentData=data;const f=data.forecast||{};const over=f.status==='forecast_over'||f.status==='actual_over';$('budget').textContent=money(f.budget_amount);$('spent').textContent=money(f.spent);$('forecast').textContent=money(f.forecast);$('safe').textContent=money(f.safe_to_spend_daily);$('spent-foot').textContent=`Thiết yếu ${money(f.essential_spent)} · Linh hoạt ${money(f.flexible_spent)}`;$('forecast-foot').textContent=f.forecast==null?'Chưa đủ dữ liệu dự báo':`P50 ${money(f.forecast_p50)} · P85 ${money(f.forecast_p85)}`;$('health-badge').textContent=over?'● Có nguy cơ vượt ngân sách':'● Đang theo dõi ngân sách';$('health-badge').style.background=over?'#fff0ef':'#e9f8f2';$('health-badge').style.color=over?'#c34b54':'#16805f';$('days-left').textContent=`Còn ${f.days_left??'—'} ngày`;$('usage-pct').textContent=f.budget_amount?Math.round(f.spent/f.budget_amount*100)+'%':'—';const ratio=f.budget_amount?Math.min(100,f.spent/f.budget_amount*100):0;$('budget-ring').style.background=`conic-gradient(${over?'#e35c69':'#7258e8'} 0 ${ratio}%,#eeeaff ${ratio}% 100%)`;$('budget-status').textContent=({safe:'Trong ngưỡng ngân sách',forecast_over:'Có nguy cơ vượt ngân sách',actual_over:'Đã vượt ngân sách',insufficient_data:'Chưa đủ dữ liệu'})[f.status]||f.status||'Chưa xác định';$('budget-note').textContent=`Đã chi ${money(f.spent)} trên ngân sách ${money(f.budget_amount)}.`;$('p50').textContent=money(f.forecast_p50);$('p85').textContent=money(f.forecast_p85);$('p50-bar').style.width=(f.budget_amount?Math.min(100,(f.forecast_p50||0)/f.budget_amount*100):0)+'%';$('p85-bar').style.width=(f.budget_amount?Math.min(100,(f.forecast_p85||0)/f.budget_amount*100):0)+'%';renderCats('category-list',f.flexible_by_category);renderCats('category-list-2',{...(f.essential_by_category||{}),...(f.flexible_by_category||{})});renderRecommendations(data.optimization);$('essential').textContent=money(f.essential_spent);$('flexible').textContent=money(f.flexible_spent);$('completeness').textContent=pct(f.data_completeness_score);$('last-tx').textContent=(f.days_since_last_tx??'—')+' ngày';$('tx-user').textContent=data.user_id;$('tx-source').textContent=f.source||'—';$('tx-status').innerHTML=`<span class="status ${over?'warn':''}">${f.status||'unknown'}</span>`;drawChart(f)}
-async function loadOverview(){try{const user=$('user-select').value;const r=await fetch(`/api/overview?user_id=${encodeURIComponent(user)}&month=2026-11`);const d=await r.json();if(!r.ok)throw Error(d.error||'Không tải được dữ liệu');renderOverview(d)}catch(e){toast('Lỗi tải dashboard: '+e.message);$('health-badge').textContent='● API chưa sẵn sàng'}}
-$('user-select').addEventListener('change',loadOverview);
-function addMsg(text,who){const d=document.createElement('div');d.className='msg '+who;d.textContent=text;$('messages').appendChild(d);$('messages').scrollTop=$('messages').scrollHeight;return d}
-async function sendChat(message){if(!message.trim())return;addMsg(message,'user');$('chat-input').value='';const pending=addMsg('FinPilot đang phân tích dữ liệu…','bot');$('send-btn').disabled=true;try{const r=await fetch('/api/chat',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({message})});const d=await r.json();if(!r.ok)throw Error(d.error||'Lỗi máy chủ');pending.textContent=d.reply||'Không có nội dung phản hồi.';const t=d.trace||{};$('trace').textContent=`Trace · Model: ${(t.models||[]).join(', ')||'—'} · Model calls: ${t.model_calls||0} · Tool calls: ${t.tool_calls||0} · Tokens: ${t.tokens_in||0} in / ${t.tokens_out||0} out`;loadOverview()}catch(e){pending.textContent='Không thể xử lý yêu cầu: '+e.message}finally{$('send-btn').disabled=false}}
-$('chat-form').addEventListener('submit',e=>{e.preventDefault();sendChat($('chat-input').value)});
-document.querySelectorAll('[data-prompt]').forEach(b=>b.addEventListener('click',()=>sendChat(b.dataset.prompt)));
-function sendPreset(code){goPage('assistant');sendChat(code)}
-['food','shopping','entertainment'].forEach(k=>$(k+'-range').addEventListener('input',e=>$(k+'-val').textContent=e.target.value+'%'));
-$('reset-sim').addEventListener('click',()=>{['food','shopping','entertainment'].forEach(k=>{$(k+'-range').value=k==='food'?30:k==='shopping'?20:50;$(k+'-val').textContent=$(k+'-range').value+'%' });$('sim-result').textContent='Chưa chạy';$('sim-desc').textContent='Điều chỉnh thanh trượt và chạy mô phỏng để xem kết quả.';$('sim-reply').textContent='Kết quả sẽ hiển thị tại đây sau khi gửi yêu cầu đến backend.'});
-$('run-sim').addEventListener('click',async()=>{const adjustments={food:Number($('food-range').value)/100,shopping:Number($('shopping-range').value)/100,entertainment:Number($('entertainment-range').value)/100};$('sim-result').textContent='Đang tính toán…';$('sim-desc').textContent='Đang gọi What-If Simulation Engine';$('sim-reply').textContent='';try{const r=await fetch('/api/whatif',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({user_id:$('user-select').value,adjustments})});const d=await r.json();if(!r.ok)throw Error(d.error||'Lỗi mô phỏng');const x=d.simulation;if(x.error)throw Error(x.error);$('sim-result').textContent=money(x.new_forecast);$('sim-desc').textContent=`Dự báo mới · P50 ${money(x.new_forecast_p50)} · P85 ${money(x.new_forecast_p85)}`;$('sim-reply').innerHTML=`<div class="fline"><span>Tổng tiết kiệm dự kiến</span><b>${money(x.total_saving)}</b></div><div class="fline" style="margin-top:9px"><span>Gap còn lại</span><b>${money(x.new_gap)}</b></div><div class="fline" style="margin-top:9px"><span>Safe-to-Spend mới/ngày</span><b>${money(x.new_safe_to_spend_daily)}</b></div><div class="notice">Trạng thái: ${x.new_status==='safe'?'Trong ngưỡng ngân sách':'Cần tiếp tục theo dõi'}. Đây là mô phỏng, không thay đổi dữ liệu giao dịch.</div>`}catch(err){$('sim-result').textContent='Không thể mô phỏng';$('sim-desc').textContent=err.message}});
-fetch('/api/health').then(r=>r.json()).then(()=>loadOverview()).catch(()=>toast('Không kết nối được API. Hãy chạy python run.py'));
-</script>
-</body></html>
+                    <div class="card">
+                        <div class="head">
+                            <h3>Gợi ý tối ưu chi tiêu</h3>
+                            <span class="tag">AI Coaching</span>
+                        </div>
+                        <div id="recommendations" class="sub">Đang phân tích…</div>
+                        <div class="actions">
+                            <button class="btn primary" onclick="go('assistant')">Hỏi AI</button>
+                            <button class="btn light" onclick="go('whatif')">Thử What-If</button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <div class="head">
+                        <h3>Chi tiêu theo danh mục</h3>
+                        <span class="sub">Từ engine tài chính</span>
+                    </div>
+                    <div class="cats" id="cats"></div>
+                </div>
+            </section>
+
+            <!-- TRANSACTIONS -->
+            <section class="page" id="page-transactions">
+                <div class="welcome">
+                    <div>
+                        <h2>Giao dịch của tôi</h2>
+                        <p>Thêm các khoản đã chi để cập nhật dữ liệu phân tích.</p>
+                    </div>
+                    <span class="badge">Quản lý chi tiêu</span>
+                </div>
+
+                <div class="row2">
+                    <div class="card">
+                        <div class="head">
+                            <h3>Thêm khoản chi mới</h3>
+                            <span class="tag">＋ New</span>
+                        </div>
+
+                        <form id="tx-form">
+                            <div class="field">
+                                <label for="tx-description">Tên khoản chi</label>
+                                <input id="tx-description" maxlength="100" required
+                                    placeholder="Ví dụ: Ăn trưa, tiền xăng, mua sách">
+                            </div>
+
+                            <div class="formgrid">
+                                <div class="field">
+                                    <label for="tx-amount">Số tiền (VNĐ)</label>
+                                    <input id="tx-amount" type="number" min="1" step="1" required placeholder="150000">
+                                </div>
+
+                                <div class="field">
+                                    <label for="tx-date">Ngày chi</label>
+                                    <input id="tx-date" type="date" required>
+                                </div>
+
+                                <div class="field">
+                                    <label for="tx-category">Danh mục</label>
+                                    <select id="tx-category">
+                                        <option value="food">🍜 Ăn uống</option>
+                                        <option value="shopping">🛍️ Mua sắm</option>
+                                        <option value="entertainment">🎬 Giải trí</option>
+                                        <option value="transport">🚌 Đi lại</option>
+                                        <option value="travel">✈️ Du lịch</option>
+                                        <option value="housing">🏠 Nhà ở</option>
+                                        <option value="health">🏥 Y tế</option>
+                                        <option value="other">📦 Khác</option>
+                                    </select>
+                                </div>
+
+                                <div class="field">
+                                    <label for="tx-essential">Tính chất khoản chi</label>
+                                    <select id="tx-essential">
+                                        <option value="false">Chi tiêu linh hoạt</option>
+                                        <option value="true">Chi tiêu thiết yếu</option>
+                                    </select>
+                                </div>
+                            </div>
+
+                            <div class="notice">
+                                Danh mục được đánh dấu cần bảo vệ trong hồ sơ cũng được engine xem là thiết yếu.
+                            </div>
+
+                            <div class="actions">
+                                <button class="btn primary" id="save-tx" type="submit">
+                                    ＋ Thêm giao dịch
+                                </button>
+                                <button class="btn outline" type="reset">Xóa nội dung</button>
+                            </div>
+                        </form>
+                    </div>
+
+                    <div class="card">
+                        <div class="head">
+                            <h3>Tóm tắt tháng này</h3>
+                            <span class="tag" id="tx-count">0 giao dịch</span>
+                        </div>
+                        <div class="metric" id="tx-total">0 ₫</div>
+                        <div class="foot">Tổng các khoản đã ghi nhận</div>
+                        <div class="line">
+                            <span>Thiết yếu</span>
+                            <b id="tx-essential-total">0 ₫</b>
+                        </div>
+                        <div class="line">
+                            <span>Linh hoạt</span>
+                            <b id="tx-flex-total">0 ₫</b>
+                        </div>
+                        <div class="notice" id="tx-month">Tháng hiện tại</div>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <div class="head">
+                        <h3>Lịch sử giao dịch</h3>
+                        <button class="btn outline" type="button" id="refresh-tx">↻ Làm mới</button>
+                    </div>
+                    <div class="tablewrap">
+                        <table class="table">
+                            <thead>
+                                <tr>
+                                    <th>Ngày</th>
+                                    <th>Nội dung</th>
+                                    <th>Danh mục</th>
+                                    <th>Phân loại</th>
+                                    <th class="right">Số tiền</th>
+                                </tr>
+                            </thead>
+                            <tbody id="tx-body">
+                                <tr>
+                                    <td colspan="5">Đang tải…</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <h3>Ca kiểm thử engine</h3>
+                    <div class="actions">
+                        <button class="btn light" onclick="preset('TC01')">TC01 · Dưới ngân sách</button>
+                        <button class="btn light" onclick="preset('TC02')">TC02 · Nguy cơ vượt</button>
+                        <button class="btn light" onclick="preset('TC03')">TC03 · Thiếu dữ liệu</button>
+                    </div>
+                </div>
+            </section>
+
+            <!-- AI ASSISTANT -->
+            <section class="page" id="page-assistant">
+                <div class="welcome">
+                    <div>
+                        <h2>FinPilot AI Assistant</h2>
+                        <p>Hỏi về dòng tiền, ngân sách và chi tiêu.</p>
+                    </div>
+                    <span class="badge">AI Coach</span>
+                </div>
+
+                <div class="card chat">
+                    <b>✧ FinPilot Coach</b>
+                    <div class="messages" id="messages">
+                        <div class="msg bot">
+                            Xin chào! Mình có thể giúp bạn kiểm tra ngân sách, dự báo và gợi ý tiết kiệm.
+                        </div>
+                    </div>
+                    <form class="chatform" id="chat-form">
+                        <input id="chat-input" placeholder="Nhập câu hỏi…">
+                        <button class="btn primary" id="send">Gửi</button>
+                    </form>
+                    <div class="foot" id="trace"></div>
+                </div>
+
+                <div class="card">
+                    <b>Câu hỏi gợi ý</b>
+                    <div class="actions">
+                        <button class="btn light" data-prompt="Dự báo cuối tháng mình còn bao nhiêu?">
+                            Dự báo cuối tháng
+                        </button>
+                        <button class="btn light" data-prompt="Mình nên cắt giảm khoản nào?">
+                            Gợi ý cắt giảm
+                        </button>
+                    </div>
+                </div>
+            </section>
+
+            <!-- WHAT IF -->
+            <section class="page" id="page-whatif">
+                <div class="welcome">
+                    <div>
+                        <h2>What-If Simulator</h2>
+                        <p>Mô phỏng điều chỉnh các khoản chi linh hoạt.</p>
+                    </div>
+                    <span class="badge">Không thay đổi giao dịch thật</span>
+                </div>
+
+                <div class="row2">
+                    <div class="card">
+                        <div class="slider">
+                            <div class="sliderhead"><span>🍜 Ăn uống</span><b id="food-val">30%</b></div>
+                            <input id="food" type="range" min="0" max="100" value="30" step="5">
+                        </div>
+                        <div class="slider">
+                            <div class="sliderhead"><span>🛍️ Mua sắm</span><b id="shopping-val">20%</b></div>
+                            <input id="shopping" type="range" min="0" max="100" value="20" step="5">
+                        </div>
+                        <div class="slider">
+                            <div class="sliderhead"><span>🎬 Giải trí</span><b id="entertainment-val">50%</b></div>
+                            <input id="entertainment" type="range" min="0" max="100" value="50" step="5">
+                        </div>
+                        <div class="actions">
+                            <button class="btn primary" id="run-sim">Chạy mô phỏng</button>
+                            <button class="btn outline" id="reset-sim">Đặt lại</button>
+                        </div>
+                    </div>
+
+                    <div class="card">
+                        <h3>Kết quả mô phỏng</h3>
+                        <div class="result" id="sim-result">Chưa chạy</div>
+                        <div class="sub" id="sim-desc">Kết quả sẽ hiển thị tại đây.</div>
+                        <div id="sim-reply"></div>
+                    </div>
+                </div>
+            </section>
+        </main>
+    </div>
+
+    <!-- ONBOARDING -->
+    <div class="modal" id="onboard">
+        <div class="modalbox">
+            <div class="eyebrow">FINPILOT · NEW USER</div>
+            <h2>Bắt đầu quản lý tài chính</h2>
+            <p class="sub">Thiết lập thông tin cơ bản. Bạn có thể thêm giao dịch sau khi tạo hồ sơ.</p>
+
+            <form id="onboard-form">
+                <div class="field">
+                    <label for="new-name">Tên hiển thị</label>
+                    <input id="new-name" required placeholder="Minh Anh">
+                </div>
+
+                <div class="formgrid">
+                    <div class="field">
+                        <label for="new-income">Thu nhập hàng tháng (VNĐ)</label>
+                        <input id="new-income" type="number" min="1" step="1" required>
+                    </div>
+                    <div class="field">
+                        <label for="new-budget">Ngân sách tháng (VNĐ)</label>
+                        <input id="new-budget" type="number" min="1" step="1" required>
+                    </div>
+                    <div class="field">
+                        <label for="new-balance">Số dư hiện tại (VNĐ)</label>
+                        <input id="new-balance" type="number" min="0" step="1" value="0">
+                    </div>
+                </div>
+
+                <div class="field">
+                    <label>Khoản chi tiêu cần bảo vệ</label>
+                    <div class="checkgrid">
+                        <label class="checkitem"><input type="checkbox" name="protected-category" value="housing"
+                                checked>🏠 Nhà ở</label>
+                        <label class="checkitem"><input type="checkbox" name="protected-category" value="health"
+                                checked>🏥 Y tế</label>
+                        <label class="checkitem"><input type="checkbox" name="protected-category" value="food">🍜 Ăn
+                            uống</label>
+                        <label class="checkitem"><input type="checkbox" name="protected-category" value="transport">🚌
+                            Đi lại</label>
+                        <label class="checkitem"><input type="checkbox" name="protected-category" value="shopping">🛍️
+                            Mua sắm</label>
+                        <label class="checkitem"><input type="checkbox" name="protected-category"
+                                value="entertainment">🎬 Giải trí</label>
+                        <label class="checkitem"><input type="checkbox" name="protected-category" value="travel">✈️ Du
+                            lịch</label>
+                        <label class="checkitem"><input type="checkbox" name="protected-category" value="other">📦
+                            Khác</label>
+                    </div>
+                </div>
+
+                <div class="notice">
+                    Khi chưa đủ lịch sử giao dịch, hệ thống không tự tạo dự báo thiếu căn cứ.
+                </div>
+
+                <div class="actions">
+                    <button type="button" class="btn outline" id="cancel-onboard">Hủy</button>
+                    <button class="btn primary" id="create-profile">Tạo hồ sơ</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <div class="toast" id="toast"></div>
+
+    <script>
+        const $ = id => document.getElementById(id);
+        let currentData = null;
+
+        const names = {
+            food: 'Ăn uống',
+            shopping: 'Mua sắm',
+            entertainment: 'Giải trí',
+            transport: 'Đi lại',
+            travel: 'Du lịch',
+            housing: 'Nhà ở',
+            health: 'Y tế',
+            other: 'Khác'
+        };
+
+        const money = n => n == null
+            ? 'Chưa đủ dữ liệu'
+            : new Intl.NumberFormat('vi-VN').format(Math.round(Number(n))) + ' ₫';
+
+        function today() {
+            const d = new Date();
+            return `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, '0')}-${String(d.getDate()).padStart(2, '0')}`;
+        }
+
+        function toast(s) {
+            $('toast').textContent = s;
+            $('toast').style.display = 'block';
+            setTimeout(() => $('toast').style.display = 'none', 2600);
+        }
+
+        function esc(s) {
+            return String(s ?? '').replace(/[&<>"']/g, c => ({
+                '&': '&amp;',
+                '<': '&lt;',
+                '>': '&gt;',
+                '"': '&quot;',
+                "'": '&#39;'
+            }[c]));
+        }
+
+        function go(p) {
+            document.querySelectorAll('.page').forEach(x => x.classList.remove('active'));
+            $('page-' + p).classList.add('active');
+
+            document.querySelectorAll('.nav').forEach(x =>
+                x.classList.toggle('active', x.dataset.page === p)
+            );
+
+            $('page-title').textContent = {
+                dashboard: 'Tổng quan tài chính',
+                transactions: 'Giao dịch của tôi',
+                assistant: 'AI Financial Assistant',
+                whatif: 'What-If Simulator'
+            }[p];
+
+            if (p === 'transactions') loadTx();
+        }
+
+        document.querySelectorAll('.nav').forEach(x => {
+            x.onclick = () => go(x.dataset.page);
+        });
+
+        function renderCats(data) {
+            const a = Object.entries(data || {})
+                .filter(x => x[1] > 0)
+                .sort((x, y) => y[1] - x[1]);
+
+            const sum = a.reduce((s, x) => s + x[1], 0) || 1;
+
+            $('cats').innerHTML = a.length
+                ? a.map(([k, v]) => `
+      <div class="cat">
+        <b>${names[k] || esc(k)}</b>
+        <span>${money(v)}</span>
+        <div class="track"><i style="width:${v / sum * 100}%"></i></div>
+      </div>
+    `).join('')
+                : '<div class="sub">Chưa có dữ liệu danh mục.</div>';
+        }
+
+        function render(d) {
+            currentData = d;
+            const f = d.forecast || {};
+            const over = ['actual_over', 'forecast_over'].includes(f.status);
+
+            $('dash-sub').textContent = f.is_new_user
+                ? `Hồ sơ mới · ${f.profile?.name || d.user_id}`
+                : `${d.user_id} · Tháng ${d.month || f.month}`;
+
+            $('budget').textContent = money(f.budget_amount);
+            $('spent').textContent = money(f.spent ?? 0);
+            $('forecast').textContent = money(f.forecast);
+            $('safe').textContent = money(f.safe_to_spend_daily);
+
+            $('spent-foot').textContent =
+                `Thiết yếu ${money(f.essential_spent)} · Linh hoạt ${money(f.flexible_spent)}`;
+
+            $('forecast-foot').textContent = f.forecast == null
+                ? 'Chưa đủ dữ liệu dự báo'
+                : `P50 ${money(f.forecast_p50)} · P85 ${money(f.forecast_p85)}`;
+
+            $('health').textContent = f.status === 'insufficient_data'
+                ? 'Chưa đủ dữ liệu'
+                : over ? 'Có nguy cơ vượt ngân sách' : 'Đang theo dõi ngân sách';
+
+            $('days').textContent = `Còn ${f.days_left ?? '—'} ngày`;
+
+            $('status').textContent = {
+                safe: 'Trong ngưỡng',
+                forecast_over: 'Nguy cơ vượt',
+                actual_over: 'Đã vượt',
+                insufficient_data: 'Chưa đủ dữ liệu'
+            }[f.status] || f.status || '—';
+
+            $('p50').textContent = money(f.forecast_p50);
+            $('p85').textContent = money(f.forecast_p85);
+
+            $('p50bar').style.width =
+                (f.budget_amount ? Math.min(100, (f.forecast_p50 || 0) / f.budget_amount * 100) : 0) + '%';
+
+            $('p85bar').style.width =
+                (f.budget_amount ? Math.min(100, (f.forecast_p85 || 0) / f.budget_amount * 100) : 0) + '%';
+
+            $('budget-note').textContent = f.is_new_user
+                ? `Thu nhập ${money(f.income_amount)} · Số dư ${money(f.current_balance)}`
+                : `Đã chi ${money(f.spent)} trên ${money(f.budget_amount)}`;
+
+            renderCats({
+                ...f.essential_by_category,
+                ...f.flexible_by_category
+            });
+
+            const rec = d.optimization?.recommendations || [];
+
+            $('recommendations').innerHTML = rec.length
+                ? rec.slice(0, 4).map(x => `
+      <div class="line">
+        <span>${esc(x.category_vi || names[x.category] || x.category)}</span>
+        <b>Giảm ${money(x.saving_amount)}</b>
+      </div>
+    `).join('')
+                : 'Chưa có đề xuất hoặc chưa đủ dữ liệu.';
+        }
+
+        async function loadOverview() {
+            try {
+                const user = $('user-select').value;
+                const r = await fetch(
+                    `/api/overview?user_id=${encodeURIComponent(user)}&month=${today().slice(0, 7)}`
+                );
+                const d = await r.json();
+                if (!r.ok) throw Error(d.error || 'Lỗi tải Dashboard');
+                render(d);
+            } catch (e) {
+                toast(e.message);
+            }
+        }
+
+        async function restoreUsers() {
+            const r = await fetch('/api/profiles');
+            const d = await r.json();
+
+            (d.profiles || []).forEach(p => {
+                if ([...$('user-select').options].some(o => o.value === p.user_id)) return;
+
+                const o = new Option(`${p.name} · ${p.user_id}`, p.user_id);
+                $('user-select').add(o, $('user-select').lastElementChild);
+            });
+        }
+
+        $('user-select').onchange = () => {
+            if ($('user-select').value === 'NEW') {
+                $('onboard').style.display = 'flex';
+                $('user-select').value = currentData?.user_id || 'U010';
+            } else {
+                loadOverview();
+                loadTx();
+            }
+        };
+
+        $('cancel-onboard').onclick = () => $('onboard').style.display = 'none';
+
+        $('onboard-form').onsubmit = async e => {
+            e.preventDefault();
+
+            const income = +$('new-income').value;
+            const budget = +$('new-budget').value;
+            const balance = +$('new-balance').value;
+
+            if (!Number.isSafeInteger(income) || income <= 0 ||
+                !Number.isSafeInteger(budget) || budget <= 0 ||
+                !Number.isSafeInteger(balance) || balance < 0) {
+                return toast('Vui lòng nhập số tiền nguyên hợp lệ.');
+            }
+
+            if (budget > income) {
+                return toast('Ngân sách không được lớn hơn thu nhập.');
+            }
+
+            const b = $('create-profile');
+            b.disabled = true;
+
+            try {
+                const payload = {
+                    name: $('new-name').value.trim(),
+                    monthly_income: income,
+                    monthly_budget: budget,
+                    current_balance: balance,
+                    protected_categories: [
+                        ...document.querySelectorAll('[name="protected-category"]:checked')
+                    ].map(x => x.value)
+                };
+
+                const r = await fetch('/api/onboarding', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(payload)
+                });
+
+                const d = await r.json();
+                if (!r.ok) throw Error(d.error || 'Không tạo được hồ sơ');
+
+                const o = new Option(`${d.profile.name} · ${d.user_id}`, d.user_id);
+                $('user-select').add(o, $('user-select').lastElementChild);
+                $('user-select').value = d.user_id;
+                $('onboard').style.display = 'none';
+                $('onboard-form').reset();
+
+                await loadOverview();
+                await loadTx();
+                toast('Đã tạo hồ sơ thành công');
+            } catch (e) {
+                toast(e.message);
+            } finally {
+                b.disabled = false;
+            }
+        };
+
+        /* =========================
+           QUẢN LÝ GIAO DỊCH
+        ========================= */
+
+        $('tx-date').value = today();
+        $('tx-date').max = today();
+
+        async function loadTx() {
+            const u = $('user-select').value;
+            if (!u || u === 'NEW') return;
+
+            try {
+                const r = await fetch(
+                    `/api/transactions?user_id=${encodeURIComponent(u)}&month=${today().slice(0, 7)}`
+                );
+
+                const d = await r.json();
+                if (!r.ok) throw Error(d.error || 'Không tải được giao dịch');
+
+                const rows = d.transactions || [];
+
+                const sum = rows.reduce((s, x) => s + (+x.amount || 0), 0);
+                const ess = rows
+                    .filter(x => x.is_essential)
+                    .reduce((s, x) => s + (+x.amount || 0), 0);
+
+                $('tx-count').textContent = rows.length + ' giao dịch';
+                $('tx-total').textContent = money(sum);
+                $('tx-essential-total').textContent = money(ess);
+                $('tx-flex-total').textContent = money(sum - ess);
+                $('tx-month').textContent = 'Tháng ' + today().slice(0, 7);
+
+                $('tx-body').innerHTML = rows.length
+                    ? [...rows]
+                        .sort((a, b) => b.transaction_date.localeCompare(a.transaction_date))
+                        .slice(0, 100)
+                        .map(x => `
+          <tr>
+            <td>${esc(x.transaction_date)}</td>
+            <td>
+              <b>${esc(x.description || 'Khoản chi')}</b>
+              <div class="small">${esc(x.transaction_id || '')}</div>
+            </td>
+            <td><span class="tag">${esc(names[x.category] || x.category)}</span></td>
+            <td>${x.is_essential ? 'Thiết yếu' : 'Linh hoạt'}</td>
+            <td class="right"><b>${money(x.amount)}</b></td>
+          </tr>
+        `).join('')
+                    : '<tr><td colspan="5" class="sub">Chưa có giao dịch. Hãy thêm khoản chi đầu tiên.</td></tr>';
+
+            } catch (e) {
+                $('tx-body').innerHTML = `<tr><td colspan="5">${esc(e.message)}</td></tr>`;
+                toast(e.message);
+            }
+        }
+
+        $('tx-form').onsubmit = async e => {
+            e.preventDefault();
+
+            const amount = +$('tx-amount').value;
+            const dt = $('tx-date').value;
+            const description = $('tx-description').value.trim();
+            const u = $('user-select').value;
+
+            if (!u || u === 'NEW') {
+                return toast('Chọn người dùng trước khi thêm giao dịch.');
+            }
+
+            if (!Number.isSafeInteger(amount) || amount <= 0) {
+                return toast('Số tiền phải là số nguyên lớn hơn 0.');
+            }
+
+            if (!dt || dt > today()) {
+                return toast('Ngày chi không được ở tương lai.');
+            }
+
+            const b = $('save-tx');
+            b.disabled = true;
+
+            try {
+                const payload = {
+                    user_id: u,
+                    description,
+                    amount,
+                    transaction_date: dt,
+                    category: $('tx-category').value,
+                    is_essential: $('tx-essential').value === 'true'
+                };
+
+                const r = await fetch('/api/transactions', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(payload)
+                });
+
+                const d = await r.json();
+                if (!r.ok) throw Error(d.error || 'Không lưu được giao dịch');
+
+                $('tx-form').reset();
+                $('tx-date').value = today();
+
+                // Cập nhật Dashboard và lịch sử giao dịch
+                await loadOverview();
+                await loadTx();
+
+                toast('Đã thêm giao dịch thành công');
+
+            } catch (e) {
+                toast(e.message);
+            } finally {
+                b.disabled = false;
+            }
+        };
+
+        $('refresh-tx').onclick = loadTx;
+
+        /* =========================
+           AI CHAT
+        ========================= */
+
+        function addMsg(t, c) {
+            const x = document.createElement('div');
+            x.className = 'msg ' + c;
+            x.textContent = t;
+            $('messages').append(x);
+            $('messages').scrollTop = $('messages').scrollHeight;
+            return x;
+        }
+
+        async function chat(t) {
+            if (!t.trim()) return;
+
+            addMsg(t, 'user');
+            $('chat-input').value = '';
+
+            const p = addMsg('FinPilot đang phân tích…', 'bot');
+            $('send').disabled = true;
+
+            try {
+                const r = await fetch('/api/chat', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({
+                        message: t,
+                        financial_context: currentData || {}
+                    })
+                });
+
+                const d = await r.json();
+
+                if (!r.ok) {
+                    throw Error(d.error || 'Không thể xử lý câu hỏi');
+                }
+
+                p.textContent = d.reply || 'Chưa có phản hồi.';
+
+                // Hiển thị chế độ hoạt động
+                const modeLabel = d.mode === 'fallback'
+                    ? 'FinPilot Assistant · Offline'
+                    : 'FinPilot AI · Agent';
+
+                $('trace').textContent = modeLabel;
+
+                if (d.mode === 'fallback') {
+                    $('trace').textContent +=
+                        ' · Chế độ dự phòng, không sử dụng LLM';
+                } else {
+                    const z = d.trace || {};
+                    $('trace').textContent +=
+                        ` · Model calls ${z.model_calls || 0}` +
+                        ` · Tool calls ${z.tool_calls || 0}`;
+                }
+            } catch (e) {
+                p.textContent = e.message;
+            } finally {
+                $('send').disabled = false;
+            }
+        }
+
+        $('chat-form').onsubmit = e => {
+            e.preventDefault();
+            chat($('chat-input').value);
+        };
+
+        document.querySelectorAll('[data-prompt]').forEach(x => {
+            x.onclick = () => chat(x.dataset.prompt);
+        });
+
+        function preset(x) {
+            go('assistant');
+            chat(x);
+        }
+
+        /* =========================
+           WHAT-IF
+        ========================= */
+
+        ['food', 'shopping', 'entertainment'].forEach(k => {
+            $(k).oninput = () => {
+                $(k + '-val').textContent = $(k).value + '%';
+            };
+        });
+
+        $('reset-sim').onclick = () => {
+            $('food').value = 30;
+            $('shopping').value = 20;
+            $('entertainment').value = 50;
+
+            ['food', 'shopping', 'entertainment'].forEach(k => {
+                $(k + '-val').textContent = $(k).value + '%';
+            });
+
+            $('sim-result').textContent = 'Chưa chạy';
+            $('sim-desc').textContent = 'Điều chỉnh thanh trượt và chạy mô phỏng.';
+            $('sim-reply').textContent = '';
+        };
+
+        $('run-sim').onclick = async () => {
+            try {
+                const adjustments = {
+                    food: +$('food').value / 100,
+                    shopping: +$('shopping').value / 100,
+                    entertainment: +$('entertainment').value / 100
+                };
+
+                $('sim-result').textContent = 'Đang tính…';
+
+                const r = await fetch('/api/whatif', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        user_id: $('user-select').value,
+                        adjustments
+                    })
+                });
+
+                const d = await r.json();
+                if (!r.ok) throw Error(d.error || 'Không mô phỏng được');
+
+                const x = d.simulation;
+                if (x.error) throw Error(x.error);
+
+                $('sim-result').textContent = money(x.new_forecast);
+                $('sim-desc').textContent =
+                    `P50 ${money(x.new_forecast_p50)} · P85 ${money(x.new_forecast_p85)}`;
+
+                $('sim-reply').innerHTML = `
+      <div class="line"><span>Tiết kiệm dự kiến</span><b>${money(x.total_saving)}</b></div>
+      <div class="line"><span>Gap còn lại</span><b>${money(x.new_gap)}</b></div>
+      <div class="line"><span>Safe-to-Spend mới/ngày</span><b>${money(x.new_safe_to_spend_daily)}</b></div>
+    `;
+
+            } catch (e) {
+                $('sim-result').textContent = 'Không thể mô phỏng';
+                $('sim-desc').textContent = e.message;
+            }
+        };
+
+        /* =========================
+           KHỞI ĐỘNG
+        ========================= */
+
+        fetch('/api/health')
+            .then(r => r.json())
+            .then(async () => {
+                await restoreUsers();
+                await loadOverview();
+                await loadTx();
+            })
+            .catch(() => toast('Không kết nối được API. Hãy chạy python run.py'));
+    </script>
+</body>
+
+</html>
