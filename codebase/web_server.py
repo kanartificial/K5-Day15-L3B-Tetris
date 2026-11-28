@@ -2,13 +2,12 @@
 import json
 import os
 import sys
-from datetime import date
+from datetime import date, datetime
 from http.server import SimpleHTTPRequestHandler, ThreadingHTTPServer
 from urllib.parse import urlparse
 
 import uuid
 import csv
-from datetime import date, datetime
 from urllib.parse import parse_qs
 
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -84,11 +83,11 @@ def fallback_finpilot_reply(question, context=None):
     Không sử dụng API Key, không gọi LLM.
     Trả lời dựa trên dữ liệu tài chính thực tế.
     """
-    import re
-
     q = question.lower().strip()
-    context = context or {}
+    context = context if isinstance(context, dict) else {}
     forecast = context.get("forecast", context)
+    if not isinstance(forecast, dict):
+        forecast = {}
 
     budget = float(forecast.get("budget_amount") or 0)
     spent = float(forecast.get("spent") or 0)
@@ -503,62 +502,157 @@ class Handler(SimpleHTTPRequestHandler):
                 }, 201)
             
             if path == "/api/whatif":
-                from tools import get_cashflow_forecast, simulate_what_if
-                user_id = str(body.get("user_id", "U010"))
-                adjustments = body.get("adjustments") or {}
-                allowed = {"food", "shopping", "entertainment", "transport", "travel", "other"}
-                adjustments = {k: max(0, min(1, float(v))) for k, v in adjustments.items() if k in allowed}
+                from tools import (
+                    get_cashflow_forecast,
+                    simulate_what_if,
+                    _load_synthetic_snapshot
+                )
+
+                user_id = str(body.get("user_id", "U010")).strip()
+                if not user_id or user_id == "NEW" or not _known_user(user_id):
+                    return self._json(
+                        {"error": "Không tìm thấy người dùng hợp lệ để mô phỏng."},
+                        404
+                    )
+
+                raw_adjustments = body.get("adjustments") or {}
+                if not isinstance(raw_adjustments, dict):
+                    return self._json(
+                        {"error": "Dữ liệu điều chỉnh không hợp lệ."},
+                        400
+                    )
+
+                allowed = {
+                    "food", "shopping", "entertainment",
+                    "transport", "travel", "other"
+                }
+                try:
+                    adjustments = {
+                        key: max(0.0, min(1.0, float(value)))
+                        for key, value in raw_adjustments.items()
+                        if key in allowed
+                    }
+                except (TypeError, ValueError):
+                    return self._json(
+                        {"error": "Tỷ lệ điều chỉnh phải nằm trong khoảng 0 đến 1."},
+                        400
+                    )
+
+                today = date.today()
+                month = today.strftime("%Y-%m")
+                profiles = _load_profiles()
+                manual = _load_user_transactions().get(user_id, [])
+
+                # Tạo payload đầu vào giống luồng Dashboard.
+                # Code cũ thiếu biến này nên phát sinh NameError.
+                if user_id in profiles:
+                    profile = profiles[user_id]
+                    rows = list(profile.get("transactions", []))
+                    rows.extend(
+                        tx for tx in manual
+                        if tx.get("transaction_date", "")[:7] == month
+                    )
+
+                    dates = [
+                        tx.get("transaction_date", "")
+                        for tx in rows
+                        if tx.get("transaction_date", "").startswith(month)
+                    ]
+                    first_date = min(dates) if dates else None
+                    coverage = (
+                        (today - date.fromisoformat(first_date)).days + 1
+                        if first_date else 0
+                    )
+
+                    payload = {
+                        "month": month,
+                        "as_of": today.isoformat(),
+                        "coverage_days": coverage,
+                        "budget_amount": int(profile["monthly_budget"]),
+                        "protected_categories": profile.get(
+                            "protected_categories", []
+                        ),
+                        "transactions": rows,
+                        "planned_expenses": []
+                    }
+                else:
+                    payload = _load_synthetic_snapshot(
+                        user_id, month, today.isoformat()
+                    )
+                    payload.setdefault("transactions", [])
+                    payload["transactions"].extend(
+                        tx for tx in manual
+                        if tx.get("transaction_date", "")[:7] == month
+                    )
+
                 forecast = get_cashflow_forecast(
                     payload_json=json.dumps(payload, ensure_ascii=False)
                 )
+                simulation = simulate_what_if(forecast, adjustments)
 
-                result = simulate_what_if(forecast, adjustments)
+                if isinstance(simulation, dict) and simulation.get("error"):
+                    return self._json({"error": simulation["error"]}, 400)
 
                 return self._json({
+                    "user_id": user_id,
                     "forecast": forecast,
-                    "simulation": result
+                    "simulation": simulation
                 })
-
 
             if path == "/api/chat":
                 message = str(body.get("message", "")).strip()
-                context = body.get("financial_context", {})
-                
+                context = body.get("financial_context") or {}
+
                 if not message:
-                    return self._json({
-                        "error": "Vui lòng nhập câu hỏi."
-                    }, 400)
+                    return self._json(
+                        {"error": "Vui lòng nhập câu hỏi."},
+                        400
+                    )
 
                 try:
+                    import tracing
                     from agent import answer
 
-                    result = answer(message)
+                    tracing.begin("web-chat")
+                    try:
+                        agent_result = answer(message)
+                        summary, events = tracing.end()
+                    except Exception:
+                        try:
+                            tracing.end()
+                        except Exception:
+                            pass
+                        raise
 
-                    # Chuẩn hóa kết quả từ Agent
-                    if isinstance(result, dict):
+                    # Agent có thể trả về {"output": "..."}.
+                    # Chỉ lấy nội dung câu trả lời, không trả nguyên dict.
+                    if isinstance(agent_result, dict):
                         reply = (
-                            result.get("answer")
-                            or result.get("response")
-                            or result.get("reply")
-                            or str(result)
+                            agent_result.get("output")
+                            or agent_result.get("reply")
+                            or agent_result.get("response")
+                            or agent_result.get("answer")
+                            or ""
                         )
                     else:
-                        reply = str(result)
+                        reply = agent_result
+
+                    if not isinstance(reply, str):
+                        reply = json.dumps(reply, ensure_ascii=False)
 
                     return self._json({
-                        "reply": reply,
+                        "reply": reply.strip() or "Agent chưa trả về nội dung.",
                         "mode": "agent",
-                        "trace": {}
+                        "trace": summary or {},
+                        "events": events or []
                     })
 
-                except Exception as e:
-                    # Không để lỗi API làm hỏng trải nghiệm người dùng
-                    print(f"[FinPilot] Agent unavailable: {e}")
-
-                    reply = fallback_finpilot_reply(
-                        message,
-                        context
+                except Exception as exc:
+                    print(
+                        f"[FinPilot] Agent unavailable: "
+                        f"{type(exc).__name__}: {exc}"
                     )
+                    reply = fallback_finpilot_reply(message, context)
 
                     return self._json({
                         "reply": reply,
@@ -571,28 +665,8 @@ class Handler(SimpleHTTPRequestHandler):
                         }
                     })
 
-            
-            if path != "/api/chat":
-                return self._json({"error": "Endpoint không tồn tại"}, 404)
-            message = str(body.get("message", "")).strip()
-            if not message:
-                return self._json({"error": "Vui lòng nhập câu hỏi."}, 400)
+            return self._json({"error": "Endpoint không tồn tại."}, 404)
 
-            import tracing
-            from agent import answer
-            tracing.begin("web-chat")
-            try:
-                result = answer(message)
-                summary, events = tracing.end()
-            except Exception:
-                tracing.end()
-                raise
-
-            return self._json({
-                "reply": result.get("output", str(result)),
-                "trace": summary,
-                "events": events,
-            })
         except NotImplementedError as exc:
             return self._json({"error": "Model chưa được kết nối: " + str(exc)}, 503)
         except Exception as exc:
