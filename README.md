@@ -1,35 +1,17 @@
-> Đây là khung repo nộp bài. Điền mọi chỗ `____`, giữ nguyên tên các mục. **Mục 0 xoá đi sau khi tạo repo xong.**
-> Giờ, mốc, luật, rubric: xem `README.md`, `02-guide.md`, `03-rubric.md` trong repo đề (bộ đề BTC phát).
+# Tetris — FinPilot: Cảnh báo sớm vượt ngân sách & gợi ý cắt giảm chi tiêu
 
-# [Tên nhóm] — [Tên lát cắt]
+**Lớp L3B · Track E (Tài chính)** · Repo: https://github.com/kanartificial/K5-Day15-L3B-Tetris
+
+**Lát cắt:** Khi người trẻ mới đi làm (20–30 tuổi) có nguy cơ vượt ngân sách tháng trước kỳ lương tiếp theo, hệ thống tách 3 luồng chi để dự báo dòng tiền (P50/P85, Safe-to-Spend), tối ưu mức cắt ở danh mục linh hoạt (khóa cứng tiền nhà / trả góp), và AI diễn giải thành 2–3 gợi ý hành động kèm mô phỏng What-If — **AI gợi ý, người quyết** (chi tiết: [spec.md](spec.md) §4).
+
+**Kết quả chính:**
+- Bằng chứng: khảo sát n=21 — 15/21 (71%) vượt ngân sách ít nhất 1 trong 3 tháng gần đây, chỉ 4/21 (19%) nhận ra *trước khi* vượt ([evidence/summary.md](evidence/summary.md)).
+- Đánh giá: lượt 1 8/30 (27%) → lượt 2 **28/30 (93%)**, `tu_choi` 4/4 — đạt chuẩn ([eval/README.md](eval/README.md), [eval/report.md](eval/report.md)).
+- Chi phí: **$0.00033 / task thành công** với `gpt-6-luna`; cơ sở 500 người ≈ **$1.04 / tháng** ([cost/cost-estimate.md](cost/cost-estimate.md)).
 
 **Thành viên, lớp, track:** xem [TEAMS.md](TEAMS.md). **Điền TEAMS.md đúng format**: khi chấm và đánh giá, BTC quét file này để ghép điểm cho từng người.
 
 *Lát cắt = phần nhỏ nhất làm xong được trong hackathon: một người dùng · một việc · một quyết định AI · một kết quả.*
-
----
-
-## 0. Tạo repo nhóm từ khung này *(guide bước 1.0 — xoá mục này khi xong)*
-
-**Hai luật:** repo **mới, công khai (Public)** · tên `K5-Day15-<lớp>-<tên nhóm>`, vd `K5-Day15-L3A-StudyPulse` (tên nhóm viết liền, không dấu). Chép **nội dung bên trong** `starter-repo/` — `README.md`, `run.py` phải nằm ngay ở trang đầu repo.
-
-**(a) Không cần terminal — làm trên web GitHub**
-1. **New repository** → tên theo mẫu → **Public** → không tick thêm gì → tạo.
-2. Trên máy mở thư mục `starter-repo/`, **bật hiện file ẩn** (Mac Finder: `Cmd + Shift + .` · Windows: View → Show → Hidden items) để thấy `.gitignore`, `.env.example`.
-3. Trên repo vừa tạo: **Add file → Upload files** → **kéo thả** tất cả file và thư mục bên trong `starter-repo/` → **Commit changes**. Kéo thả mới giữ được thư mục con; lỗi vì nhiều file quá thì tải từng thư mục.
-4. Kiểm: có `.gitignore` chưa (hay thiếu nhất). Thiếu thì **Add file → Create new file**, tên `.gitignore`, dán nội dung từ máy.
-5. Từ giờ sửa file ngay trên web (biểu tượng bút chì → Commit). Phần code vẫn cần **một** người chạy được trên máy: trước mỗi lượt chạy tải **Code → Download ZIP** về thư mục mới (mang `.env` sang), chạy xong chỉ upload file kết quả và file vừa sửa; trong lúc đang chạy không ai sửa `eval/benchmark.csv` trên web.
-
-**(b) Dùng git**
-```bash
-git clone https://github.com/<tai-khoan>/K5-Day15-L3A-TenNhom.git
-cd K5-Day15-L3A-TenNhom
-cp -R ../duong-dan-toi/starter-repo/. .      # Windows PowerShell: Copy-Item -Recurse -Force ..\duong-dan-toi\starter-repo\* .
-git status                                   # không được có .env, data-btc/
-git add -A && git commit -m "Khung repo từ starter-repo" && git push
-```
-
-**Xong khi:** mở link repo bằng **cửa sổ ẩn danh** thấy được file (link nộp CP1) · đã mời thành viên (Settings → Collaborators) · đã điền `TEAMS.md` và `python run.py check` không báo gì ở phần "Kiểm TEAMS.md".
 
 ---
 
@@ -62,13 +44,13 @@ Gõ `dir` (Windows) hoặc `ls` (macOS / Linux): thấy `run.py` và `README.md`
 | Việc | Windows (PowerShell) | macOS / Linux |
 |---|---|---|
 | Kiểm Python | `python --version` (không được thì `py --version`) | `python3 --version` |
-| Chạy bản chạy thử (chế độ giả, chưa gọi model) | `python run.py` | `python3 run.py` |
+| Chạy bản chạy thử (web FinPilot tại http://127.0.0.1:8000, đổi cổng bằng biến `FINPILOT_PORT`) | `python run.py` | `python3 run.py` |
 | Kiểm bộ câu thử | `python run.py check` | `python3 run.py check` |
 | Tạo file `.env` để nối model | `copy .env.example .env` | `cp .env.example .env` |
 
 - Windows: gõ `python` mà mở Microsoft Store hoặc báo không có lệnh → dùng `py`. Chưa có Python: cài từ python.org, **tick "Add python.exe to PATH"**, mở lại PowerShell.
 - macOS: báo `command not found: python` là bình thường → dùng `python3`.
-- `python run.py` in ra "[câu trả lời giả — chưa nối model] …" là khung chạy đúng. Nối model thật: [docs/connect-model.md](docs/connect-model.md).
+- `python run.py` in ra "FinPilot đang chạy tại http://…" → mở link đó trên trình duyệt. Chưa có `.env` thì phần chat AI chạy **chế độ giả** ("[câu trả lời giả — chưa nối model] …"); phần dự báo / tối ưu / What-If vẫn tính thật bằng Python. Nối model thật: [docs/connect-model.md](docs/connect-model.md) (nhóm dùng `gpt-6-luna`).
 
 Trong README này lệnh viết là `python …`; máy nhóm cần `python3` hay `py` thì gõ thay.
 
@@ -108,14 +90,21 @@ Nhóm dùng stack khác (Node, Streamlit, notebook…): sửa hàm `run_app()` t
 
 | Thành phần | Thật / Giả | Ghi chú |
 |---|---|---|
-| Lời gọi AI ở quyết định trung tâm | **Thật** (bắt buộc từ CP3) | Model: ____ |
-|  |  |  |
+| Lời gọi AI ở quyết định trung tâm (LLM Coaching Layer — diễn giải JSON đã chốt số thành 2–3 gợi ý) | **Thật** (bắt buộc từ CP3) | Model: `gpt-6-luna`, gọi trong `codebase/ai.py`; token lấy từ `usage` của API |
+| Dự báo dòng tiền P50/P85, Safe-to-Spend (`get_cashflow_forecast`) | **Thật** | Tính tất định bằng Python trong `codebase/tools.py`, LLM không tự tính số |
+| Tối ưu mức cắt có ràng buộc (`optimize_budget_reduction`) · What-If (`simulate_what_if`) | **Thật** | Khóa cứng danh mục cố định / thiết yếu; chạy cục bộ |
+| Nạp giao dịch từ tin nhắn (`ingest_transaction_draft`, P1) | **Thật** (chỉ tạo nháp) | Chỉ tạo bản nháp `pending_user_approval`, người dùng duyệt |
+| Giao diện web FinPilot | **Thật** | `codebase/web_server.py` + `codebase/frontend/index.html`, chạy bằng `python run.py` |
+| Dữ liệu giao dịch, ngân sách, hồ sơ người dùng | **Giả** (synthetic) | `data/synthetic/` (30 user, 90 ngân sách, 6.259 giao dịch, seed 42) · `data/demo/` (19 ca `TC01–TC19`) — xem `data/DATA_CARD.md` |
+| Thông báo biến động số dư / Open Banking / SMS | **Giả** (mock) | Nút giả lập / nhập tay trên giao diện, không đọc SMS hay nối ngân hàng thật |
+| Tài khoản người dùng | **Giả** | Hồ sơ demo, không có đăng nhập (Auth) |
 
 ## Dùng AI vào việc gì
 
 2–3 dòng (bắt buộc): nhóm dùng công cụ AI nào để làm gì, người kiểm lại phần nào. Chi tiết: [docs/ai-usage.md](docs/ai-usage.md). Coding agent đọc [AGENTS.md](AGENTS.md).
 
-____
+- Claude Code (coding agent, theo [AGENTS.md](AGENTS.md)): điền README này từ `spec.md`, `TEAMS.md`, `eval/README.md`, `cost/simulate-1-summary.md`; nhóm đọc lại trước khi commit.
+- ____ *(nhóm bổ sung: công cụ AI dùng cho code, prompt, data, benchmark, slide — ai kiểm phần nào, khớp `docs/ai-usage.md`)*
 
 ## File mẫu — điền ở bước nào
 
@@ -147,5 +136,5 @@ ____
 | 4 | Bản chạy thử làm trọn lát cắt | `codebase/` · lệnh ở mục "Lệnh" |
 | 5 | Định nghĩa "tốt" + bộ câu thử | `data/DATA_CARD.md` · `eval/` |
 | 6 | Mô phỏng chi phí khi dùng thật | `cost/` |
-| 7 | Slide + demo + video dự phòng | `demo-slides.pdf` ở thư mục gốc · link video: ____ |
+| 7 | Slide + demo + video dự phòng | `demo-slides.pdf` ở thư mục gốc (nguồn: `slides/demo-slides.html`, dàn ý `slides/outline.md`) · link video: [Google Drive](https://drive.google.com/drive/folders/1ja1j5vpWSTrW3gypK3A69OahXo3BYoNU?usp=sharing) |
 | + | *Bonus:* người dùng thử | `validation/log.md` |
