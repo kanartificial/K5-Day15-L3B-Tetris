@@ -1,0 +1,15 @@
+{
+  "U010": [
+    {
+      "role": "user",
+      "content": "hi",
+      "timestamp": "2026-11-28T14:12:51"
+    },
+    {
+      "role": "assistant",
+      "content": "Mình là FinPilot Assistant, trợ lý hỗ trợ quản lý tài chính cá nhân.\n\nMình hiện có thể hỗ trợ bạn theo các nhóm thông tin:\n• Tổng quan ngân sách và khoản đã chi.\n• Dự báo chi tiêu P50/P85 khi đủ dữ liệu.\n• Safe-to-Spend mỗi ngày.\n• Gợi ý kiểm soát và tiết kiệm chi tiêu.\n\nBạn hãy thử hỏi: \"Tháng này mình đã chi bao nhiêu?\" hoặc \"Mình có nguy cơ vượt ngân sách không?\"",
+      "timestamp": "2026-11-28T14:12:51",
+      "mode": "fallback"
+    }
+  ]
+}
