@@ -843,8 +843,8 @@
                             <input id="entertainment" type="range" min="0" max="100" value="50" step="5">
                         </div>
                         <div class="actions">
-                            <button class="btn primary" id="run-sim">Chạy mô phỏng</button>
-                            <button class="btn outline" id="reset-sim">Đặt lại</button>
+                            <button class="btn primary" id="run-sim" type="button">Chạy mô phỏng</button>
+                            <button class="btn outline" id="reset-sim" type="button">Đặt lại</button>
                         </div>
                     </div>
 
@@ -1317,7 +1317,13 @@
                     throw Error(d.error || 'Không thể xử lý câu hỏi');
                 }
 
-                p.textContent = d.reply || 'Chưa có phản hồi.';
+                // Hỗ trợ cả phản hồi chuẩn và object cũ dạng { output: "..." }.
+                let reply = d.reply ?? d.output ?? d.response ?? '';
+                if (reply && typeof reply === 'object') {
+                    reply = reply.output ?? reply.reply ?? reply.response
+                        ?? JSON.stringify(reply);
+                }
+                p.textContent = String(reply || 'Chưa có phản hồi.');
 
                 // Hiển thị chế độ hoạt động
                 const modeLabel = d.mode === 'fallback'
