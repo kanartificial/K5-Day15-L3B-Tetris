@@ -154,6 +154,9 @@ def fallback_finpilot_reply(question, context=None):
             f"• P85: {vnd(p85)}\n"
             f"• Ngân sách: {vnd(budget)}\n\n"
             + (
+                "Chi tiêu thực tế đã vượt ngân sách. "
+                "Bạn nên dừng các khoản chi linh hoạt không cần thiết."
+                if spent > budget or forecast.get("status") == "actual_over" else
                 "Dự báo cho thấy có nguy cơ vượt ngân sách. "
                 "Bạn nên ưu tiên kiểm soát các khoản chi linh hoạt."
                 if float(p85) > budget else

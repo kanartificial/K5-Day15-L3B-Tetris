@@ -1024,9 +1024,11 @@
                 ? 'Chưa đủ dữ liệu dự báo'
                 : `P50 ${money(f.forecast_p50)} · P85 ${money(f.forecast_p85)}`;
 
-            $('health').textContent = f.status === 'insufficient_data'
-                ? 'Chưa đủ dữ liệu'
-                : over ? 'Có nguy cơ vượt ngân sách' : 'Đang theo dõi ngân sách';
+            $('health').textContent = {
+                insufficient_data: 'Chưa đủ dữ liệu',
+                actual_over: 'Đã vượt ngân sách',
+                forecast_over: 'Có nguy cơ vượt ngân sách'
+            }[f.status] || 'Đang theo dõi ngân sách';
 
             $('days').textContent = `Còn ${f.days_left ?? '—'} ngày`;
 
