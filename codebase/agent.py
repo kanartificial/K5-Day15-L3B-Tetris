@@ -567,7 +567,22 @@ def _strip_injection_clauses(text: str) -> str:
     return cleaned.strip()
 
 
-def answer(text: str) -> dict:
+def _sanitize_web_forecast(raw_fc: dict) -> dict:
+    """Giữ các trường số liệu/trạng thái an toàn từ ngữ cảnh web, loại bỏ thông tin cá nhân (PII)."""
+    keep_keys = (
+        "source", "month", "as_of", "days_left", "coverage_days", "budget_amount",
+        "budget_used_pct", "remaining_budget", "status", "insufficient_data_for_forecast",
+        "spent", "essential_spent", "flexible_spent", "planned_essential",
+        "flexible_projection", "forecast", "forecast_p50", "forecast_p85", "gap",
+        "safe_to_spend_daily", "data_completeness_score", "days_since_last_tx",
+        "protected_categories", "flexible_by_category", "essential_by_category",
+        "planned_flex_candidates", "forbidden_candidate_ids",
+        "income_amount", "current_balance", "is_new_user",
+    )
+    return {k: raw_fc[k] for k in keep_keys if k in raw_fc}
+
+
+def answer(text: str, financial_context: dict | None = None) -> dict:
     user_text = (text or "").strip()
     if not user_text:
         return {"output": "Vui lòng nhập ngân sách, kỳ theo dõi và giao dịch (hoặc mã hồ sơ/kịch bản What-If) cần kiểm tra."}
@@ -694,6 +709,19 @@ def answer(text: str) -> dict:
             context["ambiguous_daily_limit"] = parsed
             context["status"] = "insufficient_assumptions"
             note("cảnh báo thiếu giả định cho câu hỏi hạn mức ngày")
+        elif isinstance(financial_context, dict) and (
+            isinstance(financial_context.get("forecast"), dict) and financial_context["forecast"]
+            or financial_context.get("user_id")
+        ):
+            web_fc = financial_context.get("forecast")
+            if isinstance(web_fc, dict) and web_fc:
+                context["forecast"] = _sanitize_web_forecast(web_fc)
+            else:
+                context["forecast"] = get_cashflow_forecast(
+                    user_id=str(financial_context["user_id"]),
+                    month=str(financial_context.get("month") or "2026-11"),
+                )
+            note("nạp ngữ cảnh tài chính từ phiên web đang mở")
         else:
             is_survey = "phiếu khảo sát" in user_text.lower() or bool(re.search(r"\bq\d{1,2}\s*:", user_text.lower()))
             context["status"] = "survey_analysis" if is_survey else "missing_user_data"

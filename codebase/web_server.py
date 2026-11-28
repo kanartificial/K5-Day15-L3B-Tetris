@@ -615,7 +615,7 @@ class Handler(SimpleHTTPRequestHandler):
 
                     tracing.begin("web-chat")
                     try:
-                        agent_result = answer(message)
+                        agent_result = answer(message, financial_context=context)
                         summary, events = tracing.end()
                     except Exception:
                         try:
