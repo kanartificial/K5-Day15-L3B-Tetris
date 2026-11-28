@@ -926,6 +926,8 @@
     <script>
         const $ = id => document.getElementById(id);
         let currentData = null;
+        let currentUserId = localStorage.getItem('finpilot_user_id') || 'U010';
+        let userSwitchToken = 0;
 
         const names = {
             food: 'Ăn uống',
@@ -1024,11 +1026,9 @@
                 ? 'Chưa đủ dữ liệu dự báo'
                 : `P50 ${money(f.forecast_p50)} · P85 ${money(f.forecast_p85)}`;
 
-            $('health').textContent = {
-                insufficient_data: 'Chưa đủ dữ liệu',
-                actual_over: 'Đã vượt ngân sách',
-                forecast_over: 'Có nguy cơ vượt ngân sách'
-            }[f.status] || 'Đang theo dõi ngân sách';
+            $('health').textContent = f.status === 'insufficient_data'
+                ? 'Chưa đủ dữ liệu'
+                : over ? 'Có nguy cơ vượt ngân sách' : 'Đang theo dõi ngân sách';
 
             $('days').textContent = `Còn ${f.days_left ?? '—'} ngày`;
 
@@ -1069,17 +1069,20 @@
                 : 'Chưa có đề xuất hoặc chưa đủ dữ liệu.';
         }
 
-        async function loadOverview() {
+        async function loadOverview(token = userSwitchToken) {
+            const user = currentUserId;
+            if (!user || user === 'NEW') return;
             try {
-                const user = $('user-select').value;
                 const r = await fetch(
-                    `/api/overview?user_id=${encodeURIComponent(user)}&month=${today().slice(0, 7)}`
+                    `/api/overview?user_id=${encodeURIComponent(user)}&month=${today().slice(0, 7)}`,
+                    { cache: 'no-store' }
                 );
                 const d = await r.json();
                 if (!r.ok) throw Error(d.error || 'Lỗi tải Dashboard');
+                if (token !== userSwitchToken || user !== currentUserId) return;
                 render(d);
             } catch (e) {
-                toast(e.message);
+                if (token === userSwitchToken) toast(e.message);
             }
         }
 
@@ -1095,15 +1098,38 @@
             });
         }
 
-        $('user-select').onchange = () => {
-            if ($('user-select').value === 'NEW') {
+        $('user-select').onchange = async () => {
+            const selected = $('user-select').value;
+            if (selected === 'NEW') {
                 $('onboard').style.display = 'flex';
-                $('user-select').value = currentData?.user_id || 'U010';
-            } else {
-                loadOverview();
-                loadTx();
+                $('user-select').value = currentUserId;
+                return;
             }
+            await switchUser(selected);
         };
+
+        async function switchUser(userId) {
+            if (!userId || userId === 'NEW') return;
+            currentUserId = userId;
+            $('user-select').value = userId;
+            localStorage.setItem('finpilot_user_id', userId);
+            const token = ++userSwitchToken;
+            currentData = null;
+
+            // Xóa nội dung của user cũ trước khi nạp dữ liệu user mới.
+            $('messages').innerHTML = '';
+            $('trace').textContent = '';
+            $('send').disabled = false;
+            $('tx-body').innerHTML = '<tr><td colspan="5" class="sub">Đang tải giao dịch…</td></tr>';
+            $('tx-count').textContent = 'Đang tải…';
+            restoreWhatIfState();
+
+            await Promise.all([
+                loadOverview(token),
+                loadTx(token),
+                loadChatHistory(token)
+            ]);
+        }
 
         $('cancel-onboard').onclick = () => $('onboard').style.display = 'none';
 
@@ -1152,9 +1178,8 @@
                 $('user-select').value = d.user_id;
                 $('onboard').style.display = 'none';
                 $('onboard-form').reset();
-
-                await loadOverview();
-                await loadTx();
+                await restoreUsers();
+                await switchUser(d.user_id);
                 toast('Đã tạo hồ sơ thành công');
             } catch (e) {
                 toast(e.message);
@@ -1170,8 +1195,8 @@
         $('tx-date').value = today();
         $('tx-date').max = today();
 
-        async function loadTx() {
-            const u = $('user-select').value;
+        async function loadTx(token = userSwitchToken) {
+            const u = currentUserId;
             if (!u || u === 'NEW') return;
 
             try {
@@ -1181,6 +1206,7 @@
 
                 const d = await r.json();
                 if (!r.ok) throw Error(d.error || 'Không tải được giao dịch');
+                if (token !== userSwitchToken || u !== currentUserId) return;
 
                 const rows = d.transactions || [];
 
@@ -1214,8 +1240,10 @@
                     : '<tr><td colspan="5" class="sub">Chưa có giao dịch. Hãy thêm khoản chi đầu tiên.</td></tr>';
 
             } catch (e) {
-                $('tx-body').innerHTML = `<tr><td colspan="5">${esc(e.message)}</td></tr>`;
-                toast(e.message);
+                if (token === userSwitchToken && u === currentUserId) {
+                    $('tx-body').innerHTML = `<tr><td colspan="5">${esc(e.message)}</td></tr>`;
+                    toast(e.message);
+                }
             }
         }
 
@@ -1225,7 +1253,7 @@
             const amount = +$('tx-amount').value;
             const dt = $('tx-date').value;
             const description = $('tx-description').value.trim();
-            const u = $('user-select').value;
+            const u = currentUserId;
 
             if (!u || u === 'NEW') {
                 return toast('Chọn người dùng trước khi thêm giao dịch.');
@@ -1277,7 +1305,7 @@
             }
         };
 
-        $('refresh-tx').onclick = loadTx;
+        $('refresh-tx').onclick = () => loadTx();
 
         /* =========================
            AI CHAT
@@ -1292,61 +1320,81 @@
             return x;
         }
 
+        async function loadChatHistory(token = userSwitchToken) {
+            const user = currentUserId;
+            try {
+                const r = await fetch(`/api/chat?user_id=${encodeURIComponent(user)}`, { cache: 'no-store' });
+                const d = await r.json();
+                if (!r.ok) throw Error(d.error || 'Không tải được lịch sử chat');
+                if (token !== userSwitchToken || user !== currentUserId) return;
+
+                $('messages').innerHTML = '';
+                const history = d.messages || [];
+                if (!history.length) {
+                    addMsg('Xin chào! Mình là FinPilot Assistant. Hãy hỏi mình về ngân sách, chi tiêu hoặc dự báo tài chính của bạn nhé.', 'bot');
+                    return;
+                }
+                history.forEach(item => {
+                    addMsg(item.content || '', item.role === 'user' ? 'user' : 'bot');
+                });
+            } catch (e) {
+                if (token === userSwitchToken) {
+                    $('messages').innerHTML = '';
+                    addMsg('Không tải được lịch sử chat: ' + e.message, 'bot');
+                }
+            }
+        }
+
         async function chat(t) {
-            if (!t.trim()) return;
+            t = String(t || '').trim();
+            if (!t) return;
+            const user = currentUserId;
+            const token = userSwitchToken;
 
             addMsg(t, 'user');
             $('chat-input').value = '';
-
-            const p = addMsg('FinPilot đang phân tích…', 'bot');
+            const pending = addMsg('FinPilot đang phân tích…', 'bot');
             $('send').disabled = true;
 
             try {
                 const r = await fetch('/api/chat', {
                     method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json'
-                    },
+                    headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify({
+                        user_id: user,
                         message: t,
                         financial_context: currentData || {}
                     })
                 });
-
                 const d = await r.json();
+                if (!r.ok) throw Error(d.error || 'Không thể xử lý câu hỏi');
 
-                if (!r.ok) {
-                    throw Error(d.error || 'Không thể xử lý câu hỏi');
-                }
+                // Nếu người dùng đã chuyển tài khoản, không ghi câu trả lời
+                // của tài khoản cũ vào khung chat của tài khoản mới.
+                if (token !== userSwitchToken || user !== currentUserId) return;
 
-                // Hỗ trợ cả phản hồi chuẩn và object cũ dạng { output: "..." }.
                 let reply = d.reply ?? d.output ?? d.response ?? '';
                 if (reply && typeof reply === 'object') {
-                    reply = reply.output ?? reply.reply ?? reply.response
-                        ?? JSON.stringify(reply);
+                    reply = reply.output ?? reply.reply ?? reply.response ?? JSON.stringify(reply);
                 }
-                p.textContent = String(reply || 'Chưa có phản hồi.');
+                pending.textContent = String(reply || 'Chưa có phản hồi.');
 
-                // Hiển thị chế độ hoạt động
                 const modeLabel = d.mode === 'fallback'
                     ? 'FinPilot Assistant · Offline'
                     : 'FinPilot AI · Agent';
-
                 $('trace').textContent = modeLabel;
-
                 if (d.mode === 'fallback') {
-                    $('trace').textContent +=
-                        ' · Chế độ dự phòng, không sử dụng LLM';
+                    $('trace').textContent += ' · Chế độ dự phòng, không sử dụng LLM';
                 } else {
                     const z = d.trace || {};
-                    $('trace').textContent +=
-                        ` · Model calls ${z.model_calls || 0}` +
-                        ` · Tool calls ${z.tool_calls || 0}`;
+                    $('trace').textContent += ` · Model calls ${z.model_calls || 0} · Tool calls ${z.tool_calls || 0}`;
                 }
             } catch (e) {
-                p.textContent = e.message;
+                if (token === userSwitchToken && user === currentUserId) {
+                    pending.textContent = e.message;
+                }
             } finally {
-                $('send').disabled = false;
+                if (token === userSwitchToken) $('send').disabled = false;
             }
         }
 
@@ -1368,9 +1416,39 @@
            WHAT-IF
         ========================= */
 
+        function saveWhatIfState() {
+            if (!currentUserId) return;
+            const state = {
+                food: $('food').value,
+                shopping: $('shopping').value,
+                entertainment: $('entertainment').value,
+                result: $('sim-result').textContent,
+                desc: $('sim-desc').textContent,
+                reply: $('sim-reply').innerHTML
+            };
+            localStorage.setItem(`finpilot_whatif_${currentUserId}`, JSON.stringify(state));
+        }
+
+        function restoreWhatIfState() {
+            let state = null;
+            try {
+                state = JSON.parse(localStorage.getItem(`finpilot_whatif_${currentUserId}`) || 'null');
+            } catch (_) {}
+            $('food').value = state?.food ?? 30;
+            $('shopping').value = state?.shopping ?? 20;
+            $('entertainment').value = state?.entertainment ?? 50;
+            ['food', 'shopping', 'entertainment'].forEach(k => {
+                $(k + '-val').textContent = $(k).value + '%';
+            });
+            $('sim-result').textContent = state?.result ?? 'Chưa chạy';
+            $('sim-desc').textContent = state?.desc ?? 'Điều chỉnh thanh trượt và chạy mô phỏng.';
+            $('sim-reply').innerHTML = state?.reply ?? '';
+        }
+
         ['food', 'shopping', 'entertainment'].forEach(k => {
             $(k).oninput = () => {
                 $(k + '-val').textContent = $(k).value + '%';
+                saveWhatIfState();
             };
         });
 
@@ -1378,17 +1456,18 @@
             $('food').value = 30;
             $('shopping').value = 20;
             $('entertainment').value = 50;
-
             ['food', 'shopping', 'entertainment'].forEach(k => {
                 $(k + '-val').textContent = $(k).value + '%';
             });
-
             $('sim-result').textContent = 'Chưa chạy';
             $('sim-desc').textContent = 'Điều chỉnh thanh trượt và chạy mô phỏng.';
             $('sim-reply').textContent = '';
+            saveWhatIfState();
         };
 
         $('run-sim').onclick = async () => {
+            const user = currentUserId;
+            const token = userSwitchToken;
             try {
                 const adjustments = {
                     food: +$('food').value / 100,
@@ -1402,13 +1481,14 @@
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify({
-                        user_id: $('user-select').value,
+                        user_id: user,
                         adjustments
                     })
                 });
 
                 const d = await r.json();
                 if (!r.ok) throw Error(d.error || 'Không mô phỏng được');
+                if (token !== userSwitchToken || user !== currentUserId) return;
 
                 const x = d.simulation;
                 if (x.error) throw Error(x.error);
@@ -1422,10 +1502,14 @@
       <div class="line"><span>Gap còn lại</span><b>${money(x.new_gap)}</b></div>
       <div class="line"><span>Safe-to-Spend mới/ngày</span><b>${money(x.new_safe_to_spend_daily)}</b></div>
     `;
+                saveWhatIfState();
 
             } catch (e) {
-                $('sim-result').textContent = 'Không thể mô phỏng';
-                $('sim-desc').textContent = e.message;
+                if (token === userSwitchToken && user === currentUserId) {
+                    $('sim-result').textContent = 'Không thể mô phỏng';
+                    $('sim-desc').textContent = e.message;
+                    saveWhatIfState();
+                }
             }
         };
 
@@ -1433,14 +1517,23 @@
            KHỞI ĐỘNG
         ========================= */
 
-        fetch('/api/health')
-            .then(r => r.json())
-            .then(async () => {
+        async function initializeApp() {
+            try {
+                const health = await fetch('/api/health', { cache: 'no-store' });
+                if (!health.ok) throw Error('API không hoạt động');
                 await restoreUsers();
-                await loadOverview();
-                await loadTx();
-            })
-            .catch(() => toast('Không kết nối được API. Hãy chạy python run.py'));
+                const savedUser = localStorage.getItem('finpilot_user_id') || 'U010';
+                const exists = [...$('user-select').options].some(o => o.value === savedUser);
+                const initialUser = exists ? savedUser : 'U010';
+                await switchUser(initialUser);
+            } catch (e) {
+                console.error(e);
+                toast('Không kết nối được API. Hãy chạy python run.py');
+            }
+        }
+
+        initializeApp();
+
     </script>
 </body>
 
