@@ -19,8 +19,6 @@ PROFILE_FILE = os.path.join(ROOT, "data", "user_profiles.json")
 TRANSACTION_FILE = os.path.join(
     ROOT, "data", "user_transactions.json"
 )
-CHAT_FILE = os.path.join(ROOT, "data", "user_chats.json")
-CHAT_LOCK = threading.RLock()
 
 ALLOWED_CATEGORIES = {
     "food",
@@ -47,6 +45,54 @@ def _save_profiles(profiles):
 sys.path.insert(0, CODEBASE)
 
 
+CHAT_FILE = os.path.join(ROOT, "data", "chat_history.json")
+CHAT_MAX_PER_USER = 200
+_CHAT_LOCK = threading.Lock()
+
+
+def _chat_user_id(value):
+    """Chuẩn hóa user_id dùng làm khóa lịch sử chat (chỉ giữ chữ, số, '_' , '-')."""
+    raw = str(value or "").strip()[:40]
+    cleaned = "".join(ch for ch in raw if ch.isalnum() or ch in "_-")
+    return cleaned or "anonymous"
+
+
+def _load_chat_history():
+    try:
+        with open(CHAT_FILE, encoding="utf-8") as f:
+            data = json.load(f)
+        return data if isinstance(data, dict) else {}
+    except (FileNotFoundError, json.JSONDecodeError):
+        return {}
+
+
+def _save_chat_history(data):
+    os.makedirs(os.path.dirname(CHAT_FILE), exist_ok=True)
+    tmp = CHAT_FILE + ".tmp"
+    with open(tmp, "w", encoding="utf-8") as f:
+        json.dump(data, f, ensure_ascii=False, indent=2)
+    os.replace(tmp, CHAT_FILE)
+
+
+def _append_chat(user_id, message, result):
+    """Lưu một lượt hỏi–đáp vào data/chat_history.json (tối đa CHAT_MAX_PER_USER tin / user)."""
+    now = datetime.now().isoformat(timespec="seconds")
+    trace = result.get("trace") or {}
+    with _CHAT_LOCK:
+        history = _load_chat_history()
+        items = history.setdefault(user_id, [])
+        items.append({"role": "user", "text": message, "ts": now})
+        items.append({
+            "role": "bot",
+            "text": result.get("reply", ""),
+            "ts": now,
+            "mode": result.get("mode"),
+            "trace": {k: trace.get(k) for k in ("model_calls", "tool_calls", "tokens_in", "tokens_out", "models") if k in trace},
+        })
+        history[user_id] = items[-CHAT_MAX_PER_USER:]
+        _save_chat_history(history)
+
+
 def _load_user_transactions():
     try:
         with open(TRANSACTION_FILE, encoding="utf-8") as f:
@@ -60,25 +106,6 @@ def _save_user_transactions(data):
 
     with open(TRANSACTION_FILE, "w", encoding="utf-8") as f:
         json.dump(data, f, ensure_ascii=False, indent=2)
-
-
-def _load_user_chats():
-    """Đọc lịch sử chat được lưu riêng theo từng user."""
-    try:
-        with open(CHAT_FILE, encoding="utf-8") as f:
-            data = json.load(f)
-            return data if isinstance(data, dict) else {}
-    except (FileNotFoundError, json.JSONDecodeError):
-        return {}
-
-
-def _save_user_chats(data):
-    """Ghi lịch sử chat an toàn bằng file tạm rồi thay thế file cũ."""
-    os.makedirs(os.path.dirname(CHAT_FILE), exist_ok=True)
-    temp_file = CHAT_FILE + ".tmp"
-    with open(temp_file, "w", encoding="utf-8") as f:
-        json.dump(data, f, ensure_ascii=False, indent=2)
-    os.replace(temp_file, CHAT_FILE)
 
 
 def _known_user(user_id):
@@ -176,6 +203,9 @@ def fallback_finpilot_reply(question, context=None):
             f"• P85: {vnd(p85)}\n"
             f"• Ngân sách: {vnd(budget)}\n\n"
             + (
+                "Chi tiêu thực tế đã vượt ngân sách. "
+                "Bạn nên dừng các khoản chi linh hoạt không cần thiết."
+                if spent > budget or forecast.get("status") == "actual_over" else
                 "Dự báo cho thấy có nguy cơ vượt ngân sách. "
                 "Bạn nên ưu tiên kiểm soát các khoản chi linh hoạt."
                 if float(p85) > budget else
@@ -272,19 +302,15 @@ class Handler(SimpleHTTPRequestHandler):
         path = urlparse(self.path).path
         if path == "/api/health":
             return self._json({"ok": True, "service": "FinPilot API"})
+        if path == "/api/chat/history":
+            params = parse_qs(urlparse(self.path).query)
+            user_id = _chat_user_id(params.get("user_id", [""])[0])
+            with _CHAT_LOCK:
+                messages = _load_chat_history().get(user_id, [])
+            return self._json({"user_id": user_id, "messages": messages})
         if path == "/api/profiles":
             profiles = _load_profiles()
             return self._json({"profiles": [{"user_id": k, "name": v.get("name", k)} for k, v in profiles.items()]})
-
-        if path == "/api/chat":
-            params = parse_qs(urlparse(self.path).query)
-            user_id = params.get("user_id", [""])[0].strip()
-            if not user_id or not _known_user(user_id):
-                return self._json({"error": "Không tìm thấy người dùng."}, 404)
-            with CHAT_LOCK:
-                chats = _load_user_chats()
-                messages = chats.get(user_id, [])
-            return self._json({"user_id": user_id, "messages": messages})
 
         if path == "/api/transactions":
             params = parse_qs(urlparse(self.path).query)
@@ -309,10 +335,14 @@ class Handler(SimpleHTTPRequestHandler):
                     if x.get("transaction_date", "")[:7] == month
                 ]
             else:
-                snapshot = _load_synthetic_snapshot(
-                    user_id, month, date.today().isoformat()
-                )
-                rows = snapshot.get("transactions", [])
+                as_of = date.today().isoformat()
+                snapshot = _load_synthetic_snapshot(user_id, month, as_of)
+                # Dữ liệu mẫu sinh sẵn cả tháng: chỉ hiện giao dịch đến hôm nay,
+                # khớp với mốc as_of mà engine dùng để tính dự báo ở trang Tổng quan.
+                rows = [
+                    x for x in snapshot.get("transactions", [])
+                    if x.get("transaction_date", "") <= as_of
+                ]
 
             manual = _load_user_transactions().get(user_id, [])
 
@@ -632,50 +662,25 @@ class Handler(SimpleHTTPRequestHandler):
                 })
 
             if path == "/api/chat":
-                user_id = str(body.get("user_id", "")).strip()
                 message = str(body.get("message", "")).strip()
                 context = body.get("financial_context") or {}
+                chat_user = _chat_user_id(
+                    body.get("user_id") or (context or {}).get("user_id")
+                )
 
-                if not user_id or not _known_user(user_id):
-                    return self._json({"error": "Không tìm thấy người dùng."}, 404)
                 if not message:
-                    return self._json({"error": "Vui lòng nhập câu hỏi."}, 400)
-                if not isinstance(context, dict):
-                    context = {}
+                    return self._json(
+                        {"error": "Vui lòng nhập câu hỏi."},
+                        400
+                    )
 
-                # Lấy lịch sử riêng của user trước khi gọi AI.
-                with CHAT_LOCK:
-                    chats = _load_user_chats()
-                    history = list(chats.get(user_id, []))
-
-                # Đưa một phần hội thoại cũ vào prompt để AI có ngữ cảnh
-                # tiếp nối sau khi reload hoặc chuyển qua lại giữa các user.
-                recent_history = history[-12:]
-                history_text = "\n".join(
-                    f"{'Người dùng' if item.get('role') == 'user' else 'FinPilot'}: "
-                    f"{str(item.get('content', ''))}"
-                    for item in recent_history
-                )
-                agent_prompt = (
-                    "Bạn là FinPilot Assistant. Hãy trả lời bằng tiếng Việt, "
-                    "dựa trên đúng dữ liệu tài chính được cung cấp. "
-                    "Không sử dụng thông tin của người dùng khác.\n\n"
-                    f"Mã người dùng hiện tại: {user_id}\n"
-                    f"Dữ liệu tài chính hiện tại: {json.dumps(context, ensure_ascii=False)}\n\n"
-                    + (f"Lịch sử hội thoại của riêng người dùng này:\n{history_text}\n\n" if history_text else "")
-                    + f"Câu hỏi mới: {message}"
-                )
-
-                mode = "agent"
-                summary = {}
-                events = []
                 try:
                     import tracing
                     from agent import answer
 
                     tracing.begin("web-chat")
                     try:
-                        agent_result = answer(agent_prompt)
+                        agent_result = answer(message, financial_context=context)
                         summary, events = tracing.end()
                     except Exception:
                         try:
@@ -684,6 +689,8 @@ class Handler(SimpleHTTPRequestHandler):
                             pass
                         raise
 
+                    # Agent có thể trả về {"output": "..."}.
+                    # Chỉ lấy nội dung câu trả lời, không trả nguyên dict.
                     if isinstance(agent_result, dict):
                         reply = (
                             agent_result.get("output")
@@ -694,50 +701,46 @@ class Handler(SimpleHTTPRequestHandler):
                         )
                     else:
                         reply = agent_result
+
                     if not isinstance(reply, str):
                         reply = json.dumps(reply, ensure_ascii=False)
-                    reply = reply.strip() or "Agent chưa trả về nội dung."
+
+                    result = {
+                        "reply": reply.strip() or "Agent chưa trả về nội dung.",
+                        "mode": "agent",
+                        "trace": summary or {},
+                        "events": events or []
+                    }
 
                 except Exception as exc:
                     print(
                         f"[FinPilot] Agent unavailable: "
                         f"{type(exc).__name__}: {exc}"
                     )
-                    mode = "fallback"
-                    reply = fallback_finpilot_reply(message, context)
-                    summary = {
-                        "model_calls": 0,
-                        "tool_calls": 0,
-                        "tokens_in": 0,
-                        "tokens_out": 0
+                    result = {
+                        "reply": fallback_finpilot_reply(message, context),
+                        "mode": "fallback",
+                        "trace": {
+                            "model_calls": 0,
+                            "tool_calls": 0,
+                            "tokens_in": 0,
+                            "tokens_out": 0
+                        }
                     }
 
-                now = datetime.now().isoformat(timespec="seconds")
-                history.extend([
-                    {"role": "user", "content": message, "timestamp": now},
-                    {"role": "assistant", "content": reply, "timestamp": now, "mode": mode}
-                ])
-                # Giới hạn lịch sử để file không tăng vô hạn.
-                history = history[-200:]
-                with CHAT_LOCK:
-                    chats = _load_user_chats()
-                    # Gộp với dữ liệu mới nhất để không ghi đè tin nhắn
-                    # nếu có hai request chat gần như đồng thời.
-                    latest_history = list(chats.get(user_id, []))
-                    latest_history.extend([
-                        {"role": "user", "content": message, "timestamp": now},
-                        {"role": "assistant", "content": reply, "timestamp": now, "mode": mode}
-                    ])
-                    chats[user_id] = latest_history[-200:]
-                    _save_user_chats(chats)
+                try:
+                    _append_chat(chat_user, message, result)
+                except OSError as exc:
+                    print(f"[FinPilot] Không lưu được lịch sử chat: {exc}")
+                return self._json(result)
 
-                return self._json({
-                    "user_id": user_id,
-                    "reply": reply,
-                    "mode": mode,
-                    "trace": summary or {},
-                    "events": events or []
-                })
+            if path == "/api/chat/clear":
+                user_id = _chat_user_id(body.get("user_id"))
+                with _CHAT_LOCK:
+                    history = _load_chat_history()
+                    history.pop(user_id, None)
+                    _save_chat_history(history)
+                return self._json({"ok": True, "user_id": user_id})
 
             return self._json({"error": "Endpoint không tồn tại."}, 404)
 
