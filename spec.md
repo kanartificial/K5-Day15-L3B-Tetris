@@ -13,7 +13,7 @@ Data BTC cấp đã dùng (nếu có — không commit nguyên file):
   2. Muốn theo dõi chi tiêu thì mở app ngân hàng xem lịch sử biến động số dư hoặc nhập tay/đồng bộ vào app ghi chép như Money Lover / bảng tính cá nhân.
   3. Cuối tuần hoặc gần cuối tháng mới cộng lại các khoản đã tiêu; gặp các khoản chuyển khoản VietQR thiếu ngữ cảnh, chuyển khoản nội bộ giữa bank–ví hoặc trả hộ chia tiền nhóm khiến tổng chi bị lệch.
   4. Chỉ phát hiện thiếu tiền khi số dư gần cạn hoặc sát hạn tiền nhà/trả góp, lúc đó không rõ nên cắt cụ thể khoản nào để kịp bù đắp.
-  *(Chờ chèn ảnh chụp màn hình từ tài khoản của thành viên nhóm, đã che thông tin cá nhân).*
+  *(Ảnh minh họa đã che thông tin: `evidence/images/chitieutheonhom1.jpg`, `evidence/images/chitieutheonhom2.jpg`).*
 - Công cụ / AI đang được dùng cho việc này (nếu có) + nguồn. Không kiểm được thì ghi "chưa kiểm": MoniAI của Ví MoMo 
 
 ## §1. Người dùng & bằng chứng *(guide 1.1, 1.2)*
@@ -24,7 +24,7 @@ Data BTC cấp đã dùng (nếu có — không commit nguyên file):
   - **Hỏng ở đâu:** App truyền thống chỉ thống kê quá khứ chứ không dự báo dòng tiền tương lai theo chu kỳ lương (Safe-to-Spend) và không chỉ ra phương án cắt giảm khả thi theo thói quen; dữ liệu giao dịch VietQR tại VN thiếu mã danh mục, dễ lẫn chuyển khoản nội bộ và tiền chia nhóm.
   - **Vì sao chưa bỏ:** Vẫn cần xem số dư và lịch sử giao dịch thô để ước lượng số tiền còn lại trong tháng dù thiếu công cụ ra quyết định.
 - Pain (KHÔNG chữ AI): Người trẻ mới đi làm (20–30 tuổi) khi quản lý chi tiêu hằng tháng thường không nhận ra nguy cơ vượt ngân sách đủ sớm và không biết nên cắt giảm khoản nào, dẫn đến thiếu hụt tài chính cuối tháng.
-- Bằng chứng — số chính + kết luận (chi tiết: `evidence/summary.md`): __ *(chưa có số đo thực tế; giả thuyết ban đầu: người dùng chỉ nhận ra chi tiêu quá mức khi ngân sách gần cạn hoặc đã vượt hạn mức — dự kiến kiểm chứng qua khảo sát Google Forms / phỏng vấn và cập nhật vào `evidence/summary.md`)*.
+- Bằng chứng — số chính + kết luận (chi tiết: `evidence/summary.md`): Khảo sát (`n=21`) ghi nhận **15/21 (71%)** vượt ít nhất 1 trong 3 tháng gần đây, chỉ **4/21 (19%)** nhận ra *trước khi* vượt (**12/21 = 57%** vượt mà không nhận ra đủ sớm), **15/21 (71%)** thiếu tiền trước kỳ thu nhập mới, **18/21 (86%)** khó kiểm soát khoản nhỏ/không nhận ra nguy cơ vượt, và **7/21 (33%)** không biết nên cắt khoản nào (**20/21** muốn có gợi ý cắt giảm cá nhân hóa). Đào review Google Play (`N=2.717`) cho **12/2.717 (0,44%)** chạm trực tiếp pain (dùng lấy ví dụ nguyên văn). **Kết luận:** xác nhận giả thuyết pain (đạt điều kiện a `12/21` và điều kiện b `21/21` trên khảo sát); lưu ý cả hai nguồn là tự báo cáo, chưa đo hành vi từ sao kê thật.
 
 ## §2. Impact & quyết định chọn *(guide 1.3)*
 
@@ -75,14 +75,14 @@ flowchart TD
 ```
   
 - **Hình dạng:** [x] workflow cố định · [ ] một agent · [ ] nhiều agent — Luồng chạy theo đường ống tất định qua 3 tầng rõ ràng (Forecasting → Constrained Optimization → LLM Coaching; cộng thêm nhánh tính toán trực tiếp cho thanh trượt What-If). **Không** chọn một agent tự vòng lặp hay nhiều agent vì bài toán tài chính cá nhân đòi hỏi độ chính xác số liệu tuyệt đối, thời gian phản hồi <50ms khi kéo What-If, kiểm soát được PII và tránh chi phí/rủi ro LLM tự chọn sai công cụ hay bịa số.
-- **AI dựa vào đâu** — mỗi công cụ *(thiết kế mục tiêu cho `codebase/tools.py`; hiện `codebase/tools.py` trong repo mới có hàm mẫu `search_example`, cần đồng bộ khi cài đặt)*:
+- **AI dựa vào đâu** — mỗi công cụ (đã cài đặt đủ 4 `@tool` trong `codebase/tools.py` và điều phối theo workflow cố định tại `codebase/agent.py`):
 
   | Công cụ | Input | Output | Tác động ra ngoài? |
   |---|---|---|---|
-  | `get_cashflow_forecast` *(thiết kế)* | Lịch sử giao dịch đã chuẩn hóa, ngày hiện tại, ngày nhận lương, hóa đơn định kỳ | Chuỗi dự báo P50/P85 đến cuối kỳ, số dư dự kiến, `Safe-to-Spend` mỗi ngày, `data_completeness_score` | Không (chỉ đọc & tính toán) |
-  | `optimize_budget_reduction` *(thiết kế)* | Mục tiêu cắt giảm $\Delta S$, chi tiêu theo danh mục, trọng số độ khó cắt $w_i$ (khóa $w_i = \infty$ với khoản cố định) | JSON chốt cứng danh mục cần giảm, số tiền cắt, số lần giao dịch tương ứng (đã ẩn danh PII) | Không (chỉ trả phương án đề xuất) |
-  | `simulate_what_if` *(thiết kế)* | Danh sách điều chỉnh từ thanh trượt What-If (vd giảm đơn đồ ăn khuya/tuần, tắt subscription) | Chuỗi P50/P85 mới và `Safe-to-Spend` mới | Không (mô phỏng tạm thời) |
-  | `ingest_transaction_draft` *(P1 — phụ trợ, thiết kế)* | Tin nhắn biến động số dư / văn bản nhập nhanh / giao dịch giả lập | Bản ghi nháp đã gắn cờ `is_transfer`, `is_reimbursable`, danh mục dự kiến chờ người dùng xác nhận | Không (chỉ tạo bản nháp chờ người duyệt) |
+  | `get_cashflow_forecast` | `user_id`/`month`/`as_of` hoặc `case_id` (`TC01–TC19`) hoặc `payload_json` | Dict gồm `status`, `spent`, `forecast`, `forecast_p50`, `forecast_p85`, `gap`, `safe_to_spend_daily`, `data_completeness_score`, `category_breakdown` | Không (chỉ đọc & tính toán) |
+  | `optimize_budget_reduction` | `forecast_data` (từ `get_cashflow_forecast`) và `target_saving` (VND) | JSON phương án cắt giảm tối ưu (khóa danh mục thiết yếu/bảo vệ, ẩn danh PII) | Không (chỉ trả phương án đề xuất) |
+  | `simulate_what_if` | `forecast_data` và `adjustments` (tỉ lệ cắt theo danh mục hoặc `amount_cut`) | Dict chứa `new_forecast`, `new_forecast_p50`/`p85`, `new_gap`, `new_safe_to_spend_daily` | Không (mô phỏng tạm thời) |
+  | `ingest_transaction_draft` *(P1 — phụ trợ)* | `raw_text` (câu nhập chi tiêu hoặc tin nhắn biến động số dư) | Bản nháp giao dịch đã ẩn danh PII, gắn cờ `is_transfer`, `is_reimbursable`, `draft_status="pending_user_approval"` | Không (chỉ tạo bản nháp chờ người duyệt) |
 
 - **Mức tự động:** [x] AI gợi ý, người quyết · [ ] AI tự làm khi chắc, chuyển người khi không · [ ] AI tự làm — Engine thống kê/tối ưu tính toán nguy cơ vượt ngân sách và mức cắt; AI chỉ diễn giải thành 2–3 phương án cắt giảm; người dùng quyết định áp dụng, điều chỉnh trên thanh trượt What-If, bỏ qua hoặc tạm tắt. Sai sót trong gợi ý tài chính ảnh hưởng trực tiếp đến sinh hoạt và kế hoạch trả nợ/tiền nhà của người dùng, nên chi phí sửa sai cao nếu tự hành động.
 - **Chỗ chặn rủi ro**:
@@ -100,10 +100,11 @@ flowchart TD
   | Ẩn danh PII trước khi ra LLM ngoài | Strip toàn bộ tên người nhận, số tài khoản và chi tiết nhạy cảm trước khi truyền ngữ cảnh sang `LLM Coaching Layer` (`call_model`). |
 
 - Phần nào còn giả (công cụ trả dữ liệu giả, model chế độ giả…) — ghi rõ, không giả làm thật:
-  - Dữ liệu giao dịch đầu vào là bộ dữ liệu tổng hợp (`synthetic persona`: nhân viên văn phòng lương 18 triệu, nhận lương ngày mùng 5, ~250–300 giao dịch trong 3 tháng, cài sẵn áp lực tiền nhà 4,5 triệu, 9 đơn đồ ăn khuya, 1 subscription 199k và các tình huống nhiễu VN).
-  - Thông báo biến động số dư ngân hàng / Open Banking là **mock**: dùng nút *"Giả lập thông báo ngân hàng mới"* thay cho đọc SMS/Notification Android thật hay kết nối ngân hàng thật.
-  - Tài khoản người dùng là 1 tài khoản demo duy nhất (không có Auth).
-  - *(Ghi chú hiện trạng code: `codebase/agent.py`, `codebase/tools.py`, `codebase/ai.py` hiện đang ở bản khung mặc định của repo, chưa cài đặt các module P0 trên).*
+  - **Phần thật:** Lời gọi LLM đã nối model thật (`gpt-6-luna`) trong `codebase/ai.py`; 4 `@tool` tính toán/mô phỏng/nháp trong `codebase/tools.py`, luồng workflow trong `codebase/agent.py`, và giao diện web FinPilot (`codebase/web_server.py`, `codebase/frontend/index.html`) chạy qua `python run.py`.
+  - **Phần còn giả / tổng hợp:**
+    - Dữ liệu giao dịch là dữ liệu mô phỏng/mẫu (`data/synthetic`: 30 user, 90 ngân sách, 6.259 giao dịch; `data/demo`: 19 ca đối chiếu `TC01–TC19`; hồ sơ demo web tại `data/user_profiles.json`, `data/user_transactions.json`).
+    - Thông báo biến động số dư ngân hàng / Open Banking là **mock**: tạo bản nháp qua `ingest_transaction_draft` hoặc nhập giả lập trên giao diện thay cho đọc SMS/Notification Android thật hay kết nối ngân hàng thật.
+    - Tài khoản người dùng là hồ sơ demo (không có Auth).
 
 ## §5. Chỗ khó — 4 lớp + ≥6 kịch bản + 2 tấn công *(guide 2.3)*
 
@@ -129,9 +130,9 @@ flowchart TD
 - **Trường hợp đặc thù lĩnh vực (lớp 4):** Khi có khoản chi cố định lớn sắp đến hạn (tiền nhà, trả góp), hệ thống ưu tiên cảnh báo theo cận trên rủi ro (P85, asymmetric loss) và khóa cứng không cho phép cắt giảm vào các khoản cố định để bảo vệ người dùng khỏi hụt tiền cuối tháng.
 
 ## §7. Đánh giá & chuẩn "đạt" *(guide 2.4, 4.1)*
-- Data card: `data/DATA_CARD.md` · bộ câu thử: `eval/benchmark.csv` — 15 câu (thuong 6 · kho 7 · tu_choi 2) · metric: `eval/metric_spec.yaml` (3 metric)
+- Data card: `data/DATA_CARD.md` · bộ câu thử: `eval/benchmark.csv` — 30 câu (thuong 11 · kho 15 · tu_choi 4) · metric: `eval/metric_spec.yaml` (3 metric)
 - **Chuẩn "đạt"** (chốt **trước 19:30 Thứ Sáu 27/11**, giữ nguyên đến 23:59 Thứ Bảy 28/11): "Đạt khi ≥ 80% câu qua (Precision cảnh báo ≥ 80%, Recall phát hiện nguy cơ ≥ 80%, ≥ 80% đề xuất cắt giảm phù hợp), và 100% câu `tu_choi` từ chối đúng, không bịa số hay cắt khoản thiết yếu/bảo vệ."
-- Kết quả: lượt 1 __/__ (__%) · lượt 2 __/__ (__%) — run ID: __ / __ → chi tiết `eval/report.md`, hồ sơ `eval/README.md`
+- Kết quả: lượt 1 8/30 (27%) · lượt 2 __/__ (__%) — run ID: `run-1@20261127-231844` / __ → chi tiết `eval/report.md`, hồ sơ `eval/README.md`
 
 ## §8. Chi phí khi dùng thật *(guide 4.2)*
 - Persona + giá: `cost/personas.yaml` · lượt mô phỏng: `cost/simulate-__.csv` (__ phiên) *(chờ chạy `python run.py simulate` sau khi điền `cost/personas.yaml` và nối model)*
@@ -166,7 +167,8 @@ flowchart TD
 
 | Thời điểm | Đổi gì | Vì sao (trỏ về câu thử / lỗi / bằng chứng nào) |
 |---|---|---|
-|  |  |  |
+| 27/11 22:21 | Nối model thật (`gpt-6-luna`) vào `codebase/ai.py` và mở rộng `eval/benchmark.csv` từ 15 lên 30 câu (`11 thuong · 15 kho · 4 tu_choi`). | Chuẩn bị CP3, đáp ứng đủ ngưỡng 20–30 câu trước khi chạy đánh giá hợp lệ. |
+| 27/11 23:18 | Chạy lượt 1 trên đủ 30 câu (`eval/run-1.csv`, `run-1@20261127-231844`, `8/30`, 27%). | Xác lập baseline CP3; phát hiện lỗi rơi về hồ sơ mặc định `U010`/`cold_payload` (`11` câu), chưa bóc tách số văn xuôi (`8` câu), `B19` (nháp chuyển khoản nội bộ), `B20`, `B24` (rò rỉ tóm tắt `U017`). |
 
 **Sau CP4 (đến 23:59 Thứ Bảy 28/11)** (sửa theo góp ý — không sửa chuẩn "đạt", câu thử, số bằng chứng, kết quả các lượt đã chạy)
 
