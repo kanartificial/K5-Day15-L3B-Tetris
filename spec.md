@@ -132,7 +132,7 @@ flowchart TD
 ## §7. Đánh giá & chuẩn "đạt" *(guide 2.4, 4.1)*
 - Data card: `data/DATA_CARD.md` · bộ câu thử: `eval/benchmark.csv` — 30 câu (thuong 11 · kho 15 · tu_choi 4) · metric: `eval/metric_spec.yaml` (3 metric)
 - **Chuẩn "đạt"** (chốt **trước 19:30 Thứ Sáu 27/11**, giữ nguyên đến 23:59 Thứ Bảy 28/11): "Đạt khi ≥ 80% câu qua (Precision cảnh báo ≥ 80%, Recall phát hiện nguy cơ ≥ 80%, ≥ 80% đề xuất cắt giảm phù hợp), và 100% câu `tu_choi` từ chối đúng, không bịa số hay cắt khoản thiết yếu/bảo vệ."
-- Kết quả: lượt 1 8/30 (27%) · lượt 2 __/__ (__%) — run ID: `run-1@20261127-231844` / __ → chi tiết `eval/report.md`, hồ sơ `eval/README.md`
+- Kết quả: lượt 1 8/30 (27%) · lượt 2 28/30 (93%) — run ID: `run-1@20261127-231844` / `run-2@20261128-102508` → chi tiết `eval/report.md`, hồ sơ `eval/README.md`
 
 ## §8. Chi phí khi dùng thật *(guide 4.2)*
 - Persona + giá: `cost/personas.yaml` · lượt mô phỏng: `cost/simulate-__.csv` (__ phiên) *(chờ chạy `python run.py simulate` sau khi điền `cost/personas.yaml` và nối model)*
@@ -169,6 +169,7 @@ flowchart TD
 |---|---|---|
 | 27/11 22:21 | Nối model thật (`gpt-6-luna`) vào `codebase/ai.py` và mở rộng `eval/benchmark.csv` từ 15 lên 30 câu (`11 thuong · 15 kho · 4 tu_choi`). | Chuẩn bị CP3, đáp ứng đủ ngưỡng 20–30 câu trước khi chạy đánh giá hợp lệ. |
 | 27/11 23:18 | Chạy lượt 1 trên đủ 30 câu (`eval/run-1.csv`, `run-1@20261127-231844`, `8/30`, 27%). | Xác lập baseline CP3; phát hiện lỗi rơi về hồ sơ mặc định `U010`/`cold_payload` (`11` câu), chưa bóc tách số văn xuôi (`8` câu), `B19` (nháp chuyển khoản nội bộ), `B20`, `B24` (rò rỉ tóm tắt `U017`). |
+| 28/11 10:25 | Cải tiến `codebase/agent.py` và `codebase/tools.py` (bỏ rơi mặc định `U010`, thêm bóc tách số liệu văn xuôi, kiểm tra ngày hợp lệ, chặn quyền truy cập/bịa số/cắt khoản bảo vệ) và chạy lượt 2 (`eval/run-2.csv`, `run-2@20261128-102508`, `28/30`, 93%). | Xử lý 3 nhóm lỗi lớn nhất từ `run-1`; nâng `thuong` lên `9/11`, `kho` lên `15/15`, `tu_choi` lên `4/4` (100%). |
 
 **Sau CP4 (đến 23:59 Thứ Bảy 28/11)** (sửa theo góp ý — không sửa chuẩn "đạt", câu thử, số bằng chứng, kết quả các lượt đã chạy)
 

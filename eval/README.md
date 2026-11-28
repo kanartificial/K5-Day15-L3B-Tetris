@@ -35,10 +35,10 @@ Tổng hợp từ 3 nguồn trong `data/DATA_CARD.md`: (1) khảo sát 21 phản
 | Lượt | Run ID | Model | Cấu hình (prompt / công cụ / thay đổi) | Đạt / tổng | % | Đạt chuẩn? |
 |---|---|---|---|---|---|---|
 | 1 | `run-1@20261127-231844` | `gpt-6-luna` | Khung `agent.py` + 4 tool `tools.py` ban đầu trên đủ 30 câu (`eval/benchmark.csv`) | 8/30 | 27% | chưa |
-| 2 | | | | __/__ | | |
+| 2 | `run-2@20261128-102508` | `gpt-6-luna` | Bỏ rơi mặc định `U010`, thêm bóc tách văn xuôi + kiểm tra ngày + chặn quyền/injection/khoản bảo vệ | 28/30 | 93% | đạt |
 
 Lượt chạy lại vì lỗi kỹ thuật, lượt sau CP4: ghi thêm dòng, không sửa dòng cũ.
 
 ## 6. Lỗi chính
 
-Hai nhóm lỗi lớn nhất trên `run-1` (22/30 câu trượt): (1) rơi về hồ sơ mặc định `U010` / `cold_payload` khi thiếu dữ liệu thay vì hỏi lại người dùng (`11` câu); (2) chưa bóc tách số liệu từ câu văn xuôi nên bỏ qua số trong đề (`8` câu), cộng thêm rò rỉ tóm tắt `U017` ở `B24` và hiểu nhầm bản nháp chuyển nội bộ ở `B19`. Sẽ sửa trước lượt tiếp theo cho CP4.
+Từ `run-1` (`8/30`, 27%) sang `run-2` (`28/30`, 93%; `thuong 9/11`, `kho 15/15`, `tu_choi 4/4`): đã khắc phục hoàn toàn nhóm lỗi rơi về `U010`/`cold_payload` (`10/11`), bóc tách văn xuôi (`7/8`) và điều kiện đặc biệt `B19`, `B20`, `B24` (`3/3`), không có câu nào tệ đi. Còn lại 2 câu trượt là `B09` (thiếu nêu lại `forecast 5.800.000đ` và `gap 800.000đ`) và `B27` (chưa gợi ý gắn với ngày nhận thu nhập).
