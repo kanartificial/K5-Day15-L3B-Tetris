@@ -121,6 +121,20 @@ def _detect_guardrail(text: str) -> str | None:
     return None
 
 
+def _foreign_profile_guard(text: str, financial_context: dict | None) -> str | None:
+    """Phiên web đang mở hồ sơ A mà câu hỏi nhắc mã hồ sơ khác (Uxxx / NEWxxx) → chặn, không nạp hồ sơ đó.
+    Chỉ áp dụng khi có ngữ cảnh phiên web (financial_context.user_id); CLI/eval giữ nguyên định tuyến Uxxx."""
+    if not isinstance(financial_context, dict):
+        return None
+    current = str(financial_context.get("user_id") or "").strip().upper()
+    if not current:
+        return None
+    mentioned = set(re.findall(r"\b(U\d{3}|NEW\d{3})\b", text.upper()))
+    if mentioned - {current}:
+        return "unauthorized_profile_access"
+    return None
+
+
 def _parse_what_if_adjustments(text: str) -> dict:
     lower = text.lower()
     is_what_if = any(k in lower for k in ("mô phỏng", "what-if", "what if", "nếu giảm", "nếu cắt", "nếu tắt"))
@@ -602,7 +616,7 @@ def answer(text: str, financial_context: dict | None = None) -> dict:
         return {"output": context["refusal_message"] if reply["model"] == "fake" else reply["text"]}
 
     # Bước 1: Kiểm tra rào chắn an toàn, quyền truy cập & phạm vi
-    guard = _detect_guardrail(user_text)
+    guard = _detect_guardrail(user_text) or _foreign_profile_guard(user_text, financial_context)
     if guard:
         note(f"dừng: chặn {guard}")
         messages = {
@@ -677,6 +691,16 @@ def answer(text: str, financial_context: dict | None = None) -> dict:
     elif tc_match:
         forecast = get_cashflow_forecast(case_id=tc_match.group(1))
         context["forecast"] = forecast
+    elif (
+        uid_match
+        and isinstance(financial_context, dict)
+        and str(financial_context.get("user_id") or "").upper() == uid_match.group(1)
+        and isinstance(financial_context.get("forecast"), dict)
+        and financial_context["forecast"]
+    ):
+        # Phiên web hỏi về chính hồ sơ đang mở: dùng đúng số liệu Dashboard đang hiển thị (cùng mốc as_of).
+        context["forecast"] = _sanitize_web_forecast(financial_context["forecast"])
+        note("nạp ngữ cảnh tài chính từ phiên web đang mở")
     elif uid_match:
         forecast = get_cashflow_forecast(
             user_id=uid_match.group(1),

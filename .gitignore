@@ -32,6 +32,9 @@ traces/simulate-error.jsonl
 traces/simulate-stopped.jsonl
 # Export khảo sát còn tên / email / SĐT: chỉ commit bản đã ẩn danh
 evidence/**/raw-*
+# Lịch sử chat do người dùng gõ trên giao diện demo (có thể chứa thông tin cá nhân): không commit
+data/chat_history.json
+data/chat_history.json.tmp
 # Nguyên file data BTC cấp (data/preclass, data/training-ops… của repo đề): để ở đây, không commit
 data-btc
 data-btc/

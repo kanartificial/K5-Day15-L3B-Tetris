@@ -86,7 +86,7 @@
         .main {
             padding: 25px 30px;
             max-width: 1450px;
-            margin: auto;
+            margin: 0 auto;
             flex: 1;
             min-width: 0
         }
@@ -162,6 +162,21 @@
             background: #e9f8f2;
             color: var(--green);
             font-weight: 700
+        }
+
+        .badge.warn {
+            background: #fdf1de;
+            color: #a8610a
+        }
+
+        .badge.danger {
+            background: #fde8e6;
+            color: #b42318
+        }
+
+        .badge.neutral {
+            background: #eef0f4;
+            color: #5b6474
         }
 
         .grid {
@@ -357,9 +372,33 @@
         }
 
         .chat {
-            height: 390px;
+            height: min(560px, calc(100vh - 260px));
+            min-height: 380px;
             display: flex;
             flex-direction: column
+        }
+
+        .chathead {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 10px
+        }
+
+        .linkbtn {
+            background: none;
+            border: 0;
+            color: var(--muted);
+            font: inherit;
+            font-size: 12px;
+            cursor: pointer;
+            padding: 4px 6px;
+            border-radius: 6px
+        }
+
+        .linkbtn:hover {
+            color: var(--purple);
+            background: #f2f1f8
         }
 
         .messages {
@@ -375,8 +414,53 @@
             padding: 10px 12px;
             border-radius: 11px;
             max-width: 85%;
+            font-size: 14px;
+            line-height: 1.5;
+            white-space: pre-wrap;
+            overflow-wrap: anywhere
+        }
+
+        .msg.md {
+            white-space: normal
+        }
+
+        .msg.md p {
+            margin: 0 0 6px
+        }
+
+        .msg.md p:last-child,
+        .msg.md ul:last-child {
+            margin-bottom: 0
+        }
+
+        .msg.md ul {
+            margin: 0 0 6px;
+            padding-left: 18px
+        }
+
+        .msg.md code {
             font-size: 12px;
-            white-space: pre-wrap
+            background: rgba(0, 0, 0, .06);
+            padding: 1px 4px;
+            border-radius: 4px
+        }
+
+        .msg .meta {
+            display: block;
+            margin-top: 6px;
+            font-size: 10px;
+            opacity: .65
+        }
+
+        .msg.pending {
+            color: var(--muted);
+            font-style: italic
+        }
+
+        .daysep {
+            align-self: center;
+            font-size: 11px;
+            color: var(--muted)
         }
 
         .bot {
@@ -792,14 +876,15 @@
                 </div>
 
                 <div class="card chat">
-                    <b>✧ FinPilot Coach</b>
-                    <div class="messages" id="messages">
-                        <div class="msg bot">
-                            Xin chào! Mình có thể giúp bạn kiểm tra ngân sách, dự báo và gợi ý tiết kiệm.
-                        </div>
+                    <div class="chathead">
+                        <b>✧ FinPilot Coach <span class="small" id="chat-user"></span></b>
+                        <button class="linkbtn" type="button" id="clear-chat">Xóa lịch sử</button>
+                    </div>
+                    <div class="messages" id="messages" aria-live="polite">
+                        <div class="msg bot">Xin chào! Mình có thể giúp bạn kiểm tra ngân sách, dự báo và gợi ý tiết kiệm.</div>
                     </div>
                     <form class="chatform" id="chat-form">
-                        <input id="chat-input" placeholder="Nhập câu hỏi…">
+                        <input id="chat-input" placeholder="Nhập câu hỏi…" maxlength="2000" autocomplete="off">
                         <button class="btn primary" id="send">Gửi</button>
                     </form>
                     <div class="foot" id="trace"></div>
@@ -979,7 +1064,17 @@
             }[p];
 
             if (p === 'transactions') loadTx();
+            if (p === 'assistant') {
+                $('messages').scrollTop = $('messages').scrollHeight;
+            }
+            try { history.replaceState(null, '', '#' + p); } catch (e) { }
         }
+
+        // Giữ trang đang xem khi F5 (vd …/#assistant)
+        (() => {
+            const p = location.hash.slice(1);
+            if (['dashboard', 'transactions', 'assistant', 'whatif'].includes(p)) go(p);
+        })();
 
         document.querySelectorAll('.nav').forEach(x => {
             x.onclick = () => go(x.dataset.page);
@@ -1001,6 +1096,24 @@
       </div>
     `).join('')
                 : '<div class="sub">Chưa có dữ liệu danh mục.</div>';
+        }
+
+        // Tổng mức giảm đề xuất và phần còn thiếu (lấy nguyên từ engine, không tự tính lại).
+        function recSummary(opt, f) {
+            if (!opt) return '';
+            const saved = opt.selected_saving || 0;
+            const left = opt.remaining_gap || 0;
+            let note;
+            if (left > 0) {
+                note = f.status === 'actual_over'
+                    ? `Đã vượt ngân sách thực tế. Áp dụng hết các gợi ý vẫn còn thiếu <b>${money(left)}</b>.`
+                    : `Áp dụng hết các gợi ý vẫn còn thiếu <b>${money(left)}</b> so với ngân sách.`;
+            } else {
+                note = 'Áp dụng các gợi ý này thì dự báo về trong ngân sách.';
+            }
+            return `
+      <div class="line"><span>Tổng giảm đề xuất</span><b>${money(saved)}</b></div>
+      <div class="notice ${left > 0 ? 'warn' : ''}" style="margin-top:8px">${note}</div>`;
         }
 
         function render(d) {
@@ -1029,6 +1142,11 @@
                 actual_over: 'Đã vượt ngân sách',
                 forecast_over: 'Có nguy cơ vượt ngân sách'
             }[f.status] || 'Đang theo dõi ngân sách';
+            $('health').className = 'badge ' + ({
+                actual_over: 'danger',
+                forecast_over: 'warn',
+                insufficient_data: 'neutral'
+            }[f.status] || '');
 
             $('days').textContent = `Còn ${f.days_left ?? '—'} ngày`;
 
@@ -1065,7 +1183,7 @@
         <span>${esc(x.category_vi || names[x.category] || x.category)}</span>
         <b>Giảm ${money(x.saving_amount)}</b>
       </div>
-    `).join('')
+    `).join('') + recSummary(d.optimization, f)
                 : 'Chưa có đề xuất hoặc chưa đủ dữ liệu.';
         }
 
@@ -1102,6 +1220,8 @@
             } else {
                 loadOverview();
                 loadTx();
+                $('trace').textContent = '';
+                loadChatHistory();
             }
         };
 
@@ -1155,6 +1275,7 @@
 
                 await loadOverview();
                 await loadTx();
+                await loadChatHistory();
                 toast('Đã tạo hồ sơ thành công');
             } catch (e) {
                 toast(e.message);
@@ -1203,8 +1324,8 @@
           <tr>
             <td>${esc(x.transaction_date)}</td>
             <td>
-              <b>${esc(x.description || 'Khoản chi')}</b>
-              <div class="small">${esc(x.transaction_id || '')}</div>
+              <b>${esc(x.description || names[x.category] || 'Khoản chi')}</b>
+              <div class="small">${esc(x.transaction_id || '')}${x.description ? '' : ' · dữ liệu mẫu'}</div>
             </td>
             <td><span class="tag">${esc(names[x.category] || x.category)}</span></td>
             <td>${x.is_essential ? 'Thiết yếu' : 'Linh hoạt'}</td>
@@ -1283,22 +1404,129 @@
            AI CHAT
         ========================= */
 
-        function addMsg(t, c) {
-            const x = document.createElement('div');
+        const WELCOME = 'Xin chào! Mình có thể giúp bạn kiểm tra ngân sách, dự báo và gợi ý tiết kiệm.';
+
+        // Markdown tối giản cho câu trả lời của bot: **đậm**, *nghiêng*, `code`, gạch đầu dòng.
+        // Escape HTML trước rồi mới gắn thẻ, nên nội dung từ model không chèn được HTML.
+        function md(t) {
+            const inline = s => esc(s)
+                .replace(/\*\*(.+?)\*\*/g, '<b>$1</b>')
+                .replace(/`([^`]+)`/g, '<code>$1</code>')
+                .replace(/(^|[\s(])\*([^*\s][^*]*?)\*(?=[\s).,;:!?]|$)/g, '$1<i>$2</i>');
+            const out = [];
+            let list = null;
+            String(t ?? '').split('\n').forEach(line => {
+                const m = line.match(/^\s*[-*•]\s+(.*)$/);
+                if (m) {
+                    if (!list) { list = []; out.push(list); }
+                    list.push(inline(m[1]));
+                } else {
+                    list = null;
+                    if (line.trim()) out.push(inline(line));
+                }
+            });
+            return out.map(x => Array.isArray(x)
+                ? '<ul>' + x.map(li => `<li>${li}</li>`).join('') + '</ul>'
+                : `<p>${x}</p>`).join('');
+        }
+
+        function fmtTime(ts) {
+            if (!ts) return '';
+            const d = new Date(ts);
+            if (isNaN(d)) return '';
+            return d.toLocaleString('vi-VN', { hour: '2-digit', minute: '2-digit', day: '2-digit', month: '2-digit' });
+        }
+
+        function setMsg(x, t, c, meta) {
             x.className = 'msg ' + c;
-            x.textContent = t;
+            if (c.includes('bot') && !c.includes('pending')) {
+                x.classList.add('md');
+                x.innerHTML = md(t);
+            } else {
+                x.textContent = t;
+            }
+            if (meta) {
+                const m = document.createElement('span');
+                m.className = 'meta';
+                m.textContent = meta;
+                x.append(m);
+            }
+        }
+
+        function addMsg(t, c, meta) {
+            const x = document.createElement('div');
+            setMsg(x, t, c, meta);
             $('messages').append(x);
             $('messages').scrollTop = $('messages').scrollHeight;
             return x;
         }
 
-        async function chat(t) {
-            if (!t.trim()) return;
+        function chatUser() {
+            const u = $('user-select').value;
+            return u && u !== 'NEW' ? u : (currentData?.user_id || 'U010');
+        }
 
-            addMsg(t, 'user');
+        function traceLabel(mode, z) {
+            if (mode === 'fallback') return 'Chế độ dự phòng, không dùng LLM';
+            z = z || {};
+            return `Model calls ${z.model_calls || 0} · Tool calls ${z.tool_calls || 0}`;
+        }
+
+        async function loadChatHistory() {
+            const u = chatUser();
+            $('chat-user').textContent = '· ' + u;
+            $('messages').innerHTML = '';
+            addMsg(WELCOME, 'bot');
+            try {
+                const r = await fetch(`/api/chat/history?user_id=${encodeURIComponent(u)}`);
+                const d = await r.json();
+                if (!r.ok) throw Error(d.error || 'Không tải được lịch sử chat');
+                if (chatUser() !== u) return; // người dùng đã đổi hồ sơ trong lúc tải
+                const items = d.messages || [];
+                if (items.length) {
+                    const sep = document.createElement('div');
+                    sep.className = 'daysep';
+                    sep.textContent = `Lịch sử đã lưu · ${items.length} tin`;
+                    $('messages').append(sep);
+                }
+                items.forEach(m => addMsg(
+                    m.text,
+                    m.role === 'user' ? 'user' : 'bot',
+                    fmtTime(m.ts) + (m.role === 'user' ? '' : ' · ' + traceLabel(m.mode, m.trace))
+                ));
+            } catch (e) {
+                toast(e.message);
+            }
+        }
+
+        $('clear-chat').onclick = async () => {
+            const u = chatUser();
+            if (!confirm(`Xóa toàn bộ lịch sử chat của ${u}?`)) return;
+            try {
+                const r = await fetch('/api/chat/clear', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ user_id: u })
+                });
+                if (!r.ok) throw Error('Không xóa được lịch sử');
+                $('trace').textContent = '';
+                await loadChatHistory();
+                toast('Đã xóa lịch sử chat');
+            } catch (e) {
+                toast(e.message);
+            }
+        };
+
+        let chatBusy = false;
+
+        async function chat(t) {
+            if (!t.trim() || chatBusy) return;
+            chatBusy = true;
+
+            addMsg(t, 'user', fmtTime(new Date().toISOString()));
             $('chat-input').value = '';
 
-            const p = addMsg('FinPilot đang phân tích…', 'bot');
+            const p = addMsg('FinPilot đang phân tích…', 'bot pending');
             $('send').disabled = true;
 
             try {
@@ -1309,6 +1537,7 @@
                     },
                     body: JSON.stringify({
                         message: t,
+                        user_id: chatUser(),
                         financial_context: currentData || {}
                     })
                 });
@@ -1325,28 +1554,20 @@
                     reply = reply.output ?? reply.reply ?? reply.response
                         ?? JSON.stringify(reply);
                 }
-                p.textContent = String(reply || 'Chưa có phản hồi.');
+                const label = traceLabel(d.mode, d.trace);
+                setMsg(p, String(reply || 'Chưa có phản hồi.'), 'bot',
+                    fmtTime(new Date().toISOString()) + ' · ' + label);
 
-                // Hiển thị chế độ hoạt động
-                const modeLabel = d.mode === 'fallback'
-                    ? 'FinPilot Assistant · Offline'
-                    : 'FinPilot AI · Agent';
-
-                $('trace').textContent = modeLabel;
-
-                if (d.mode === 'fallback') {
-                    $('trace').textContent +=
-                        ' · Chế độ dự phòng, không sử dụng LLM';
-                } else {
-                    const z = d.trace || {};
-                    $('trace').textContent +=
-                        ` · Model calls ${z.model_calls || 0}` +
-                        ` · Tool calls ${z.tool_calls || 0}`;
-                }
+                $('trace').textContent =
+                    (d.mode === 'fallback' ? 'FinPilot Assistant · Offline' : 'FinPilot AI · Agent') +
+                    ' · ' + label;
             } catch (e) {
-                p.textContent = e.message;
+                setMsg(p, '⚠ ' + e.message + ' (tin này chưa được lưu)', 'bot');
             } finally {
+                chatBusy = false;
                 $('send').disabled = false;
+                $('messages').scrollTop = $('messages').scrollHeight;
+                $('chat-input').focus();
             }
         }
 
@@ -1439,6 +1660,7 @@
                 await restoreUsers();
                 await loadOverview();
                 await loadTx();
+                await loadChatHistory();
             })
             .catch(() => toast('Không kết nối được API. Hãy chạy python run.py'));
     </script>
