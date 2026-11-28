@@ -135,10 +135,10 @@ flowchart TD
 - Kết quả: lượt 1 8/30 (27%) · lượt 2 28/30 (93%) — run ID: `run-1@20261127-231844` / `run-2@20261128-102508` → chi tiết `eval/report.md`, hồ sơ `eval/README.md`
 
 ## §8. Chi phí khi dùng thật *(guide 4.2)*
-- Persona + giá: `cost/personas.yaml` · lượt mô phỏng: `cost/simulate-__.csv` (__ phiên) *(chờ chạy `python run.py simulate` sau khi điền `cost/personas.yaml` và nối model)*
-- Chi phí / task thành công: __ (model __) · __ (model __) *(tầng Forecasting & Optimization chạy cục bộ trên Python gần như 0đ, chỉ LLM Coaching Layer phát sinh chi phí token)*
-- Chi phí / tháng ở quy mô thật: thấp __ · cơ sở __ · cao __ → chi tiết `cost/cost-estimate.md`
-- So với impact / người / tháng (§2): đáng làm không, vì sao: __
+- Persona + giá: `cost/personas.yaml` · lượt mô phỏng: `cost/simulate-1.csv` (50 phiên, gồm 44 phiên hợp lệ và 6 phiên lỗi kết nối).
+- Chi phí / task thành công: **$0.00033** (model `gpt-6-luna`) · **$0.0067** (model `gpt-6.2-sol`). Tầng Forecasting & Optimization chạy cục bộ trên Python gần như 0đ, chỉ LLM Coaching Layer phát sinh chi phí token.
+- Chi phí / tháng ở quy mô thật: thấp **$0.2088 (100 người)** · cơ sở **$1.04 (500 người)** · cao **$2.09 (1.000 người)** với `gpt-6-luna`; nếu dùng `gpt-6.2-sol` lần lượt là **$4.18 · $20.88 · $41.76** → chi tiết `cost/cost-estimate.md`.
+- So với impact / người / tháng (§2): **Đáng làm**, vì chi phí LLM ước tính trên mỗi người dùng chỉ khoảng **$0.0021/tháng** với `gpt-6-luna`, trong khi hệ thống hỗ trợ người dùng theo dõi chi tiêu, dự báo ngân sách và đưa ra gợi ý điều chỉnh tài chính. Chi phí thấp so với tiềm năng giá trị mang lại; tuy nhiên cần tiếp tục kiểm chứng impact bằng dữ liệu người dùng thực tế.
 
 ## §9. Rủi ro & an toàn
 - Dữ liệu: đã ẩn danh gì, không thu gì, không đưa gì vào model gói miễn phí:
